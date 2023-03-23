@@ -7,6 +7,7 @@ import LoadingBox from "../LoadingBox";
 import Hls from 'hls.js'
 import clsx from "clsx";
 import { historyDB } from "@/db";
+import { isClient } from "@/utils/is-client";
 
 interface VideoPlayerProps {
     pkg: string;
@@ -35,14 +36,15 @@ export default function VideoPlayer(props: VideoPlayerProps) {
         if (!artRef || !data) {
             return
         }
-        console.log(data);
+
+        const autoMini = isClient() && window.innerWidth > 768
 
         const art = new Artplayer({
             container: artRef.current as unknown as HTMLDivElement,
             url: data.url,
             type: data.type,
             pip: true,
-            autoMini: true,
+            autoMini,
             screenshot: true,
             setting: true,
             flip: true,
@@ -130,6 +132,8 @@ export default function VideoPlayer(props: VideoPlayerProps) {
         art.on('resize', () => {
             art.autoHeight = true;
         });
+
+        // 销毁时保存历史记录
         art.on("destroy", async () => {
             const data = await (fetch(await art.getBlobUrl()))
             const cover = await data.arrayBuffer()
@@ -142,7 +146,6 @@ export default function VideoPlayer(props: VideoPlayerProps) {
                 type: "bangumi",
                 cover: cover,
             })
-
         })
         return () => {
             if (art && art.destroy) {
