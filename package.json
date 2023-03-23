@@ -1,6 +1,6 @@
 {
     "name": "miru",
-    "version": "2.0.0-Alpha1",
+    "version": "2.0.0-Alpha2",
     "private": true,
     "scripts": {
         "dev": "next dev",

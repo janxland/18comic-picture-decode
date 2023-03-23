@@ -40,12 +40,12 @@ export class TMDBStore {
         return data.results
     }
 
-    async details(tvid: number): Promise<Details.RootObject | undefined> {
+    async getDetails(tvid: number): Promise<Details.RootObject | undefined> {
         const data = await this.request(`/3/tv/${tvid}`)
         return data
     }
 
-    async credits(tbid: number): Promise<Credits.Root | undefined> {
+    async getCredits(tbid: number): Promise<Credits.RootObject | undefined> {
         const data = await this.request(`/3/tv/${tbid}/credits`)
         return data
     }

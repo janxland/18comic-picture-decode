@@ -112,7 +112,7 @@ export module Details {
 
 
 export namespace Credits {
-    export interface Root {
+    export interface RootObject {
         cast: Cast[]
         crew: Crew[]
         id: number
