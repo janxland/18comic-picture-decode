@@ -14,9 +14,9 @@ function Fragment({ itemData }: { itemData: ListItem }) {
     return (
         <>
             <img className="rounded-lg object-cover h-4/5 w-full" src={itemData.cover} alt={itemData.title} />
-            <div className="h-2/5">
+            <div>
                 <p className="text-gray-400 text-xs mt-3 mb-1"> {itemData.update}</p>
-                <p>{itemData.title}</p>
+                <p className="text-ellipsis whitespace-nowrap overflow-hidden">{itemData.title}</p>
             </div>
         </>
     )
