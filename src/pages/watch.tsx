@@ -161,14 +161,14 @@ function Background() {
             <div className="fixed left-0 right-0 bottom-0 top-0 -z-30 bg-cover bg-no-repeat p-4"
                 style={{ backgroundImage: `url(${background})`, minHeight: "20rem" }}>
             </div>
-            <div className="fixed left-0 right-0 bottom-0 top-0 -z-10 bg-white bg-opacity-90"></div>
+            <div className="fixed left-0 lg:left-230px right-0 bottom-0 top-0 -z-10 bg-white bg-opacity-95"></div>
         </>
     )
 }
 
 function BaseDetail() {
     const { tmdbStore } = useRootStore()
-    const { pkg, url, detail, extension, setWatchData, tmdbId } = useWatchContext()
+    const { pkg, url, detail, extension, setWatchData, tmdbId, media_type } = useWatchContext()
     const [metaData, setMetaData] = useState<Map<string, string>>(new Map())
     const [overview, setOverview] = useState<string | undefined>(detail.desc)
     const [genres, setGenres] = useState<string[]>()
@@ -182,6 +182,7 @@ function BaseDetail() {
                 return {
                     ...data!,
                     tmdbId: res[0].id,
+                    media_type: res[0].media_type,
                     background: tmdbStore.getImageUrl(res[0].backdrop_path),
                 }
             })
@@ -193,14 +194,14 @@ function BaseDetail() {
         if (!tmdbId) {
             return
         }
-        tmdbStore.getDetails(tmdbId).then((res) => {
+        tmdbStore.getDetails(tmdbId, media_type!).then((res) => {
             const map = new Map<string, string>()
             if (res) {
-                map.set("原产地片名", res.original_name)
+                map.set("原产地片名", res.original_name ?? res.original_title)
                 map.set("语言", res.original_language)
-                map.set("上映时间", res.first_air_date)
+                map.set("上映时间", res.first_air_date ?? res.release_date)
                 map.set("状态", res.status)
-                map.set("集数", res.number_of_episodes.toString())
+                map.set("制作公司", res.production_companies.map((c) => c.name).join(","))
                 setOverview(res.overview)
                 setGenres(res.genres.map((g) => g.name))
             }
@@ -226,7 +227,7 @@ function BaseDetail() {
                 </div>
             </div>
             <div className=" md:w-3/4 lg:w-4/5 md:ml-5 md:mt-10">
-                <div className="text-2xl lg:text-3xl mb-1">{detail?.title}</div>
+                <div className="text-3xl mb-1">{detail?.title}</div>
                 <div className="mb-3 text-gray-500">
                     {
                         genres?.map((g, index) => (
@@ -268,6 +269,7 @@ function Play() {
     )
 }
 
+// 剧集
 function Episodes() {
     const { detail, setWatchData } = useWatchContext()
     const [episodesTabs, setEpisodesTabs] = useState<Tabs[]>([])
@@ -283,10 +285,12 @@ function Episodes() {
             }
         })
         // 平滑滚动到顶部
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        })
+        setTimeout(() => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            })
+        }, 100)
     }
 
 
@@ -302,7 +306,7 @@ function Episodes() {
                     <div className="max-h-80 overflow-auto">
                         {item.urls.map((value, index) => (
                             <Button
-                                onClick={() => handlePlay(value.url, value.name)}
+                                onClick={() => handlePlay(value.url, `${item.title}|${value.name}`)}
                                 key={index}
                                 className="mr-1 mb-1">
                                 {value.name}
@@ -317,7 +321,7 @@ function Episodes() {
 
     return (
         <div className="mb-6" >
-            <div className="text-2xl md:text-3xl mb-6 text-gray-500">
+            <div className="text-3xl mb-6 text-gray-500">
                 剧集
             </div>
             <div>
@@ -327,16 +331,17 @@ function Episodes() {
     )
 }
 
+// 主演
 function Credits() {
     const { tmdbStore } = useRootStore()
-    const { tmdbId } = useWatchContext()
+    const { tmdbId, media_type } = useWatchContext()
     const [cast, setCast] = useState<Credits.Cast[]>([])
 
     useEffect(() => {
         if (!tmdbId) {
             return
         }
-        tmdbStore.getCredits(tmdbId).then((res) => {
+        tmdbStore.getCredits(tmdbId, media_type!).then((res) => {
             if (res) {
                 setCast(res.cast)
             }
@@ -345,14 +350,14 @@ function Credits() {
 
     return (
         <div className="mb-3" >
-            <div className="text-2xl md:text-3xl mb-6 text-gray-500">
+            <div className="text-3xl mb-6 text-gray-500">
                 主演
             </div>
 
             <div className="overflow-auto flex pb-3 scrollbar-none " >
                 {
                     cast.map((item, index) => (
-                        <div key={index} className="shadow mr-3 border rounded-lg bg-white" style={{ minWidth: "130px", maxWidth: "130px" }} >
+                        <div key={index} className="mr-3" style={{ minWidth: "130px", maxWidth: "130px" }} >
                             <img className="w-full rounded-lg" src={tmdbStore.getImageUrl(item.profile_path)} />
                             <a href={`https://www.themoviedb.org/person/${item.id}`} target="_blank" rel="noreferrer">
                                 <div className="p-3 break-keep text-sm ">

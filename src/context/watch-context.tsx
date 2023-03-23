@@ -11,6 +11,7 @@ export interface WatchData {
     extension: Extension
     background?: string
     tmdbId?: number
+    media_type?: "movie" | "tv"
     setWatchData: (value: SetStateAction<WatchData | undefined>) => void
 }
 

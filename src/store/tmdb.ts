@@ -32,7 +32,7 @@ export class TMDBStore {
 
 
     async search(kw: string): Promise<SearchResult[] | undefined> {
-        const data = await this.request("/3/search/tv", {
+        const data = await this.request("/3/search/multi", {
             params: {
                 query: kw,
             }
@@ -40,13 +40,13 @@ export class TMDBStore {
         return data.results
     }
 
-    async getDetails(tvid: number): Promise<Details.RootObject | undefined> {
-        const data = await this.request(`/3/tv/${tvid}`)
+    async getDetails(tvid: number, mediaType: "movie" | "tv"): Promise<Details.RootObject | undefined> {
+        const data = await this.request(`/3/${mediaType}/${tvid}`)
         return data
     }
 
-    async getCredits(tbid: number): Promise<Credits.RootObject | undefined> {
-        const data = await this.request(`/3/tv/${tbid}/credits`)
+    async getCredits(mbid: number, mediaType: "movie" | "tv"): Promise<Credits.RootObject | undefined> {
+        const data = await this.request(`/3/${mediaType}/${mbid}/credits`)
         return data
     }
 

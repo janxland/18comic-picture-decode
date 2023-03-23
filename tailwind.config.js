@@ -11,7 +11,9 @@ module.exports = {
             margin: {
                 "230px": "230px",
             },
-
+            inset: {
+                "230px": "230px",
+            }
         },
     },
     plugins: [

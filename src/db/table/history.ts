@@ -26,7 +26,7 @@ export namespace historyDB {
     }
 
     export async function getAllHistoryByType(type: "bangumi" | "manga" | "novel", limit: number) {
-        return (await db.history.where("type").equals(type).limit(limit).sortBy("time")).reverse();
+        return await db.history.where("type").equals(type).reverse().limit(limit).sortBy("time");
     }
 
     export async function addHistory(history: History) {
