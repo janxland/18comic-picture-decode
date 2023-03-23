@@ -2,7 +2,6 @@ import httpProxyMiddleware from "next-http-proxy-middleware"
 export default function proxy(req, res) {
     let target = "";
     target = req.headers["miru-url"];
-    console.log(target)
     if (!target) {
         res.redirect("https://miru.0n0.dev");
         return;

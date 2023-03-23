@@ -34,62 +34,36 @@ export default class ExtensionStore {
 
     }
 
-    // 通过脚本安装
-    // @param script 未base64编码的脚本
+    // 通过脚本加载扩展
     installExtension(script: string) {
-        return new Promise((resolve, reject) => {
-            // 先保存到本地数据库
+        return new Promise<string>((resolve, reject) => {
             const extensionData = readExtensionMateData(script);
-
             if (!extensionData || !verExtensionMateData(extensionData)) {
                 return reject("扩展元数据错误");
             }
+            extensionData.script = script;
+            script = `data:text/javascript;base64,${encode(script)}`;
+            if (isClient()) {
+                import(/* webpackIgnore: true */ script)
+                    .then((module) => {
+                        const extension = new module.default();
+                        // 将扩展的属性复制到扩展实例上
+                        Object.assign(extension, extensionData);
 
-            // 将 script 转为 base64
-            extensionData.script = `data:text/javascript;base64,${encode(script)}`;
+                        // 设置代理地址
+                        extension.proxyUrl = this.proxyUrl;
 
-            // 保存到数据库
-            extensionDB.addExtension(extensionData).then(() => {
-                // 加载扩展
-                this.loadExtension(extensionData.package).then(() => {
-                    return resolve(extensionData.package);
-                }).catch((error) => {
-                    return reject(error);
-                })
-            })
-        })
-    }
+                        // 保存扩展
+                        extensionDB.addExtension(extensionData)
+                        this.setExtension(extension.package, extension);
+                        return resolve(extension.package);
+                    })
+                    .catch((error) => {
+                        this.extensionsErrorMap.set(extensionData.package, error)
+                        return reject(error);
+                    });
+            }
 
-    // 从已保存的数据中通过包名加载扩展
-    loadExtension(pkg: string) {
-        return new Promise<string>((resolve, reject) => {
-            extensionDB.getExtension(pkg).then((extensionData) => {
-                if (!extensionData) {
-                    return reject("Extension not found");
-                }
-                if (isClient()) {
-                    import(/* webpackIgnore: true */ extensionData.script)
-                        .then((module) => {
-                            const extension = new module.default();
-                            // 将扩展的属性复制到扩展实例上
-                            Object.assign(extension, extensionData);
-
-                            // 设置代理地址
-                            extension.proxyUrl = this.proxyUrl;
-
-                            this.setExtension(pkg, extension);
-                            return resolve(pkg);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            this.extensionsErrorMap.set(pkg, error)
-                            return reject(error);
-                        });
-                }
-            }).catch((error) => {
-                this.extensionsErrorMap.set(pkg, error)
-                return reject(error);
-            })
         });
     }
 
@@ -116,9 +90,9 @@ export default class ExtensionStore {
     async init() {
         const extensions = await extensionDB.getAllExtensions();
         await Promise.all(extensions.map((extension) => {
-            return this.loadExtension(extension.package);
+            this.installExtension(extension.script);
         }));
-        
+
     }
 
     // 设置Extension
