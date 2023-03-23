@@ -93,13 +93,7 @@ function InstalledTab() {
     }
 
     const handleSettings = (pkg: string) => {
-        enqueueSnackbar("还没实现的（", {
-            variant: "info",
-            anchorOrigin: {
-                vertical: "top",
-                horizontal: "right"
-            }
-        })
+        enqueueSnackbar("还没实现的（", { variant: "info", })
     }
 
     return (
