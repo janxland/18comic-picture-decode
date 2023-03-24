@@ -6,7 +6,6 @@ import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
 import Hls from 'hls.js'
 import clsx from "clsx";
-import { historyDB } from "@/db";
 import { isClient } from "@/utils/is-client";
 
 interface VideoPlayerProps {
@@ -20,7 +19,7 @@ interface VideoPlayerProps {
 
 export default function VideoPlayer(props: VideoPlayerProps) {
 
-    const { extensionStore } = useRootStore()
+    const { extensionStore, historyStore } = useRootStore()
 
     const extension = extensionStore.getExtension(props.pkg)
 
@@ -134,17 +133,15 @@ export default function VideoPlayer(props: VideoPlayerProps) {
         });
 
         // 销毁时保存历史记录
-        art.on("destroy", async () => {
-            const data = await (fetch(await art.getBlobUrl()))
-            const cover = await data.arrayBuffer()
+        art.on("video:timeupdate", async () => {
             // 存储历史记录
-            historyDB.addHistory({
+            historyStore.addHistory({
                 package: props.pkg,
                 url: props.pageUrl,
                 title: props.title,
                 chapter: props.chapter,
                 type: "bangumi",
-                cover: cover,
+                cover: await art.getDataURL(),
             })
         })
         return () => {

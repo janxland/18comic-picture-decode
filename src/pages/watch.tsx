@@ -9,10 +9,9 @@ import VideoPlayer from "@/components/Player/Video";
 import Tab, { Tabs } from "@/components/Tab";
 import { useRootStore } from "@/context/root-context";
 import { WatchData, useWatchContext, WatchProvider } from "@/context/watch-context";
-import { historyDB, loveDB } from "@/db";
+import { loveDB } from "@/db";
 import { Detail } from "@/types/extension";
 import { Credits } from "@/types/tmdb";
-import clsx from "clsx";
 import { observer } from "mobx-react-lite";
 import Head from "next/head";
 import Link from "next/link";
@@ -273,6 +272,7 @@ function Play() {
 
 // 剧集
 function Episodes() {
+    const { historyStore } = useRootStore()
     const { detail, setWatchData, url, pkg } = useWatchContext()
     const [episodesTabs, setEpisodesTabs] = useState<Tabs[]>([])
     const [playUrl, setPlayUrl] = useState<string>("")
@@ -321,11 +321,11 @@ function Episodes() {
             }
         }))
 
-    }, [detail,playUrl])
+    }, [detail, playUrl])
 
     useEffect(() => {
         // 获取历史记录提示播放到哪一集
-        historyDB.getHistory(url, pkg).then((res) => {
+        historyStore.getHistory(url, pkg).then((res) => {
             if (!res) {
                 return
             }
