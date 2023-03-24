@@ -4,7 +4,6 @@ import { enableStaticRendering } from "mobx-react-lite";
 import { configure } from "mobx";
 import { isClient } from "@/utils/is-client";
 import LoadingBox from "@/components/LoadingBox";
-import { motion } from "framer-motion";
 import IconLogo from "@/components/icons/IconLogo";
 
 
@@ -29,7 +28,7 @@ export function useRootStore() {
 export const store = initializeStore()
 export function RootStoreProvider({ children }: { children: React.ReactNode }) {
     const [ok, setOk] = useState(false);
-    const [initMsg, setInitMsg] = useState<string>("")
+    const [initMsg, setInitMsg] = useState<string>("正在初始化...")
 
     useEffect(() => {
         if (isClient()) {
@@ -38,6 +37,8 @@ export function RootStoreProvider({ children }: { children: React.ReactNode }) {
                 await store.settingsStore.init()
                 setInitMsg('正在初始化扩展...')
                 await store.extensionStore.init()
+                setInitMsg('正在初始化历史记录...')
+                await store.historyStore.init()
                 setOk(true)
             })()
         }

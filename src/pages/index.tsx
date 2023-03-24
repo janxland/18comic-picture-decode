@@ -34,17 +34,17 @@ export default function Home() {
 
 
 const ContinueVewing = observer(() => {
-    const { settingsStore, extensionStore } = useRootStore()
+    const { settingsStore, historyStore } = useRootStore()
     const { error, data, isLoading, refetch } = useQuery("getHistoryData",
         () => {
-            return historyDB.getAllHistoryByType(getModel(settingsStore.getSetting("model")), 8)
+            return historyStore.getHistoryByType(getModel(settingsStore.getSetting("model")), 8)
         }, {
         cacheTime: 0
     })
 
     useEffect(() => {
         refetch()
-    }, [settingsStore.getSetting("model")])
+    }, [settingsStore.getSetting("model"), historyStore.history])
 
 
 
@@ -67,7 +67,10 @@ const ContinueVewing = observer(() => {
         )
     }
 
-    const getObjUrl = (url: ArrayBuffer | string) => {
+    const getObjUrl = async (url: ArrayBuffer | string) => {
+        if (typeof url === "string") {
+            url = await (await fetch(url)).arrayBuffer()
+        }
         // 图片
         return URL.createObjectURL(new Blob([url], { type: "image/png" }))
     }
@@ -86,9 +89,8 @@ const ContinueVewing = observer(() => {
                                 url: history.url
                             }
                         }}>
-                            <img
-                                className="object-cover w-full h-full" style={{ height: "200px", maxWidth: "400px" }}
-                                src={getObjUrl(history.cover)} alt="" />
+                            <LoadImage className="object-cover w-full h-full" style={{ height: "200px", maxWidth: "400px" }}
+                                src={getObjUrl(history.cover)} alt={history.title} ></LoadImage>
                             <div className="absolute left-0 right-0 bottom-0 p-2 bg-gradient-to-t from-black">
                                 <p className=" text-neutral-300 text-xs mt-3 mb-1"> <CheckUpdate pkg={history.package} url={history.url}></CheckUpdate> 看到 {history.chapter}</p>
                                 <p className="text-white">{history.title}</p>
@@ -101,6 +103,24 @@ const ContinueVewing = observer(() => {
 
     )
 })
+
+function LoadImage({ src, alt, className, style }: { src: Promise<string>, alt: string, className?: string, style?: React.CSSProperties }) {
+    const { data, isLoading } = useQuery(`loadImage${alt}`, () => {
+        return src
+    })
+
+    if (isLoading) {
+        return (
+            <div className="w-full h-full flex justify-center items-center" style={style}>
+                <LoadingBox></LoadingBox>
+            </div>
+        )
+    }
+
+    return (
+        <img className={className} src={data} alt={alt} style={style} />
+    )
+}
 
 const LoveVewing = observer(() => {
     const { settingsStore } = useRootStore()

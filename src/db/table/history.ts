@@ -22,11 +22,11 @@ export namespace historyDB {
 
     export async function getAllHistory() {
         // 返回最新修改的
-        return db.history.toArray()
+        return db.history.reverse().sortBy("time")
     }
 
-    export async function getAllHistoryByType(type: "bangumi" | "manga" | "novel", limit: number) {
-        return await db.history.where("type").equals(type).reverse().limit(limit).sortBy("time");
+    export function getAllHistoryByType(type: "bangumi" | "manga" | "novel", limit: number) {
+        return db.history.where("type").equals(type).reverse().limit(limit).sortBy("time");
     }
 
     export async function addHistory(history: History) {
