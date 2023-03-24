@@ -9,13 +9,15 @@ import VideoPlayer from "@/components/Player/Video";
 import Tab, { Tabs } from "@/components/Tab";
 import { useRootStore } from "@/context/root-context";
 import { WatchData, useWatchContext, WatchProvider } from "@/context/watch-context";
-import { loveDB } from "@/db";
-import { Detail, Episode } from "@/types/extension";
+import { historyDB, loveDB } from "@/db";
+import { Detail } from "@/types/extension";
 import { Credits } from "@/types/tmdb";
+import clsx from "clsx";
 import { observer } from "mobx-react-lite";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { enqueueSnackbar, closeSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
@@ -257,7 +259,7 @@ function BaseDetail() {
 function Play() {
     const { watchData, url, pkg, detail } = useWatchContext()
     return (
-        <>
+        <div className="mb-6">
             {watchData && <VideoPlayer
                 pkg={pkg}
                 url={watchData?.url}
@@ -265,16 +267,18 @@ function Play() {
                 chapter={watchData.chapter}
                 title={detail.title}
                 className="mb-6" ></VideoPlayer>}
-        </>
+        </div>
     )
 }
 
 // 剧集
 function Episodes() {
-    const { detail, setWatchData } = useWatchContext()
+    const { detail, setWatchData, url, pkg } = useWatchContext()
     const [episodesTabs, setEpisodesTabs] = useState<Tabs[]>([])
+    const [playUrl, setPlayUrl] = useState<string>("")
 
     const handlePlay = (url: string, chapter: string) => {
+        setPlayUrl(url)
         setWatchData((data) => {
             return {
                 ...data!,
@@ -293,31 +297,67 @@ function Episodes() {
         }, 100)
     }
 
-
     useEffect(() => {
-        let tabs: Tabs[] = []
         if (!detail.episodes) {
             return
         }
-        detail.episodes.map((item, _) => {
-            tabs.push({
+
+        setEpisodesTabs(detail.episodes.map((item, _) => {
+            return {
                 title: item.title,
                 content: (
-                    <div className="max-h-80 overflow-auto">
+                    <div className="max-h-80 overflow-auto p-1">
                         {item.urls.map((value, index) => (
                             <Button
                                 onClick={() => handlePlay(value.url, `${item.title}|${value.name}`)}
                                 key={index}
-                                className="mr-1 mb-1">
+                                className={`mr-1 mb-1 ${playUrl === value.url ? "ring-2 ring-gray-500" : ""}`}>
                                 {value.name}
                             </Button>
-                        ))}
-                    </div>
+                        ))
+                        }
+                    </div >
+                )
+            }
+        }))
+
+    }, [detail,playUrl])
+
+    useEffect(() => {
+        // 获取历史记录提示播放到哪一集
+        historyDB.getHistory(url, pkg).then((res) => {
+            if (!res) {
+                return
+            }
+            enqueueSnackbar(`上次观看到 ${res.chapter}`, {
+                persist: false,
+                action: (key) => (
+                    <Button onClick={() => {
+                        // 通过detail.episodes找到对应的url
+                        let url = ""
+                        const chap = res?.chapter.split("|")
+                        if (!chap || chap.length !== 2) {
+                            enqueueSnackbar("播放记录异常", {
+                                variant: "error"
+                            })
+                            return
+                        }
+                        detail.episodes?.map((item, _) => {
+                            item.urls.map((value, _) => {
+                                if (item.title === chap[0] && value.name === chap[1]) {
+                                    url = value.url
+                                }
+                            })
+                        })
+                        handlePlay(url, res?.chapter!)
+                        closeSnackbar(key)
+                    }}>
+                        继续观看
+                    </Button>
                 )
             })
         })
-        setEpisodesTabs(tabs)
-    }, [detail])
+    }, [])
 
     return (
         <div className="mb-6" >

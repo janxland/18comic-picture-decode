@@ -89,15 +89,15 @@ const ContinueVewing = observer(() => {
                             <img
                                 className="object-cover w-full h-full" style={{ height: "200px", maxWidth: "400px" }}
                                 src={getObjUrl(history.cover)} alt="" />
-                            <div className="absolute left-0 right-0 bottom-0 p-2 " style={{ background: "linear-gradient(rgba(255, 255, 255, 0), rgb(0 0 0 / 52%))" }}>
+                            <div className="absolute left-0 right-0 bottom-0 p-2 bg-gradient-to-t from-black">
                                 <p className=" text-neutral-300 text-xs mt-3 mb-1"> <CheckUpdate pkg={history.package} url={history.url}></CheckUpdate> 看到 {history.chapter}</p>
                                 <p className="text-white">{history.title}</p>
                             </div>
                         </Link>
-                    </div>
+                    </div >
                 ))
             }
-        </div>
+        </div >
 
     )
 })
