@@ -27,9 +27,6 @@ export function useWatchContext() {
 }
 
 export function WatchProvider({ children, value }: { children: React.ReactNode, value: WatchData | undefined }) {
-    if (!value) {
-        return <></>
-    }
     return (
         <WatchContext.Provider value={value}>
             {children}

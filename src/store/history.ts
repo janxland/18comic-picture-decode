@@ -21,7 +21,7 @@ export default class HistoryStore {
     // 然后从数据库读取数据
     async init() {
         const localHistory = JSON.parse(localStorage.getItem("historyTemp") || "[]") as History[];
-        await Promise.all(localHistory.map(async (history) => historyDB.addHistory(history)));
+        await Promise.all(localHistory.reverse().map(async (history) => historyDB.addHistory(history)));
         localStorage.removeItem("historyTemp");
         this.history = await historyDB.getAllHistory();
     }

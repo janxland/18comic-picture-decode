@@ -75,7 +75,7 @@ const Watch = observer(() => {
         )
     }
 
-    if (!data) {
+    if (!data || !watchData) {
         return (
             <ErrorView error={"未找到数据"}></ErrorView>
         )
