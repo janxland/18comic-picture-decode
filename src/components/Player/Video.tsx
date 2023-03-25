@@ -37,7 +37,6 @@ export default function VideoPlayer(props: VideoPlayerProps) {
         }
 
         const autoMini = isClient() && window.innerWidth > 768
-
         const art = new Artplayer({
             container: artRef.current as unknown as HTMLDivElement,
             url: data.url,
@@ -131,9 +130,22 @@ export default function VideoPlayer(props: VideoPlayerProps) {
         art.on('resize', () => {
             art.autoHeight = true;
         });
-
-        // 销毁时保存历史记录
+        let lastTime = 0
+        // 创建进度变量
         art.on("video:timeupdate", async () => {
+            // 每次播放进度更新时，更新历史记录太卡了，每过两秒更新一次
+            const currentTime = Math.floor(art.currentTime);
+            // 如果当前进度和上次进度相同，就不更新了
+            if (currentTime === lastTime) {
+                return;
+            }
+            // 更新上次进度
+            lastTime = currentTime;
+
+            if (currentTime % 2 !== 0) {
+                return;
+            }
+
             // 存储历史记录
             historyStore.addHistory({
                 package: props.pkg,
