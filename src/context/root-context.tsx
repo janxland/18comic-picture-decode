@@ -47,8 +47,8 @@ export function RootStoreProvider({ children }: { children: React.ReactNode }) {
     if (!ok) {
         return (
             <div className="h-screen flex justify-center items-center">
-                <div>
-                    <IconLogo className="mb-3" />
+                <div className="flex flex-col items-center">
+                    <IconLogo className="mb-3" width={110} />
                     <LoadingBox />
                     <p className="mt-3">{initMsg}</p>
                 </div>
