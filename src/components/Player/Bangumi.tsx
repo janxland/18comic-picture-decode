@@ -1,14 +1,15 @@
 import { useRootStore } from "@/context/root-context";
 import Artplayer from "artplayer";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useQuery } from "react-query";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
 import Hls from 'hls.js'
 import clsx from "clsx";
 import { isClient } from "@/utils/is-client";
+import { BangumiWatch } from "@/types/extension";
 
-interface VideoPlayerProps {
+interface BangumiPlayerProps {
     pkg: string;
     url: string;
     chapter: string;
@@ -17,7 +18,7 @@ interface VideoPlayerProps {
     className?: string;
 }
 
-export default function VideoPlayer(props: VideoPlayerProps) {
+export default function BangumiPlayer(props: BangumiPlayerProps) {
 
     const { extensionStore, historyStore } = useRootStore()
 
@@ -27,7 +28,7 @@ export default function VideoPlayer(props: VideoPlayerProps) {
 
 
     const { data, error, isLoading } = useQuery(`getVideoPlayer${props.pkg}${props.url}`, () => {
-        return extension?.watch(props.url)
+        return extension?.watch(props.url) as BangumiWatch
     })
 
 

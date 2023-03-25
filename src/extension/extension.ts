@@ -1,5 +1,5 @@
 import { extensionSettingsDB } from "@/db";
-import { Detail, ListItem, VideoWatch } from "@/types/extension";
+import { Detail, ListItem, MangaWatch, BangumiWatch as BangumiWatch } from "@/types/extension";
 import request from "umi-request";
 
 
@@ -46,7 +46,7 @@ export class Extension {
     }
 
     // 观看
-    watch(url: string): VideoWatch {
+    watch(url: string): BangumiWatch | MangaWatch {
         throw new Error("not implement");
     }
 

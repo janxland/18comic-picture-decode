@@ -26,8 +26,13 @@ export interface Episode {
 }
 
 // 影视 watch Props
-export interface VideoWatch {
+export interface BangumiWatch {
     type: "hls" | "mp4";
     url: string;
+}
+
+// 漫画 watch Props
+export interface MangaWatch {
+    urls: string[];
 }
 

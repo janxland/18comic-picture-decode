@@ -5,7 +5,8 @@ import IconLink from "@/components/icons/IconLink";
 import IconLove from "@/components/icons/IconLove";
 import Layout from "@/components/Layout";
 import LoadingBox from "@/components/LoadingBox";
-import VideoPlayer from "@/components/Player/Video";
+import MangaPlayer from "@/components/Player/Manga";
+import BangumiPlayer from "@/components/Player/Bangumi";
 import Tab, { Tabs } from "@/components/Tab";
 import { useRootStore } from "@/context/root-context";
 import { WatchData, useWatchContext, WatchProvider } from "@/context/watch-context";
@@ -174,6 +175,8 @@ function BaseDetail() {
     const [overview, setOverview] = useState<string | undefined>(detail.desc)
     const [genres, setGenres] = useState<string[]>()
 
+    // 获取 TMDB ID
+    // 也许可以获取个背景（（就不判断了
     useEffect(() => {
         tmdbStore.search(detail.title).then((res) => {
             if (!res || res.length === 0) {
@@ -191,8 +194,9 @@ function BaseDetail() {
         })
     }, [])
 
+    // 通过 TMDB 获取详情
     useEffect(() => {
-        if (!tmdbId) {
+        if (!tmdbId || extension.type !== "bangumi") {
             return
         }
         tmdbStore.getDetails(tmdbId, media_type!).then((res) => {
@@ -256,16 +260,42 @@ function BaseDetail() {
 
 // 播放
 function Play() {
-    const { watchData, url, pkg, detail } = useWatchContext()
+    const { watchData, url, pkg, detail, extension } = useWatchContext()
+    const [player, setPlayer] = useState<JSX.Element | undefined>(undefined)
+    useEffect(() => {
+        if (!watchData) {
+            return
+        }
+        switch (extension.type) {
+            case "bangumi":
+                {
+                    setPlayer(<BangumiPlayer
+                        pkg={pkg}
+                        url={watchData!.url}
+                        pageUrl={url}
+                        chapter={watchData!.chapter}
+                        title={detail.title}
+                        className="mb-6" ></BangumiPlayer>)
+                }
+                break;
+            case "manga":
+                {
+                    setPlayer(<MangaPlayer
+                        nextChapter={() => { }}
+                        prevChapter={() => { }}
+                        watchData={{
+                            url: watchData!.url,
+                            chapter: watchData!.chapter,
+                            pkg: pkg,
+                        }}
+                    ></MangaPlayer >)
+                }
+        }
+    }, [watchData])
+
     return (
         <div className="mb-6">
-            {watchData && <VideoPlayer
-                pkg={pkg}
-                url={watchData?.url}
-                pageUrl={url}
-                chapter={watchData.chapter}
-                title={detail.title}
-                className="mb-6" ></VideoPlayer>}
+            {player}
         </div>
     )
 }
@@ -374,7 +404,7 @@ function Episodes() {
 // 主演
 function Credits() {
     const { tmdbStore } = useRootStore()
-    const { tmdbId, media_type } = useWatchContext()
+    const { tmdbId, media_type, extension } = useWatchContext()
     const [cast, setCast] = useState<Credits.Cast[]>([])
 
     useEffect(() => {
@@ -387,6 +417,10 @@ function Credits() {
             }
         })
     }, [tmdbId])
+
+    if (extension.type !== "bangumi") {
+        return <></>
+    }
 
     return (
         <div className="mb-3" >
