@@ -89,8 +89,17 @@ const ContinueVewing = observer(() => {
                                 url: history.url
                             }
                         }}>
-                            <LoadImage className="object-cover w-full h-full" style={{ height: "200px", maxWidth: "400px" }}
-                                src={getObjUrl(history.cover)} alt={history.title} ></LoadImage>
+                            {
+                                history.type === "bangumi" && (
+                                    <LoadImage className="object-cover w-full h-full" style={{ height: "200px", maxWidth: "400px" }}
+                                        src={getObjUrl(history.cover)} alt={history.title} ></LoadImage>
+                                )
+                                ||
+                                (
+                                    <img className="object-cover w-full h-full" style={{ height: "200px", maxWidth: "400px" }}
+                                        src={history.cover as string} alt={history.title} />
+                                )
+                            }
                             <div className="absolute left-0 right-0 bottom-0 p-2 bg-gradient-to-t from-black">
                                 <p className=" text-neutral-300 text-xs mt-3 mb-1"> <CheckUpdate pkg={history.package} url={history.url}></CheckUpdate> 看到 {history.chapter}</p>
                                 <p className="text-white">{history.title}</p>
