@@ -281,13 +281,11 @@ function Play() {
             case "manga":
                 {
                     setPlayer(<MangaPlayer
-                        nextChapter={() => { }}
-                        prevChapter={() => { }}
-                        watchData={{
-                            url: watchData!.url,
-                            chapter: watchData!.chapter,
-                            pkg: pkg,
-                        }}
+                        url={watchData!.url}
+                        chapter={watchData!.chapter}
+                        pageUrl={url}
+                        pkg={pkg}
+                        title={detail.title}
                     ></MangaPlayer >)
                 }
         }
@@ -339,7 +337,10 @@ function Episodes() {
                     <div className="max-h-80 overflow-auto p-1">
                         {item.urls.map((value, index) => (
                             <Button
-                                onClick={() => handlePlay(value.url, `${item.title}|${value.name}`)}
+                                onClick={() => handlePlay(
+                                    value.url,
+                                    `${item.title}|${value.name}`,
+                                )}
                                 key={index}
                                 className={`mr-1 mb-1 ${playUrl === value.url ? "ring-2 ring-gray-500" : ""}`}>
                                 {value.name}

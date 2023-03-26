@@ -1,28 +1,41 @@
 import { useRootStore } from "@/context/root-context";
 import { MangaWatch } from "@/types/extension";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
+import Button from "../common/Button";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
 
 interface MangaPlayerProps {
-    nextChapter: () => void;
-    prevChapter: () => void;
-    watchData: WatchData;
-}
-interface WatchData {
     url: string;
     pkg: string;
+    pageUrl: string;
+    title: string;
     chapter: string;
 }
-
 export default function MangaPlayer(props: MangaPlayerProps) {
     const { extensionStore, historyStore } = useRootStore()
-    const extension = extensionStore.getExtension(props.watchData.pkg)
+    const extension = extensionStore.getExtension(props.pkg)
 
     const { data, error, isLoading } = useQuery(
-        `manga-${props.watchData.url}-${props.watchData.pkg}`,
-        async () => extension?.watch(props.watchData.url) as MangaWatch
+        `manga-${props.url}-${props.pkg}`,
+        async () => extension?.watch(props.url) as MangaWatch
     )
+
+
+    useEffect(() => {
+        if (!data) {
+            return
+        }
+        historyStore.addHistory({
+            package: props.pkg,
+            url: props.pageUrl,
+            title: props.title,
+            chapter: props.chapter,
+            type: "manga",
+            cover: data.urls[0],
+        })
+    }, [data])
 
     if (isLoading) {
         return <LoadingBox></LoadingBox>
@@ -36,8 +49,9 @@ export default function MangaPlayer(props: MangaPlayerProps) {
         return <ErrorView error={new Error("No data")} />
     }
 
+
     return (
-        <div>
+        <div className="m-auto md:w-3/4">
             {
                 data.urls.map((url, index) => {
                     return <img key={index} src={url} alt="Manga" referrerPolicy="no-referrer" />
