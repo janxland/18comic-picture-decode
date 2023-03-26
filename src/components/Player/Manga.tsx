@@ -12,6 +12,8 @@ interface MangaPlayerProps {
     pageUrl: string;
     title: string;
     chapter: string;
+    nextChapter?: () => void;
+    prevChapter?: () => void;
 }
 export default function MangaPlayer(props: MangaPlayerProps) {
     const { extensionStore, historyStore } = useRootStore()
@@ -21,7 +23,6 @@ export default function MangaPlayer(props: MangaPlayerProps) {
         `manga-${props.url}-${props.pkg}`,
         async () => extension?.watch(props.url) as MangaWatch
     )
-
 
     useEffect(() => {
         if (!data) {
@@ -51,12 +52,26 @@ export default function MangaPlayer(props: MangaPlayerProps) {
 
 
     return (
-        <div className="m-auto md:w-3/4">
+        <div className="m-auto md:w-3/4 text-center">
+            <Button className="mb-3" onClick={() => props.prevChapter?.()}>
+                上一章
+            </Button>
             {
                 data.urls.map((url, index) => {
                     return <img key={index} src={url} alt="Manga" referrerPolicy="no-referrer" />
                 })
             }
+            <Button className="mt-3" onClick={() => props.nextChapter?.()}>
+                下一章
+            </Button>
+            {/* <div className="fixed top-1/2 right-0 flex flex-col">
+                <Button className="mb-3" onClick={() => props.nextChapter?.()}>
+                    下一章
+                </Button>
+                <Button onClick={() => props.prevChapter?.()}>
+                    上一章
+                </Button>
+            </div> */}
         </div>
     )
 } 

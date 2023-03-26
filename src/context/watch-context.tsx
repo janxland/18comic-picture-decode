@@ -12,6 +12,8 @@ export interface WatchData {
     background?: string
     tmdbId?: number
     media_type?: "movie" | "tv"
+    nextChapter?: () => void
+    prevChapter?: () => void
     setWatchData: (value: SetStateAction<WatchData | undefined>) => void
 }
 

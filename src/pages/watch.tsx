@@ -260,7 +260,7 @@ function BaseDetail() {
 
 // 播放
 function Play() {
-    const { watchData, url, pkg, detail, extension } = useWatchContext()
+    const { watchData, url, pkg, detail, extension, nextChapter, prevChapter } = useWatchContext()
     const [player, setPlayer] = useState<JSX.Element | undefined>(undefined)
     useEffect(() => {
         if (!watchData) {
@@ -286,10 +286,12 @@ function Play() {
                         pageUrl={url}
                         pkg={pkg}
                         title={detail.title}
+                        nextChapter={nextChapter}
+                        prevChapter={prevChapter}
                     ></MangaPlayer >)
                 }
         }
-    }, [watchData])
+    }, [watchData, nextChapter, prevChapter])
 
     return (
         <div className="mb-6">
@@ -335,17 +337,43 @@ function Episodes() {
                 title: item.title,
                 content: (
                     <div className="max-h-80 overflow-auto p-1">
-                        {item.urls.map((value, index) => (
-                            <Button
-                                onClick={() => handlePlay(
-                                    value.url,
-                                    `${item.title}|${value.name}`,
-                                )}
-                                key={index}
-                                className={`mr-1 mb-1 ${playUrl === value.url ? "ring-2 ring-gray-500" : ""}`}>
-                                {value.name}
-                            </Button>
-                        ))
+                        {item.urls.map((value, index) => {
+                            // 设置下一章和上一章的方法
+                            if (playUrl === value.url) {
+                                setWatchData((data) => {
+                                    return {
+                                        ...data!,
+                                        nextChapter: () => {
+                                            const next = item.urls[index - 1]
+                                            if (next) {
+                                                handlePlay(next.url, `${item.title}|${next.name}`)
+                                            } else {
+                                                enqueueSnackbar("已经是最后一章/集了", { variant: "info" })
+                                            }
+                                        },
+                                        prevChapter: () => {
+                                            const prev = item.urls[index + 1]
+                                            if (prev) {
+                                                handlePlay(prev.url, `${item.title}|${prev.name}`)
+                                            } else {
+                                                enqueueSnackbar("已经是第一章/集了", { variant: "info" })
+                                            }
+                                        },
+                                    }
+                                })
+                            }
+                            return (
+                                <Button
+                                    onClick={() => handlePlay(
+                                        value.url,
+                                        `${item.title}|${value.name}`,
+                                    )}
+                                    key={index}
+                                    className={`mr-1 mb-1 ${playUrl === value.url ? "ring-2 ring-gray-500" : ""}`}>
+                                    {value.name}
+                                </Button>
+                            )
+                        })
                         }
                     </div >
                 )
