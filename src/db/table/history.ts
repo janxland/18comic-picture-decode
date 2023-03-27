@@ -11,7 +11,7 @@ export interface History {
     // 封面
     cover: string | ArrayBuffer;
     // 类型
-    type: "bangumi" | "manga" | "novel";
+    type: "bangumi" | "manga" | "fikushon";
     // 章节
     chapter: string;
     // 时间
@@ -25,7 +25,7 @@ export namespace historyDB {
         return db.history.reverse().sortBy("time")
     }
 
-    export function getAllHistoryByType(type: "bangumi" | "manga" | "novel", limit: number) {
+    export function getAllHistoryByType(type: "bangumi" | "manga" | "fikushon", limit: number) {
         return db.history.where("type").equals(type).reverse().limit(limit).sortBy("time");
     }
 

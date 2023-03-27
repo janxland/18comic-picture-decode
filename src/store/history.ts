@@ -26,7 +26,7 @@ export default class HistoryStore {
         this.history = await historyDB.getAllHistory();
     }
 
-    getHistoryByType(type: "bangumi" | "manga" | "novel", limit: number) {
+    getHistoryByType(type: "bangumi" | "manga" | "fikushon", limit: number) {
         return this.history.filter((history) => history.type === type).slice(0, limit);
     }
 

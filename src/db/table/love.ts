@@ -6,7 +6,7 @@ export interface Love {
     package: string;
     url: string;
     cover: string;
-    type: "bangumi" | "manga" | "novel";
+    type: "bangumi" | "manga" | "fikushon";
 }
 
 export namespace loveDB {
@@ -15,7 +15,7 @@ export namespace loveDB {
         return db.love.toArray();
     }
 
-    export function getAllLoveByType(type: "bangumi" | "manga" | "novel") {
+    export function getAllLoveByType(type: "bangumi" | "manga" | "fikushon") {
         return db.love.where("type").equals(type).reverse().toArray();
     }
 
