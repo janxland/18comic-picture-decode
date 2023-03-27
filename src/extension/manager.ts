@@ -100,7 +100,7 @@ export class ExtensionManager {
         return this.extensions.get(pkg);
     }
 
-    getExtensionsByType(type: "bangumi" | "manga" | "novel") {
+    getExtensionsByType(type: "bangumi" | "manga" | "fikushon") {
         return Array.from(this.extensions.values()).filter((extension) => extension.type === type);
     }
 

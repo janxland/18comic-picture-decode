@@ -1,5 +1,5 @@
 import { extensionSettingsDB } from "@/db";
-import { Detail, ListItem, MangaWatch, BangumiWatch as BangumiWatch } from "@/types/extension";
+import { Detail, ListItem, MangaWatch, BangumiWatch, FikushonWatch } from "@/types/extension";
 import request from "umi-request";
 
 
@@ -12,8 +12,9 @@ export class Extension {
     version = "";
     language = "";
     script = "";
-    scriptUrl = ""
-    type: "bangumi" | "manga" | "novel" = "bangumi"
+    scriptUrl = "";
+    type: "bangumi" | "manga" | "fikushon" = "bangumi";
+    nsfw: boolean = false;
 
     request(url: string, options?: any) {
         if (!options) {
@@ -46,7 +47,7 @@ export class Extension {
     }
 
     // 观看
-    watch(url: string): BangumiWatch | MangaWatch {
+    watch(url: string): BangumiWatch | MangaWatch | FikushonWatch {
         throw new Error("not implement");
     }
 

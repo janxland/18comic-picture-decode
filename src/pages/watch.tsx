@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 import { enqueueSnackbar, closeSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import FikushonPlayer from "@/components/Player/Fikushon";
 
 
 const Watch = observer(() => {
@@ -269,26 +270,17 @@ function Play() {
         switch (extension.type) {
             case "bangumi":
                 {
-                    setPlayer(<BangumiPlayer
-                        pkg={pkg}
-                        url={watchData!.url}
-                        pageUrl={url}
-                        chapter={watchData!.chapter}
-                        title={detail.title}
-                        className="mb-6" ></BangumiPlayer>)
+                    setPlayer(<BangumiPlayer />)
                 }
                 break;
             case "manga":
                 {
-                    setPlayer(<MangaPlayer
-                        url={watchData!.url}
-                        chapter={watchData!.chapter}
-                        pageUrl={url}
-                        pkg={pkg}
-                        title={detail.title}
-                        nextChapter={nextChapter}
-                        prevChapter={prevChapter}
-                    ></MangaPlayer >)
+                    setPlayer(<MangaPlayer />)
+                }
+                break;
+            case "fikushon":
+                {
+                    setPlayer(<FikushonPlayer />)
                 }
         }
     }, [watchData, nextChapter, prevChapter])
@@ -344,19 +336,20 @@ function Episodes() {
                                     return {
                                         ...data!,
                                         nextChapter: () => {
-                                            const next = item.urls[index - 1]
+                                            const next = item.urls[index + 1]
                                             if (next) {
                                                 handlePlay(next.url, `${item.title}|${next.name}`)
                                             } else {
-                                                enqueueSnackbar("已经是最后一章/集了", { variant: "info" })
+                                                enqueueSnackbar("已经是第一章/集了", { variant: "info" })
                                             }
                                         },
                                         prevChapter: () => {
-                                            const prev = item.urls[index + 1]
+                                            const prev = item.urls[index - 1]
                                             if (prev) {
                                                 handlePlay(prev.url, `${item.title}|${prev.name}`)
                                             } else {
-                                                enqueueSnackbar("已经是第一章/集了", { variant: "info" })
+                                                enqueueSnackbar("已经是最后一章/集了", { variant: "info" })
+
                                             }
                                         },
                                     }
