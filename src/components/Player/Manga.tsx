@@ -1,4 +1,5 @@
 import { useRootStore } from "@/context/root-context";
+import { useWatchContext } from "@/context/watch-context";
 import { MangaWatch } from "@/types/extension";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
@@ -6,22 +7,14 @@ import Button from "../common/Button";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
 
-interface MangaPlayerProps {
-    url: string;
-    pkg: string;
-    pageUrl: string;
-    title: string;
-    chapter: string;
-    nextChapter?: () => void;
-    prevChapter?: () => void;
-}
-export default function MangaPlayer(props: MangaPlayerProps) {
+export default function MangaPlayer() {
+    const { url, pkg, watchData, detail, prevChapter, nextChapter } = useWatchContext()
     const { extensionStore, historyStore } = useRootStore()
-    const extension = extensionStore.getExtension(props.pkg)
+    const extension = extensionStore.getExtension(pkg)
 
     const { data, error, isLoading } = useQuery(
-        `manga-${props.url}-${props.pkg}`,
-        async () => extension?.watch(props.url) as MangaWatch
+        `manga-${watchData!.url}-${pkg}`,
+        async () => extension?.watch(watchData!.url) as MangaWatch
     )
 
     useEffect(() => {
@@ -29,10 +22,10 @@ export default function MangaPlayer(props: MangaPlayerProps) {
             return
         }
         historyStore.addHistory({
-            package: props.pkg,
-            url: props.pageUrl,
-            title: props.title,
-            chapter: props.chapter,
+            package: pkg,
+            url,
+            title: detail.title,
+            chapter: watchData!.chapter,
             type: "manga",
             cover: data.urls[0],
         })
@@ -53,7 +46,7 @@ export default function MangaPlayer(props: MangaPlayerProps) {
 
     return (
         <div className="m-auto md:w-3/4 text-center">
-            <Button className="mb-3" onClick={() => props.prevChapter?.()}>
+            <Button className="mb-3" onClick={() => prevChapter?.()}>
                 上一章
             </Button>
             {
@@ -61,7 +54,7 @@ export default function MangaPlayer(props: MangaPlayerProps) {
                     return <img key={index} src={url} alt="Manga" referrerPolicy="no-referrer" />
                 })
             }
-            <Button className="mt-3" onClick={() => props.nextChapter?.()}>
+            <Button className="mt-3" onClick={() => nextChapter?.()}>
                 下一章
             </Button>
             {/* <div className="fixed top-1/2 right-0 flex flex-col">
