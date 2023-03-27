@@ -1,15 +1,15 @@
 import BaseMargin from "@/components/BaseMargin"
 import Layout from "@/components/Layout"
 import LoadingBox from "@/components/LoadingBox"
-import { loveDB, historyDB } from "@/db"
+import { loveDB } from "@/db"
 import Head from "next/head"
 import Link from "next/link"
 import { useQuery } from "react-query"
 import SwitchTitle from "@/components/SwitchTitle"
 import { useRootStore } from "@/context/root-context"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { observer } from "mobx-react-lite"
-import BangumiGrid from "@/components/BangumiGrid"
+import ItemGrid from "@/components/ItemGrid"
 import ErrorView from "@/components/ErrorView"
 import { getModel } from "@/utils/model"
 import CheckUpdate from "@/components/CheckUpdata"
@@ -93,9 +93,16 @@ const ContinueVewing = observer(() => {
                                 history.type === "bangumi" && (
                                     <LoadImage className="object-cover w-full h-full" style={{ height: "200px", maxWidth: "400px" }}
                                         src={getObjUrl(history.cover)} alt={history.title} ></LoadImage>
+                                ) ||
+                                history.type === "fikushon" && (
+                                    <div className="w-full h-full " style={{ height: "200px", maxWidth: "400px" }}>
+                                        <div className="m-auto w-4/5 p-2 text-lg rounded bg-slate-200 h-full">
+                                            {history.cover as string}
+                                        </div>
+                                    </div>
                                 )
                                 ||
-                                (
+                                history.type === "manga" && (
                                     <img className="object-cover w-full h-full" style={{ height: "200px", maxWidth: "400px" }}
                                         src={history.cover as string} alt={history.title} />
                                 )
@@ -166,7 +173,7 @@ const LoveVewing = observer(() => {
     }
 
     return (
-        <BangumiGrid.Grid>
+        <ItemGrid.Grid>
             {
                 data.map(love => (
                     <Link key={love.id} href={{
@@ -176,10 +183,10 @@ const LoveVewing = observer(() => {
                             url: love.url
                         }
                     }}>
-                        <BangumiGrid.Fragment itemData={love}></BangumiGrid.Fragment>
+                        <ItemGrid.Fragment itemData={love}></ItemGrid.Fragment>
                     </Link>
                 ))
             }
-        </BangumiGrid.Grid>
+        </ItemGrid.Grid>
     )
 })

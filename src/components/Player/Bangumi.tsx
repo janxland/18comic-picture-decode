@@ -8,27 +8,21 @@ import Hls from 'hls.js'
 import clsx from "clsx";
 import { isClient } from "@/utils/is-client";
 import { BangumiWatch } from "@/types/extension";
+import { useWatchContext } from "@/context/watch-context";
 
-interface BangumiPlayerProps {
-    pkg: string;
-    url: string;
-    chapter: string;
-    title: string;
-    pageUrl: string;
-    className?: string;
-}
 
-export default function BangumiPlayer(props: BangumiPlayerProps) {
+export default function BangumiPlayer() {
+    const { url, pkg, watchData, detail, prevChapter, nextChapter } = useWatchContext()
 
     const { extensionStore, historyStore } = useRootStore()
 
-    const extension = extensionStore.getExtension(props.pkg)
+    const extension = extensionStore.getExtension(pkg)
 
     const artRef = useRef(null);
 
 
-    const { data, error, isLoading } = useQuery(`getVideoPlayer${props.pkg}${props.url}`, () => {
-        return extension?.watch(props.url) as BangumiWatch
+    const { data, error, isLoading } = useQuery(`getVideoPlayer${pkg}${watchData!.url}`, () => {
+        return extension?.watch(watchData!.url) as BangumiWatch
     })
 
 
@@ -149,10 +143,10 @@ export default function BangumiPlayer(props: BangumiPlayerProps) {
 
             // 存储历史记录
             historyStore.addHistory({
-                package: props.pkg,
-                url: props.pageUrl,
-                title: props.title,
-                chapter: props.chapter,
+                package: pkg,
+                url,
+                title: detail.title,
+                chapter: watchData!.chapter,
                 type: "bangumi",
                 cover: await art.getDataURL(),
             })
@@ -180,7 +174,7 @@ export default function BangumiPlayer(props: BangumiPlayerProps) {
     }
 
 
-    return <div ref={artRef} className={clsx("max-h-screen h-36", props.className)}></div>;
+    return <div ref={artRef} className={"max-h-screen h-36"}></div>;
 }
 
 

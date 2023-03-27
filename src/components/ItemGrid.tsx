@@ -1,6 +1,6 @@
 import { ListItem } from "@/types/extension";
 import clsx from "clsx";
-import { HTMLProps, ReactNode } from "react";
+import { HTMLProps } from "react";
 
 
 function Grid(props: HTMLProps<HTMLDivElement>) {
@@ -13,7 +13,15 @@ function Grid(props: HTMLProps<HTMLDivElement>) {
 function Fragment({ itemData }: { itemData: ListItem }) {
     return (
         <>
-            <img className="rounded-lg object-cover h-4/5 w-full" src={itemData.cover} alt={itemData.title} />
+            {
+                itemData.cover
+                &&
+                <img className="rounded-lg object-cover h-4/5 w-full" src={itemData.cover} alt={itemData.title} />
+                ||
+                <div className="relative rounded-lg w-full bg-gray-200 p-3 flex justify-center items-center text-xl ">
+                    {itemData.title}
+                </div>
+            }
             <div>
                 <p className="text-gray-400 text-xs mt-3 mb-1"> {itemData.update}</p>
                 <p className="text-ellipsis whitespace-nowrap overflow-hidden">{itemData.title}</p>

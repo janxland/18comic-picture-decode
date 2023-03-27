@@ -36,3 +36,11 @@ export interface MangaWatch {
     urls: string[];
 }
 
+// 小说 watch Props
+export interface FikushonWatch {
+    // 段落
+    content: string[]
+    title: string
+    // 副标题
+    subtitle: string
+}

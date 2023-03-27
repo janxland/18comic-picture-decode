@@ -5,7 +5,7 @@ export function getModel(model: any) {
         case 1:
             return "manga";
         case 2:
-            return "novel";
+            return "fikushon";
         default:
             return "bangumi";
     }

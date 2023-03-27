@@ -78,7 +78,7 @@ export default class ExtensionStore {
         return this.extensionsMap.get(pkg);
     }
 
-    getExtensionsByType(type: "bangumi" | "manga" | "novel") {
+    getExtensionsByType(type: "bangumi" | "manga" | "fikushon") {
         return Array.from(this.extensionsMap.values()).filter((extension) => extension.type === type);
     }
 

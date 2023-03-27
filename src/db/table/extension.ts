@@ -10,8 +10,10 @@ export interface Extension {
     version: string;
     // 语言
     language: string;
+    // NSFW
+    nsfw: boolean;
     // 脚本类型
-    type: "bangumi" | "manga" | "novel";
+    type: "bangumi" | "manga" | "fikushon";
     // 脚本
     script: string;
     // 介绍
@@ -43,7 +45,7 @@ export namespace extensionDB {
         return db.extension.toArray();
     }
 
-    export function getAllExtensionsForType(type: "bangumi" | "manga" | "novel") {
+    export function getAllExtensionsForType(type: "bangumi" | "manga" | "fikushon") {
         return db.extension.where("type").equals(type).toArray();
     }
 

@@ -1,4 +1,4 @@
-import BangumiGrid from "@/components/BangumiGrid";
+import ItemGrid from "@/components/ItemGrid";
 import BaseMargin from "@/components/BaseMargin";
 import Button from "@/components/common/Button";
 import ErrorView from "@/components/ErrorView";
@@ -115,7 +115,7 @@ function Items({ extension, kw }: { extension: Extension, kw?: string }) {
 
     return (
         <div>
-            <BangumiGrid.Grid>
+            <ItemGrid.Grid>
                 {data.pages && data.pages.map((value, index) =>
                     value.map((value, index) =>
                         <Link
@@ -129,11 +129,11 @@ function Items({ extension, kw }: { extension: Extension, kw?: string }) {
                             }}
                             className="w-full h-full"
                         >
-                            <BangumiGrid.Fragment itemData={value}></BangumiGrid.Fragment>
+                            <ItemGrid.Fragment itemData={value}></ItemGrid.Fragment>
                         </Link>
                     )
                 )}
-            </BangumiGrid.Grid>
+            </ItemGrid.Grid>
             <div className="text-center">
                 {hasNextPage && (
                     <Button className="m-4" onClick={() => fetchNextPage()}>
