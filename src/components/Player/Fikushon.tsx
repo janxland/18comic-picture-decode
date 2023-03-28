@@ -46,12 +46,12 @@ export default function FikushonPlayer() {
 
 
     return (
-        <div className="m-auto md:w-3/4 text-center">
+        <div className="text-center p-3">
             <Button className="mb-3" onClick={() => prevChapter?.()}>
                 上一章
             </Button>
 
-            <div className="border rounded-lg text-left p-5 bg-slate-200">
+            <div className="border text-left p-5 bg-slate-200">
                 <div className="text-center mb-6">
                     <h1 className="text-2xl font-bold">{data.title}</h1>
                     <h2 className="text-lg">{data.subtitle}</h2>
@@ -68,14 +68,6 @@ export default function FikushonPlayer() {
             <Button className="mt-3" onClick={() => nextChapter?.()}>
                 下一章
             </Button>
-            {/* <div className="fixed top-1/2 right-0 flex flex-col">
-                <Button className="mb-3" onClick={() => props.nextChapter?.()}>
-                    下一章
-                </Button>
-                <Button onClick={() => props.prevChapter?.()}>
-                    上一章
-                </Button>
-            </div> */}
         </div>
     )
 }

@@ -18,9 +18,11 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { enqueueSnackbar, closeSnackbar } from "notistack";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import FikushonPlayer from "@/components/Player/Fikushon";
+import clsx from "clsx";
+import IconClose from "@/components/icons/IconClose";
 
 
 const Watch = observer(() => {
@@ -171,7 +173,7 @@ function Background() {
 
 function BaseDetail() {
     const { tmdbStore } = useRootStore()
-    const { pkg, url, detail, extension, setWatchData, tmdbId, media_type } = useWatchContext()
+    const { pkg, url, detail, extension, setWatchData, tmdbId, mediaType: media_type } = useWatchContext()
     const [metaData, setMetaData] = useState<Map<string, string>>(new Map())
     const [overview, setOverview] = useState<string | undefined>(detail.desc)
     const [genres, setGenres] = useState<string[]>()
@@ -187,7 +189,7 @@ function BaseDetail() {
                 return {
                     ...data!,
                     tmdbId: res[0].id,
-                    media_type: res[0].media_type,
+                    mediaType: res[0].media_type,
                     background: tmdbStore.getImageUrl(res[0].backdrop_path),
                 }
             })
@@ -261,8 +263,10 @@ function BaseDetail() {
 
 // 播放
 function Play() {
-    const { watchData, url, pkg, detail, extension, nextChapter, prevChapter } = useWatchContext()
+    const { watchData, extension, nextChapter, prevChapter, showPlayer, setWatchData } = useWatchContext()
     const [player, setPlayer] = useState<JSX.Element | undefined>(undefined)
+    const playerContainer = useRef<HTMLDivElement | null>(null)
+
     useEffect(() => {
         if (!watchData) {
             return
@@ -283,11 +287,41 @@ function Play() {
                     setPlayer(<FikushonPlayer />)
                 }
         }
+        // 平滑滚动到顶部
+        setTimeout(() => {
+            playerContainer.current?.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            })
+        }, 100)
     }, [watchData, nextChapter, prevChapter])
 
+    if (!showPlayer) {
+        return <></>
+    }
+
+    const handleClose = () => {
+        setWatchData((data) => {
+            return {
+                ...data!,
+                showPlayer: false,
+            }
+        })
+    }
+
     return (
-        <div className="mb-6">
-            {player}
+        <div className="fixed left-0 right-0 top-0 bottom-0 z-50">
+            <div className="fixed left-0 right-0 top-0 bottom-0 bg-black opacity-75 -z-20" onClick={handleClose}></div>
+            <div
+                ref={playerContainer}
+                className={clsx("absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-full md:w-2/3 max-h-screen overflow-auto", {
+                    "bg-white": extension.type !== "bangumi",
+                })}>
+                {player}
+            </div>
+            <div className="fixed right-0 bottom-0 p-2">
+                <Button onClick={handleClose} ><IconClose /></Button>
+            </div>
         </div>
     )
 }
@@ -304,19 +338,13 @@ function Episodes() {
         setWatchData((data) => {
             return {
                 ...data!,
+                showPlayer: true,
                 watchData: {
                     url,
                     chapter,
                 }
             }
         })
-        // 平滑滚动到顶部
-        setTimeout(() => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            })
-        }, 100)
     }
 
     useEffect(() => {
@@ -426,7 +454,7 @@ function Episodes() {
 // 主演
 function Credits() {
     const { tmdbStore } = useRootStore()
-    const { tmdbId, media_type, extension } = useWatchContext()
+    const { tmdbId, mediaType: media_type, extension } = useWatchContext()
     const [cast, setCast] = useState<Credits.Cast[]>([])
 
     useEffect(() => {

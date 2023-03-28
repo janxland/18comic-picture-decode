@@ -45,7 +45,7 @@ export default function MangaPlayer() {
 
 
     return (
-        <div className="m-auto md:w-3/4 text-center">
+        <div className="text-center p-3">
             <Button className="mb-3" onClick={() => prevChapter?.()}>
                 上一章
             </Button>
@@ -57,14 +57,6 @@ export default function MangaPlayer() {
             <Button className="mt-3" onClick={() => nextChapter?.()}>
                 下一章
             </Button>
-            {/* <div className="fixed top-1/2 right-0 flex flex-col">
-                <Button className="mb-3" onClick={() => props.nextChapter?.()}>
-                    下一章
-                </Button>
-                <Button onClick={() => props.prevChapter?.()}>
-                    上一章
-                </Button>
-            </div> */}
         </div>
     )
 } 
