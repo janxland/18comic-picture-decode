@@ -1,7 +1,4 @@
 import BaseMargin from "@/components/BaseMargin";
-import IconDownload from "@/components/icons/IconDownload";
-import IconSettings from "@/components/icons/IconSettings";
-import IconTrash from "@/components/icons/IconTrash";
 import Layout from "@/components/Layout";
 import LoadingBox from "@/components/LoadingBox";
 import SwitchTitle from "@/components/SwitchTitle";
@@ -16,7 +13,11 @@ import { useSnackbar } from "notistack";
 import { ReactNode, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import request from "umi-request";
-
+import {
+    Download as IconDownload,
+    Trash as IconTrash,
+    Settings as IconSettings,
+} from 'lucide-react'
 export default function Extensions() {
     return (
         <>
@@ -110,13 +111,13 @@ function InstalledTab() {
                         <button
                             onClick={() => { handleSettings(extension.package) }}
                             className="bg-black text-white px-4 py-1 mr-2 rounded-xl flex items-center">
-                            <IconSettings fill="#fff" width={18} ></IconSettings>
+                            <IconSettings size={18}></IconSettings>
                             <span className="hidden md:inline-block ml-1">设置</span>
                         </button>
                         <button
                             onClick={() => { handleUninstall(extension.package) }}
                             className="bg-black text-white px-4 py-1 mr-2 rounded-xl flex items-center">
-                            <IconTrash fill="#fff" width={18}></IconTrash>
+                            <IconTrash size={18}></IconTrash>
                             <span className="hidden md:inline-block ml-1">卸载</span>
                         </button>
                     </ListItem>
@@ -229,14 +230,14 @@ const RepoTab = observer(() => {
                                 <button
                                     onClick={() => { handleUninstall(extension.package) }}
                                     className="bg-black text-white px-4 py-1 mr-2 rounded-xl flex items-center">
-                                    <IconTrash fill="#fff" width={18}></IconTrash>
+                                    <IconTrash size={18}></IconTrash>
                                     <span className="hidden md:inline-block ml-1">卸载</span>
                                 </button>
                                 :
                                 <button
                                     onClick={() => { handleInstall(extension.package) }}
                                     className="bg-black text-white px-4 py-1 mr-2 rounded-xl flex items-center">
-                                    <IconDownload fill="#fff" width={18} ></IconDownload>
+                                    <IconDownload size={18} ></IconDownload>
                                     <span className="hidden md:inline-block ml-1">安装</span>
                                 </button>
                         }
