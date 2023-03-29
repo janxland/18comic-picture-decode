@@ -1,8 +1,6 @@
 import BaseMargin from "@/components/BaseMargin";
 import Button from "@/components/common/Button";
 import ErrorView from "@/components/ErrorView";
-import IconLink from "@/components/icons/IconLink";
-import IconLove from "@/components/icons/IconLove";
 import Layout from "@/components/Layout";
 import LoadingBox from "@/components/LoadingBox";
 import MangaPlayer from "@/components/Player/Manga";
@@ -22,7 +20,7 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import FikushonPlayer from "@/components/Player/Fikushon";
 import clsx from "clsx";
-import IconClose from "@/components/icons/IconClose";
+import {X as IconClose,Link as IconLink,Heart as IconLove} from 'lucide-react'
 
 
 const Watch = observer(() => {
@@ -151,7 +149,7 @@ function LoveButton({ pkg, url, type, data }: { pkg: string, url: string, type: 
             onClick={handleLove}
             className="focus:ring-2 focus:ring-gray-500 border pl-4 pr-4 pt-2 pb-2 text-lg w-full bg-black text-white rounded-xl">
             <div className="flex justify-center items-center">
-                <IconLove solid={isLove} className="mr-1" width={25} fill="#fff"></IconLove>{isLove ? "已收藏" : "收藏"}
+                <IconLove className="mr-1"  fill={isLove ? "#fff" : ''}></IconLove>{isLove ? "已收藏" : "收藏"}
             </div>
         </button>
     )
@@ -229,7 +227,7 @@ function BaseDetail() {
                     <a target="_blank" rel="noreferrer" href={extension.webSite + url}
                         className="focus:ring-2 focus:ring-gray-500 border pl-4 pr-4 pt-2 pb-2 text-lg w-full bg-black text-white rounded-xl">
                         <div className="flex justify-center items-center">
-                            <IconLink className="mr-1" width={25} fill="#fff"></IconLink>源站
+                            <IconLink className="mr-1"></IconLink>源站
                         </div>
                     </a>
                 </div>

@@ -1,6 +1,5 @@
 import BaseMargin from "@/components/BaseMargin";
 import Button from "@/components/common/Button";
-import IconUndo from "@/components/icons/IconUndo";
 import Layout from "@/components/Layout";
 import { useRootStore } from "@/context/root-context";
 import { observer } from "mobx-react-lite";
@@ -10,7 +9,9 @@ import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import Tab from "@/components/Tab";
 import IconLogo from "@/components/icons/IconLogo";
 import packageInfo from "../../package.json";
-
+import {
+    Redo as IconUndo
+} from 'lucide-react'
 
 export default function Settings() {
     return (

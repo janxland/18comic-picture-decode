@@ -4,16 +4,18 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import IconLogo from '@/components/icons/IconLogo'
-import IconSearh from '@/components/icons/IconSearch'
-import IconExtension from '@/components/icons/IconExtension'
-import IconSettings from '@/components/icons/IconSettings'
 import clsx from 'clsx'
 import { AnimatePresence } from 'framer-motion'
 import { RootStoreProvider } from '@/context/root-context'
-import IconHome from '@/components/icons/IconHome'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { SnackbarProvider } from 'notistack'
 import { logMiruInfo } from '@/utils/miru-log'
+import {
+  Search as IconSearh,
+  LayoutGrid as IconExtension,
+  Home as IconHome,
+  Settings as IconSettings
+} from 'lucide-react'
 
 function Logo() {
   return (
@@ -33,37 +35,37 @@ function Sidebar() {
       title: "首页",
       path: "/",
       icon: IconHome,
-      iconColor: "#000",
+      iconColor: "#fff",
       hoverClass: "hover:opacity-50",
       activityClass: "bg-black text-white ring-4 ring-gray-300",
-      activityIconColor: "#fff"
+      activityIconColor: "#000"
     },
     {
       title: "探索",
       path: "/search",
       icon: IconSearh,
-      iconColor: "#000",
+      iconColor: "#fff",
       hoverClass: "hover:opacity-50",
       activityClass: "bg-black text-white ring-4 ring-gray-300",
-      activityIconColor: "#fff"
+      activityIconColor: "#000"
     },
     {
       title: "扩展",
       path: "/extension",
       icon: IconExtension,
-      iconColor: "#000",
+      iconColor: "#fff",
       hoverClass: "hover:opacity-50",
       activityClass: "bg-black text-white ring-4 ring-gray-300",
-      activityIconColor: "#fff"
+      activityIconColor: "#000"
     },
     {
       title: "设置",
       path: "/settings",
       icon: IconSettings,
-      iconColor: "#000",
+      iconColor: "#fff",
       hoverClass: "hover:opacity-50",
       activityClass: "bg-black text-white ring-4 ring-gray-300",
-      activityIconColor: "#fff"
+      activityIconColor: "#000"
     },
   ]
 
