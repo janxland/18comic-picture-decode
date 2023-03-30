@@ -217,12 +217,12 @@ function BaseDetail() {
 
 
     return (
-        <div className="md:items-end mb-5 md:mb-16 flex flex-col-reverse md:flex-row">
-            <div className="md:flex flex-col items-center md:w-1/4 lg:w-1/5">
+        <div className="md:items-end mb-5 md:mb-16 flex flex-col items-center md:flex-row">
+            <div className="mb-6 md:mb-0 md:flex flex-col items-center md:w-1/4 lg:w-1/5">
                 <img
-                    className="hidden md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3"
+                    className=" md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3 "
                     src={detail?.cover} alt={detail.title} />
-                <div className="mt-3 md:mt-0 flex justify-between w-full md:flex-col xl:flex-row">
+                <div className="mt-3 md:mt-0 flex justify-between w-full flex-col xl:flex-row">
                     <LoveButton pkg={pkg} url={url} data={detail} type={extension.type}></LoveButton>
                     <a target="_blank" rel="noreferrer" href={extension.webSite + url}
                         className="focus:ring-2 focus:ring-gray-500 border pl-4 pr-4 pt-2 pb-2 text-lg w-full bg-black text-white rounded-xl">
@@ -312,7 +312,7 @@ function Play() {
             <div className="fixed left-0 right-0 top-0 bottom-0 bg-black opacity-75 -z-20" onClick={handleClose}></div>
             <div
                 ref={playerContainer}
-                className={clsx("absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-full md:w-2/3 max-h-screen overflow-auto", {
+                className={clsx("absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-full md:w-2/3", {
                     "bg-white": extension.type !== "bangumi",
                 })}>
                 {player}
