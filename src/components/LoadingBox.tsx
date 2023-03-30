@@ -1,9 +1,9 @@
-import IconLoder from "./icons/Iconloader";
+import { Loader2 } from "lucide-react";
 
 export default function LoadingBox() {
     return (
         <div className="flex justify-center items-center h-full w-full">
-            <IconLoder width={50} className="animate-spin"></IconLoder>
+            <Loader2 size={50} className="animate-spin"></Loader2>
         </div>
     )
 }
