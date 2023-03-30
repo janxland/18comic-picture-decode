@@ -27,9 +27,22 @@ export default class HistoryStore {
     }
 
     getHistoryByType(type: "bangumi" | "manga" | "fikushon", limit: number) {
-        return this.history.filter((history) => history.type === type).slice(0, limit);
+        const history = this.history.filter((history) => history.type === type).slice(0, limit)
+        // 如果是影视
+        if (type === "bangumi") {
+            return Promise.all(history.map(async (history) => {
+                // 给cover创建objectURL
+                const cover = history.cover;
+                if (cover) {
+                    const url = await (await fetch(cover as string)).arrayBuffer()
+                    const blob = new Blob([url], { type: "image/png" });
+                    history.cover = URL.createObjectURL(blob);
+                }
+                return history;
+            }))
+        }
+        return history;
     }
-
     async addHistory(history: History) {
         // 先删除原有的再往后添加
         const index = this.historyTemp.findIndex((item) => item.package === history.package && item.url === history.url);
