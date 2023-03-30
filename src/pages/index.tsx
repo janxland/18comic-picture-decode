@@ -67,14 +67,6 @@ const ContinueVewing = observer(() => {
         )
     }
 
-    const getObjUrl = async (url: ArrayBuffer | string) => {
-        if (typeof url === "string") {
-            url = await (await fetch(url)).arrayBuffer()
-        }
-        // 图片
-        return URL.createObjectURL(new Blob([url], { type: "image/png" }))
-    }
-
 
     return (
         <div className="flex overflow-auto pb-3 scrollbar-none -ml-230px">
@@ -90,10 +82,6 @@ const ContinueVewing = observer(() => {
                             }
                         }}>
                             {
-                                history.type === "bangumi" && (
-                                    <LoadImage className="object-cover w-full h-full" style={{ height: "200px", maxWidth: "400px" }}
-                                        src={getObjUrl(history.cover)} alt={history.title} ></LoadImage>
-                                ) ||
                                 history.type === "fikushon" && (
                                     <div className="w-full h-full " style={{ height: "200px", maxWidth: "400px" }}>
                                         <div className="m-auto w-4/5 p-2 text-lg rounded bg-slate-200 h-full">
@@ -101,8 +89,7 @@ const ContinueVewing = observer(() => {
                                         </div>
                                     </div>
                                 )
-                                ||
-                                history.type === "manga" && (
+                                || (
                                     <img className="object-cover w-full h-full" style={{ height: "200px", maxWidth: "400px" }}
                                         src={history.cover as string} alt={history.title} />
                                 )
@@ -119,24 +106,6 @@ const ContinueVewing = observer(() => {
 
     )
 })
-
-function LoadImage({ src, alt, className, style }: { src: Promise<string>, alt: string, className?: string, style?: React.CSSProperties }) {
-    const { data, isLoading } = useQuery(`loadImage${alt}`, () => {
-        return src
-    })
-
-    if (isLoading) {
-        return (
-            <div className="w-full h-full flex justify-center items-center" style={style}>
-                <LoadingBox></LoadingBox>
-            </div>
-        )
-    }
-
-    return (
-        <img className={className} src={data} alt={alt} style={style} />
-    )
-}
 
 const LoveVewing = observer(() => {
     const { settingsStore } = useRootStore()
