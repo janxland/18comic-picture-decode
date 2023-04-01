@@ -10,7 +10,7 @@ import Tab from "@/components/Tab";
 import IconLogo from "@/components/icons/IconLogo";
 import packageInfo from "../../package.json";
 import {
-    Redo as IconUndo
+    Undo as IconUndo
 } from 'lucide-react'
 
 export default function Settings() {
@@ -49,15 +49,16 @@ function GeneralTab() {
 }
 
 function DataTab() {
+    const { historyStore } = useRootStore()
     return (
         <div>
             <ClearCacheBotton
                 title="观看记录"
-                countFun={historyDB.getAllHistory}
-                clearCallBack={historyDB.deleteAllHistory} />
+                count={historyStore.history.length}
+                clearCallBack={() => { historyStore.clearHistory() }} />
             <ClearCacheBotton
                 title="收藏记录"
-                countFun={loveDB.getAllLove}
+                count={loveDB.getAllLove}
                 clearCallBack={loveDB.deleteAllLove} />
         </div>
     )
@@ -141,11 +142,20 @@ const Checkbox = observer(({ title, bindKey }: { title: string, bindKey: string 
     )
 })
 
-const ClearCacheBotton = observer((props: { title: string, countFun: () => Promise<any>, clearCallBack: Function }) => {
+function ClearCacheBotton(props: {
+    title: string,
+    count: (() => Promise<Array<any>>) | number,
+    clearCallBack: () => void
+}) {
+
     const [count, setCount] = useState(0)
 
     useEffect(() => {
-        props.countFun().then((res) => {
+        if (typeof props.count === "number") {
+            setCount(props.count)
+            return
+        }
+        props.count().then((res) => {
             setCount(res.length)
         })
     }, [])
@@ -161,11 +171,13 @@ const ClearCacheBotton = observer((props: { title: string, countFun: () => Promi
             </span>
             <Button onClick={() => {
                 props.clearCallBack()
+                // 直接给他显示0（
+                setCount(0)
             }}>
                 清空
             </Button>
         </div>
     )
-})
+}
 
 
