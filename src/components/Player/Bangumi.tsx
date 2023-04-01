@@ -125,22 +125,8 @@ export default function BangumiPlayer() {
         art.on('resize', () => {
             art.autoHeight = true;
         });
-        let lastTime = 0
-        // 创建进度变量
-        art.on("video:timeupdate", async () => {
-            // 每次播放进度更新时，更新历史记录太卡了，每过两秒更新一次
-            const currentTime = Math.floor(art.currentTime);
-            // 如果当前进度和上次进度相同，就不更新了
-            if (currentTime === lastTime) {
-                return;
-            }
-            // 更新上次进度
-            lastTime = currentTime;
 
-            if (currentTime % 2 !== 0) {
-                return;
-            }
-
+        const addHistory = async () => {
             // 存储历史记录
             historyStore.addHistory({
                 package: pkg,
@@ -150,13 +136,26 @@ export default function BangumiPlayer() {
                 type: "bangumi",
                 cover: await art.getDataURL(),
             })
+        }
+
+        // 播放的时候 添加一次记录
+        art.on("play", () => {
+            addHistory()
         })
+
+        // 销毁的时候 再添加一次历史记录
+        art.on("destroy", () => {
+            addHistory()
+        })
+
         return () => {
             if (art && art.destroy) {
                 art.destroy(false);
             }
         };
     }, [data]);
+
+
 
 
     if (error) {
@@ -176,6 +175,7 @@ export default function BangumiPlayer() {
 
     return <div ref={artRef} className={"max-h-screen h-36"}></div>;
 }
+
 
 
 function playM3u8(video: HTMLMediaElement, url: string, art: Artplayer) {
