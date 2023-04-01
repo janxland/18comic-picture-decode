@@ -17,7 +17,9 @@ import {
     Download as IconDownload,
     Trash as IconTrash,
     Settings as IconSettings,
+    Upload as IconUpload,
 } from 'lucide-react'
+import Button from "@/components/common/Button";
 export default function Extensions() {
     return (
         <>
@@ -48,9 +50,6 @@ function InstalledTab() {
 
     const { data, error, isLoading } = useQuery("getInstalledExtensions",
         () => {
-            if (!isClient()) {
-                return []
-            }
             return extensionDB.getAllExtensions()
         }
     )
@@ -108,18 +107,18 @@ function InstalledTab() {
                         version={extension.version}
                         icon={extension.icon}
                     >
-                        <button
+                        <Button
                             onClick={() => { handleSettings(extension.package) }}
-                            className="bg-black text-white px-4 py-1 mr-2 rounded-xl flex items-center">
+                            className="flex items-center ml-1">
                             <IconSettings size={18}></IconSettings>
                             <span className="hidden md:inline-block ml-1">设置</span>
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             onClick={() => { handleUninstall(extension.package) }}
-                            className="bg-black text-white px-4 py-1 mr-2 rounded-xl flex items-center">
+                            className="flex items-center ml-1">
                             <IconTrash size={18}></IconTrash>
                             <span className="hidden md:inline-block ml-1">卸载</span>
-                        </button>
+                        </Button>
                     </ListItem>
                 )
             }
@@ -156,12 +155,12 @@ const RepoTab = observer(() => {
     }
 
     const { data, error, isLoading, refetch } = useQuery("getRepoExtensions",
-        () => request.get(settingsStore.getSetting("miruRepo") + "/index.json")
-            .then((res: Extension[]) => {
-                return res.filter((extension) => {
-                    return extension.type === getModel(settingsStore.getSetting("model"))
+        () => {
+            return request.get(settingsStore.getSetting("miruRepo") + "/index.json")
+                .then((res: Extension[]) => {
+                    return res.filter((extension) => extension.type === getModel(settingsStore.getSetting("model")))
                 })
-            })
+        }
     )
 
     useEffect(() => {
@@ -214,6 +213,12 @@ const RepoTab = observer(() => {
         setExtensionMapAndUpdateView(pkg, false)
     }
 
+    // 就重新安装（
+    const handleUpdate = async (pkg: string) => {
+        await handleUninstall(pkg)
+        await handleInstall(pkg)
+    }
+
     return (
         <div>
             {
@@ -225,26 +230,35 @@ const RepoTab = observer(() => {
                         version={extension.version}
                         icon={extension.icon}
                     >
+                        {extensionMap.get(extension.package) && extension.version !== extensionStore.getExtension(extension.package)?.version && (
+                            <Button
+                                onClick={() => { handleUpdate(extension.package) }}
+                                className="flex items-center ml-1">
+                                <IconUpload size={18}></IconUpload>
+                                <span className="hidden md:inline-block ml-1">更新</span>
+                            </Button>
+                        )
+                        }
                         {
                             extensionMap.get(extension.package) ?
-                                <button
+                                <Button
                                     onClick={() => { handleUninstall(extension.package) }}
-                                    className="bg-black text-white px-4 py-1 mr-2 rounded-xl flex items-center">
+                                    className="flex items-center ml-1">
                                     <IconTrash size={18}></IconTrash>
                                     <span className="hidden md:inline-block ml-1">卸载</span>
-                                </button>
+                                </Button>
                                 :
-                                <button
+                                <Button
                                     onClick={() => { handleInstall(extension.package) }}
-                                    className="bg-black text-white px-4 py-1 mr-2 rounded-xl flex items-center">
+                                    className="flex items-center ml-1">
                                     <IconDownload size={18} ></IconDownload>
                                     <span className="hidden md:inline-block ml-1">安装</span>
-                                </button>
+                                </Button>
                         }
                     </ListItem>
                 )
             }
-        </div>
+        </div >
     )
 })
 
