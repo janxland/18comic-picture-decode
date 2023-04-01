@@ -60,4 +60,11 @@ export default class HistoryStore {
     async getHistory(url: string, pkg: string) {
         return this.history.find((item) => item.package === pkg && item.url === url);
     }
+
+    async clearHistory() {
+        this.history.splice(0, this.history.length);
+        this.historyTemp.splice(0, this.historyTemp.length);
+        await historyDB.deleteAllHistory();
+        localStorage.removeItem("historyTemp");
+    }
 }
