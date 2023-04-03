@@ -13,6 +13,7 @@ export interface WatchData {
     tmdbId?: number
     mediaType?: "movie" | "tv"
     showPlayer?: boolean
+    fullscreenWeb?: boolean
     nextChapter?: () => void
     prevChapter?: () => void
     setWatchData: (value: SetStateAction<WatchData | undefined>) => void

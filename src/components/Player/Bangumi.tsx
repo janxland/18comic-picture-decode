@@ -12,7 +12,7 @@ import { useWatchContext } from "@/context/watch-context";
 
 
 export default function BangumiPlayer() {
-    const { url, pkg, watchData, detail, prevChapter, nextChapter } = useWatchContext()
+    const { url, pkg, watchData, detail, prevChapter, nextChapter, fullscreenWeb, setWatchData } = useWatchContext()
 
     const { extensionStore, historyStore } = useRootStore()
 
@@ -123,6 +123,14 @@ export default function BangumiPlayer() {
             art.autoHeight = true;
         });
         art.on('resize', () => {
+            if (art.fullscreenWeb !== fullscreenWeb) {
+                setWatchData((data) => {
+                    return {
+                        ...data!,
+                        fullscreenWeb: !!art.fullscreenWeb
+                    }
+                });
+            }
             art.autoHeight = true;
         });
 
