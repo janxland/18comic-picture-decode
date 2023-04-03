@@ -261,7 +261,7 @@ function BaseDetail() {
 
 // 播放
 function Play() {
-    const { watchData, extension, nextChapter, prevChapter, showPlayer, setWatchData } = useWatchContext()
+    const { watchData, extension, nextChapter, prevChapter, showPlayer, fullscreenWeb, setWatchData } = useWatchContext()
     const [player, setPlayer] = useState<JSX.Element | undefined>(undefined)
     const playerContainer = useRef<HTMLDivElement | null>(null)
 
@@ -312,8 +312,9 @@ function Play() {
             <div className="fixed left-0 right-0 top-0 bottom-0 bg-black opacity-75 -z-20" onClick={handleClose}></div>
             <div
                 ref={playerContainer}
-                className={clsx("absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-full md:w-2/3", {
+                className={clsx("absolute w-full md:w-2/3", {
                     "bg-white": extension.type !== "bangumi",
+                    "left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2": fullscreenWeb !== true,
                 })}>
                 {player}
             </div>
