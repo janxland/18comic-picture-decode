@@ -25,10 +25,10 @@ import { useQuery } from "react-query";
 
 
 const WatchPage = observer(() => {
-    const query = useSearchParams()
+    const searchParams = useSearchParams()
     const { extensionStore } = useRootStore()
-    const pkg = query.get("pkg") as string
-    const url = query.get("url") as string
+    const pkg = searchParams?.get("pkg") as string
+    const url = searchParams?.get("url") as string
     const extension = extensionStore.getExtension(pkg)
     const [watchData, setWatchData] = useState<WatchData>()
     const { isLoading, error, isError, data } = useQuery(`getDetail${pkg}${url}`,
