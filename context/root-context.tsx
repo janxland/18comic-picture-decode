@@ -1,11 +1,10 @@
-"use client"
-import { RootStore } from "@/store/root";
-import { createContext, useContext, useEffect, useState } from "react";
-import { enableStaticRendering } from "mobx-react-lite";
-import { configure } from "mobx";
-import { isClient } from "@/utils/is-client";
-import LoadingBox from "@/components/LoadingBox";
 import IconLogo from "@/components/icons/IconLogo";
+import LoadingBox from "@/components/LoadingBox";
+import { RootStore } from "@/store/root";
+import { isClient } from "@/utils/is-client";
+import { configure } from "mobx";
+import { enableStaticRendering } from "mobx-react-lite";
+import { createContext, useContext, useEffect, useState } from "react";
 
 
 enableStaticRendering(!isClient)
