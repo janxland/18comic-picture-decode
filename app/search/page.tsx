@@ -1,7 +1,8 @@
-import ItemGrid from "@/components/ItemGrid";
+"use client"
 import BaseMargin from "@/components/BaseMargin";
 import Button from "@/components/common/Button";
 import ErrorView from "@/components/ErrorView";
+import ItemGrid from "@/components/ItemGrid";
 import Layout from "@/components/Layout";
 import LoadingBox from "@/components/LoadingBox";
 import SwitchTitle from "@/components/SwitchTitle";

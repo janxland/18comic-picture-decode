@@ -1,8 +1,8 @@
+import "@/styles/globals.css";
 import Head from "next/head";
 import Link from "next/link";
 
 export default function Error404() {
-    
     return (
         <>
             <Head>

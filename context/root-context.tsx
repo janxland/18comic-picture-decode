@@ -1,3 +1,4 @@
+"use client"
 import { RootStore } from "@/store/root";
 import { createContext, useContext, useEffect, useState } from "react";
 import { enableStaticRendering } from "mobx-react-lite";

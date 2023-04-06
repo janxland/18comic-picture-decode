@@ -1,37 +1,13 @@
-import BaseMargin from "@/components/BaseMargin"
-import Layout from "@/components/Layout"
-import LoadingBox from "@/components/LoadingBox"
-import { loveDB } from "@/db"
-import Head from "next/head"
-import Link from "next/link"
-import { useQuery } from "react-query"
-import SwitchTitle from "@/components/SwitchTitle"
-import { useRootStore } from "@/context/root-context"
-import { useEffect } from "react"
-import { observer } from "mobx-react-lite"
-import ItemGrid from "@/components/ItemGrid"
-import ErrorView from "@/components/ErrorView"
-import { getModel } from "@/utils/model"
+"use client"
 import CheckUpdate from "@/components/CheckUpdata"
-
-export default function Home() {
-    return (
-        <Layout>
-            <Head>
-                <title>首页-Miru</title>
-            </Head>
-            <BaseMargin>
-                <SwitchTitle title="首页"></SwitchTitle>
-                <h2 className="text-2xl font-bold mb-5">继续观看</h2>
-                <ContinueVewing />
-                <h2 className="text-2xl font-bold mb-5">收藏</h2>
-                <LoveVewing />
-            </BaseMargin>
-        </Layout>
-    )
-}
-
-
+import ErrorView from "@/components/ErrorView"
+import LoadingBox from "@/components/LoadingBox"
+import { useRootStore } from "@/context/root-context"
+import { getModel } from "@/utils/model"
+import { observer } from "mobx-react-lite"
+import Link from "next/link"
+import { useEffect } from "react"
+import { useQuery } from "react-query"
 
 const ContinueVewing = observer(() => {
     const { settingsStore, historyStore } = useRootStore()
@@ -66,7 +42,6 @@ const ContinueVewing = observer(() => {
             </div>
         )
     }
-
 
     return (
         <div className="flex overflow-auto pb-3 scrollbar-none -ml-230px">
@@ -107,55 +82,4 @@ const ContinueVewing = observer(() => {
     )
 })
 
-const LoveVewing = observer(() => {
-    const { settingsStore } = useRootStore()
-
-    const { error, data, isLoading, refetch } = useQuery("getLoveData",
-        () => {
-            return loveDB.getAllLoveByType(getModel(settingsStore.getSetting("model")))
-        }, {
-        cacheTime: 0
-    }
-    )
-
-    useEffect(() => {
-        refetch()
-    }, [settingsStore.getSetting("model")])
-
-    if (isLoading) {
-        return <LoadingBox></LoadingBox>
-    }
-
-    if (error) {
-        return (
-            <ErrorView error={error}></ErrorView>
-        )
-    }
-
-    if (!data || data.length === 0) {
-        return (
-            <div className="text-gray-400 text-center m-28">
-                <p>暂无收藏</p>
-                <p>快去收藏你喜欢的内容吧</p>
-            </div>
-        )
-    }
-
-    return (
-        <ItemGrid.Grid>
-            {
-                data.map(love => (
-                    <Link key={love.id} href={{
-                        pathname: "/watch",
-                        query: {
-                            pkg: love.package,
-                            url: love.url
-                        }
-                    }}>
-                        <ItemGrid.Fragment itemData={love}></ItemGrid.Fragment>
-                    </Link>
-                ))
-            }
-        </ItemGrid.Grid>
-    )
-})
+export default ContinueVewing
