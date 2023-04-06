@@ -26,7 +26,7 @@
         "lucide-react": "^0.129.0",
         "mobx": "^6.8.0",
         "mobx-react-lite": "^3.4.2",
-        "next": "13.1.6",
+        "next": "13.2.4",
         "next-http-proxy-middleware": "^1.2.5",
         "notistack": "^3.0.1",
         "react": "18.2.0",
