@@ -1,4 +1,3 @@
-import { Tabs } from "@/components/Tab";
 import { Extension } from "@/extension/extension";
 import { Detail } from "@/types/extension";
 import { createContext, SetStateAction, useContext } from "react";

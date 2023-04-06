@@ -1,26 +1,23 @@
+"use client"
 import BaseMargin from "@/components/BaseMargin";
+import Button from "@/components/common/Button";
 import Layout from "@/components/Layout";
 import LoadingBox from "@/components/LoadingBox";
 import SwitchTitle from "@/components/SwitchTitle";
 import Tab from "@/components/Tab";
 import { useRootStore } from "@/context/root-context";
 import { Extension, extensionDB } from "@/db";
-import { isClient } from "@/utils/is-client";
 import { getModel } from "@/utils/model";
+import {
+    Download as IconDownload, Settings as IconSettings, Trash as IconTrash, Upload as IconUpload
+} from 'lucide-react';
 import { observer } from "mobx-react-lite";
 import Head from "next/head";
 import { useSnackbar } from "notistack";
 import { ReactNode, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import request from "umi-request";
-import {
-    Download as IconDownload,
-    Trash as IconTrash,
-    Settings as IconSettings,
-    Upload as IconUpload,
-} from 'lucide-react'
-import Button from "@/components/common/Button";
-export default function Extensions() {
+export default function ExtensionsPage() {
     return (
         <>
             <Head>

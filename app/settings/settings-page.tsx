@@ -1,38 +1,34 @@
+"use client"
 import BaseMargin from "@/components/BaseMargin";
 import Button from "@/components/common/Button";
-import Layout from "@/components/Layout";
-import { useRootStore } from "@/context/root-context";
-import { observer } from "mobx-react-lite";
-import Head from "next/head";
-import { historyDB, loveDB } from "@/db"
-import { ChangeEvent, ReactNode, useEffect, useState } from "react";
-import Tab from "@/components/Tab";
 import IconLogo from "@/components/icons/IconLogo";
-import packageInfo from "../../package.json";
+import Layout from "@/components/Layout";
+import Tab from "@/components/Tab";
+import { useRootStore } from "@/context/root-context";
+import { loveDB } from "@/db";
+import packageInfo from "@/package.json";
 import {
     Undo as IconUndo
-} from 'lucide-react'
+} from 'lucide-react';
+import { observer } from "mobx-react-lite";
+import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 
-export default function Settings() {
+
+export default function SettingsPage() {
     return (
-        <>
-            <Head>
-                <title>设置</title>
-            </Head>
-            <Layout>
-                <BaseMargin>
-                    <h1 className="text-3xl font-bold mb-6">设置</h1>
-                    <Tab
-                        className="mb-6"
-                        tabs={[
-                            { title: "常规", content: <GeneralTab /> },
-                            { title: "数据", content: <DataTab /> },
-                            { title: "关于", content: <AboutTab /> }
-                        ]}
-                    />
-                </BaseMargin>
-            </Layout>
-        </>
+        <Layout>
+            <BaseMargin>
+                <h1 className="text-3xl font-bold mb-6">设置</h1>
+                <Tab
+                    className="mb-6"
+                    tabs={[
+                        { title: "常规", content: <GeneralTab /> },
+                        { title: "数据", content: <DataTab /> },
+                        { title: "关于", content: <AboutTab /> }
+                    ]}
+                />
+            </BaseMargin>
+        </Layout>
     )
 }
 

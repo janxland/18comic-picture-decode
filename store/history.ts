@@ -23,7 +23,11 @@ export default class HistoryStore {
         const localHistory = JSON.parse(localStorage.getItem("historyTemp") || "[]") as History[];
         await Promise.all(localHistory.reverse().map(async (history) => historyDB.addHistory(history)));
         localStorage.removeItem("historyTemp");
-        this.history = await historyDB.getAllHistory();
+        this.setHistory(await historyDB.getAllHistory())
+    }
+
+    setHistory(history: History[]) {
+        this.history = history;
     }
 
     getHistoryByType(type: "bangumi" | "manga" | "fikushon", limit: number) {

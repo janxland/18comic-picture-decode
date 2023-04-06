@@ -1,33 +1,34 @@
+"use client"
 import BaseMargin from "@/components/BaseMargin";
 import Button from "@/components/common/Button";
 import ErrorView from "@/components/ErrorView";
 import Layout from "@/components/Layout";
 import LoadingBox from "@/components/LoadingBox";
-import MangaPlayer from "@/components/Player/Manga";
 import BangumiPlayer from "@/components/Player/Bangumi";
+import FikushonPlayer from "@/components/Player/Fikushon";
+import MangaPlayer from "@/components/Player/Manga";
 import Tab, { Tabs } from "@/components/Tab";
 import { useRootStore } from "@/context/root-context";
-import { WatchData, useWatchContext, WatchProvider } from "@/context/watch-context";
+import { useWatchContext, WatchData, WatchProvider } from "@/context/watch-context";
 import { loveDB } from "@/db";
 import { Detail } from "@/types/extension";
 import { Credits } from "@/types/tmdb";
+import clsx from "clsx";
+import { Heart as IconLove, Link as IconLink, X as IconClose } from 'lucide-react';
 import { observer } from "mobx-react-lite";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { enqueueSnackbar, closeSnackbar } from "notistack";
+import { useSearchParams } from "next/navigation";
+import { closeSnackbar, enqueueSnackbar } from "notistack";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
-import FikushonPlayer from "@/components/Player/Fikushon";
-import clsx from "clsx";
-import {X as IconClose,Link as IconLink,Heart as IconLove} from 'lucide-react'
 
 
-const Watch = observer(() => {
-    const { query } = useRouter()
+const WatchPage = observer(() => {
+    const searchParams = useSearchParams()
     const { extensionStore } = useRootStore()
-    const pkg = query.pkg as string
-    const url = query.url as string
+    const pkg = searchParams?.get("pkg") as string
+    const url = searchParams?.get("url") as string
     const extension = extensionStore.getExtension(pkg)
     const [watchData, setWatchData] = useState<WatchData>()
     const { isLoading, error, isError, data } = useQuery(`getDetail${pkg}${url}`,
@@ -104,7 +105,7 @@ const Watch = observer(() => {
     )
 })
 
-export default Watch
+export default WatchPage
 
 
 function Footer() {
@@ -149,7 +150,7 @@ function LoveButton({ pkg, url, type, data }: { pkg: string, url: string, type: 
             onClick={handleLove}
             className="focus:ring-2 focus:ring-gray-500 border pl-4 pr-4 pt-2 pb-2 text-lg w-full bg-black text-white rounded-xl">
             <div className="flex justify-center items-center">
-                <IconLove className="mr-1"  fill={isLove ? "#fff" : ''}></IconLove>{isLove ? "已收藏" : "收藏"}
+                <IconLove className="mr-1" fill={isLove ? "#fff" : ''}></IconLove>{isLove ? "已收藏" : "收藏"}
             </div>
         </button>
     )

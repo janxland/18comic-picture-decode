@@ -1,7 +1,8 @@
-import ItemGrid from "@/components/ItemGrid";
+"use client"
 import BaseMargin from "@/components/BaseMargin";
 import Button from "@/components/common/Button";
 import ErrorView from "@/components/ErrorView";
+import ItemGrid from "@/components/ItemGrid";
 import Layout from "@/components/Layout";
 import LoadingBox from "@/components/LoadingBox";
 import SwitchTitle from "@/components/SwitchTitle";
@@ -15,7 +16,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
 
-const Search = observer(() => {
+
+
+const SearchPage = observer(() => {
 
     const { extensionStore, settingsStore } = useRootStore()
 
@@ -61,7 +64,7 @@ const Search = observer(() => {
     )
 })
 
-export default Search
+export default SearchPage
 
 
 function Items({ extension, kw }: { extension: Extension, kw?: string }) {

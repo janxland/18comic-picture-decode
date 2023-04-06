@@ -1,3 +1,4 @@
+"use client"
 import { useRootStore } from "@/context/root-context"
 import { observer } from "mobx-react-lite"
 import Tab from "./Tab"
