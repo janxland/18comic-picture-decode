@@ -51,7 +51,7 @@ const SearchPage = observer(() => {
                 <BaseMargin>
                     <SwitchTitle title={t('title')} />
                     <form className="mb-6" onSubmit={handleSubmit}>
-                        <input type="text" className="w-full border rounded-3xl p-4" placeholder={t('search-placeholder') as string} />
+                        <input type="text" className="w-full border rounded-3xl p-4 dark:text-white dark:bg-black" placeholder={t('search-placeholder') as string} />
                     </form>
                     <Tab className="mb-6" tabs={tabs}></Tab>
                 </BaseMargin>

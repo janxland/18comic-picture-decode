@@ -1,8 +1,8 @@
 "use client"
 import BaseMargin from "@/components/BaseMargin";
 import Button from "@/components/common/Button";
-import IconLogo from "@/components/icons/IconLogo";
 import Layout from "@/components/Layout";
+import Logo from "@/components/Logo";
 import Tab from "@/components/Tab";
 import { useRootStore } from "@/context/root-context";
 import { loveDB } from "@/db";
@@ -38,6 +38,7 @@ export default function SettingsPage() {
 
 function GeneralTab() {
     const { t, i18n } = useTranslation('settings')
+    const { settingsStore } = useRootStore()
 
     const languageOptions: {
         value: string,
@@ -54,12 +55,31 @@ function GeneralTab() {
         setLanguage(e.target.value)
     }
 
+    const themeOptions = [
+        {
+            value: "auto",
+            label: t('general.theme.auto')
+        },
+        {
+            value: "light",
+            label: t('general.theme.light')
+        }, {
+            value: "dark",
+            label: t('general.theme.dark')
+        }
+    ]
+
+    const handleThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        settingsStore.setSetting("theme", e.target.value)
+    }
+
     return (
         <div>
             <Input title={t('general.miru-proxy')} bindKey="miruProxy" />
             <Input title={t('general.repository')} bindKey="miruRepo" />
             <Input title={t('general.tmdb-key')} bindKey="TMDBKey" />
             <Select title={t('general.language')} onChange={handleLanguageChange} options={languageOptions} selected={i18n.language} />
+            <Select title={t('general.theme.title')} onChange={handleThemeChange} options={themeOptions} selected={settingsStore.getSetting("theme")} />
         </div>
     )
 }
@@ -84,8 +104,8 @@ function DataTab() {
 function AboutTab() {
     const { t } = useTranslation('settings')
     return (
-        <div className="prose">
-            <IconLogo width={100} />
+        <div className="prose dark:text-white">
+            <Logo />
             <p>{t('about.cuurent-version')} {packageInfo.version}</p>
             <p>{t('about.open-source')}<a href="https://github.com/miru-project/miru" target="_blank" rel="noreferrer">Github</a></p>
             <p>本项目灵感来自 <a href="https://tachiyomi.org/" target="_blank" rel="noopener noreferrer">tachiyomi</a></p>
@@ -129,7 +149,7 @@ const Input = observer(({ title, bindKey }: { title: string, bindKey: string }) 
                 }
             </Title>
             <input
-                className="text-sm w-full md:w-96 pl-3 pt-2 pb-2 pr-3 mr-3  border rounded-3xl mb-3"
+                className="text-sm w-full md:w-96 pl-3 pt-2 pb-2 pr-3 mr-3  border rounded-3xl mb-3 dark:bg-black"
                 type="text"
                 value={value || ''}
                 onChange={
@@ -156,7 +176,7 @@ function Select(
     return (
         <div>
             <Title>{title}</Title>
-            <select onChange={onChange} defaultValue={selected} className="text-sm w-full md:w-96 pl-3 pt-2 pb-2 pr-3 mr-3  border rounded-3xl mb-3">
+            <select onChange={onChange} defaultValue={selected} className="text-sm w-full md:w-96 pl-3 pt-2 pb-2 pr-3 mr-3  border rounded-3xl mb-3 dark:bg-black">
                 {
                     options.map((option, index) => {
                         return (

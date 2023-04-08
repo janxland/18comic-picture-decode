@@ -258,7 +258,7 @@ interface ExtensionProps {
 
 function ListItem(props: ExtensionProps) {
     return (
-        <div className="flex justify-between transition-all text-black border rounded-xl  p-3 mb-3">
+        <div className="flex justify-between transition-all text-black border rounded-xl p-3 mb-3 dark:bg-black dark:text-white">
             <div className="flex">
                 {
                     props.icon

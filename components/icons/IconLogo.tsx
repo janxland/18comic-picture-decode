@@ -5,7 +5,7 @@ export default function IconLogo(props: SVGProps) {
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 115 50" {...props}>
             <g
                 fill="none"
-                stroke="#333"
+                stroke={props.color || "#333"}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={5}
