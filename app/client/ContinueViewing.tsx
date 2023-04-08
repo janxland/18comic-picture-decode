@@ -8,9 +8,11 @@ import { observer } from "mobx-react-lite"
 import Link from "next/link"
 import { useEffect } from "react"
 import { useQuery } from "react-query"
+import { useTranslation } from "../i18n/client"
 
 const ContinueVewing = observer(() => {
     const { settingsStore, historyStore } = useRootStore()
+    const { t } = useTranslation("home")
     const { error, data, isLoading, refetch } = useQuery("getHistoryData",
         () => {
             return historyStore.getHistoryByType(getModel(settingsStore.getSetting("model")), 8)
@@ -37,8 +39,8 @@ const ContinueVewing = observer(() => {
     if (!data || data.length === 0) {
         return (
             <div className="text-gray-400 text-center m-14">
-                <p>暂无观看记录</p>
-                <p>快去观看你喜欢的内容吧</p>
+                <p>{t('no-continue-viewing.title')}</p>
+                <p>{t('no-continue-viewing.message')}</p>
             </div>
         )
     }

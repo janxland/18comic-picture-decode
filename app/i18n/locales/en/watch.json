@@ -1,0 +1,28 @@
+{
+    "title": "Watch",
+    "collected": "Collected",
+    "collect": "Collect",
+    "origin-site": "Original Site",
+    "episodes": "Episodes",
+    "starring": "Starring",
+    "extension-lost": "Extension {{pkg}} Lost",
+    "not-found-data": "Data Not Found",
+    "footer": {
+        "origin": "Page data is from extension {{ext}}",
+        "infomation-error": "Information Error?",
+        "change": "Change"
+    },
+    "detail": {
+        "original-name": "Original Name:",
+        "language": "Language:",
+        "release-date": "Release Date:",
+        "status": "Status:",
+        "production-company": "Production Company:"
+    },
+    "no-next": "No more episodes",
+    "no-previous": "No previous episodes",
+    "last-watch": "Last watched {{chapter}}",
+    "watch-record-error": "Playback record exception",
+    "play-error": "Playback error",
+    "continue-watch": "Continue watching"
+}

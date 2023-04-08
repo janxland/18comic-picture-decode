@@ -1,6 +1,7 @@
 "use client"
 import BaseMargin from "@/components/BaseMargin";
 import Button from "@/components/common/Button";
+import ErrorView from "@/components/ErrorView";
 import Layout from "@/components/Layout";
 import LoadingBox from "@/components/LoadingBox";
 import SwitchTitle from "@/components/SwitchTitle";
@@ -12,24 +13,22 @@ import {
     Download as IconDownload, Settings as IconSettings, Trash as IconTrash, Upload as IconUpload
 } from 'lucide-react';
 import { observer } from "mobx-react-lite";
-import Head from "next/head";
 import { useSnackbar } from "notistack";
 import { ReactNode, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import request from "umi-request";
+import { useTranslation } from "../i18n/client";
 export default function ExtensionsPage() {
+    const { t } = useTranslation("extensions")
     return (
         <>
-            <Head>
-                <title>扩展</title>
-            </Head>
             <Layout>
                 <BaseMargin>
-                    <SwitchTitle title="扩展"></SwitchTitle>
+                    <SwitchTitle title={t('title')}></SwitchTitle>
                     <Tab
                         tabs={[
-                            { title: "已安装", content: <InstalledTab /> },
-                            { title: "仓库", content: <RepoTab /> },
+                            { title: t('installed'), content: <InstalledTab /> },
+                            { title: t('repository'), content: <RepoTab /> },
                         ]}
                     />
                 </BaseMargin>
@@ -42,8 +41,8 @@ export default function ExtensionsPage() {
 function InstalledTab() {
 
     const { extensionStore } = useRootStore()
-
     const { enqueueSnackbar } = useSnackbar()
+    const { t } = useTranslation("extensions")
 
     const { data, error, isLoading } = useQuery("getInstalledExtensions",
         () => {
@@ -61,12 +60,7 @@ function InstalledTab() {
 
 
     if (error) {
-        return (
-            <div className="text-center mt-28">
-                <p className="text-2xl font-bold">发生了错误＞﹏＜</p>
-                <p className="text-sm">{(error as Error).message}</p>
-            </div>
-        )
+        return <ErrorView error={error} ></ErrorView>
     }
 
     if (isLoading) {
@@ -78,8 +72,8 @@ function InstalledTab() {
     if (!data || data.length === 0) {
         return (
             <div className="text-center mt-28">
-                <p className="text-2xl font-bold">没有安装任何扩展</p>
-                <p className="text-sm">你可以在仓库中找到更多扩展</p>
+                <p className="text-2xl font-bold">{t("no-installed-extension.title")}</p>
+                <p className="text-sm">{t("no-installed-extension.message")}</p>
             </div>
         )
     }
@@ -108,13 +102,13 @@ function InstalledTab() {
                             onClick={() => { handleSettings(extension.package) }}
                             className="flex items-center ml-1">
                             <IconSettings size={18}></IconSettings>
-                            <span className="hidden md:inline-block ml-1">设置</span>
+                            <span className="hidden md:inline-block ml-1">{t('settings')}</span>
                         </Button>
                         <Button
                             onClick={() => { handleUninstall(extension.package) }}
                             className="flex items-center ml-1">
                             <IconTrash size={18}></IconTrash>
-                            <span className="hidden md:inline-block ml-1">卸载</span>
+                            <span className="hidden md:inline-block ml-1">{t('remove')}</span>
                         </Button>
                     </ListItem>
                 )
@@ -125,11 +119,9 @@ function InstalledTab() {
 
 const RepoTab = observer(() => {
     const { settingsStore, extensionStore } = useRootStore()
-
     const [extensionMap, setExtensionMap] = useState<Map<string, boolean>>(new Map())
-
     const { enqueueSnackbar } = useSnackbar()
-
+    const { t } = useTranslation("extensions")
 
     useEffect(() => {
         extensionDB.getAllExtensions().then((extensions) => {
@@ -166,12 +158,7 @@ const RepoTab = observer(() => {
 
 
     if (error) {
-        return (
-            <div className="text-center mt-28">
-                <p className="text-2xl font-bold">发生了错误＞﹏＜</p>
-                <p className="text-sm">{(error as Error).message}</p>
-            </div>
-        )
+        return <ErrorView error={error} ></ErrorView>
     }
 
     if (isLoading) {
@@ -185,8 +172,8 @@ const RepoTab = observer(() => {
     if (!data || data.length === 0) {
         return (
             <div className="text-center mt-28">
-                <p className="text-2xl font-bold">没找到更多扩展力</p>
-                <p className="text-sm">可以在设置里设置别的仓库地址再来试试</p>
+                <p className="text-2xl font-bold">{t('not-find-extension.title')}</p>
+                <p className="text-sm">{t('not-find-extension.message')}</p>
             </div>
         )
     }
@@ -194,7 +181,7 @@ const RepoTab = observer(() => {
     const handleInstall = async (pkg: string) => {
         const script = await request.get(`${settingsStore.getSetting("miruRepo")}/repo/${pkg.trim()}.js`)
         if (!script) {
-            enqueueSnackbar("下载扩展出错", { variant: "error", })
+            enqueueSnackbar(t("download-error"), { variant: "error", })
         }
         extensionStore.installExtension(script).then(
             () => {
@@ -232,7 +219,7 @@ const RepoTab = observer(() => {
                                 onClick={() => { handleUpdate(extension.package) }}
                                 className="flex items-center ml-1">
                                 <IconUpload size={18}></IconUpload>
-                                <span className="hidden md:inline-block ml-1">更新</span>
+                                <span className="hidden md:inline-block ml-1">{t('update')}</span>
                             </Button>
                         )
                         }
@@ -242,14 +229,14 @@ const RepoTab = observer(() => {
                                     onClick={() => { handleUninstall(extension.package) }}
                                     className="flex items-center ml-1">
                                     <IconTrash size={18}></IconTrash>
-                                    <span className="hidden md:inline-block ml-1">卸载</span>
+                                    <span className="hidden md:inline-block ml-1">{t('remove')}</span>
                                 </Button>
                                 :
                                 <Button
                                     onClick={() => { handleInstall(extension.package) }}
                                     className="flex items-center ml-1">
                                     <IconDownload size={18} ></IconDownload>
-                                    <span className="hidden md:inline-block ml-1">安装</span>
+                                    <span className="hidden md:inline-block ml-1">{t('install')}</span>
                                 </Button>
                         }
                     </ListItem>

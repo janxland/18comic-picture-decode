@@ -1,0 +1,28 @@
+{
+    "title": "观看",
+    "collected": "已收藏",
+    "collect": "收藏",
+    "origin-site": "原站",
+    "episodes": "剧集",
+    "starring": "主演",
+    "extension-lost": "扩展 {{pkg}} 丢失",
+    "not-found-data": "未找到数据",
+    "footer": {
+        "origin": "页面数据来自扩展 {{ext}}",
+        "infomation-error": "信息有误?",
+        "change": "更改"
+    },
+    "detail": {
+        "original-name": "原产地片名：",
+        "language": "语言：",
+        "release-date": "上映日期：",
+        "status": "状态：",
+        "production-company": "制作公司："
+    },
+    "no-next": "没有下一集了",
+    "no-previous": "没有上一集了",
+    "last-watch": "上次观看 {{chapter}}",
+    "watch-record-error": "播放记录异常",
+    "play-error": "播放出错",
+    "continue-watch": "继续观看"
+}

@@ -1,17 +1,17 @@
-import '@/styles/globals.css'
-import RootProvider from './client/RootProvider'
+import '@/styles/globals.css';
+import RootProvider from './client/RootProvider';
 
 export const metadata = {
     title: 'Miru',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
     return (
-        <html lang="en">
+        <html >
             <body>
                 <RootProvider>
                     <div className="ml-0 lg:ml-230px transition-all" style={{ maxWidth: "1400px" }}>

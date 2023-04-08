@@ -9,16 +9,15 @@ import { observer } from "mobx-react-lite"
 import Link from "next/link"
 import { useEffect } from "react"
 import { useQuery } from "react-query"
+import { useTranslation } from "../i18n/client"
 
-const LoveVewing = observer(() => {
+const Collection = observer(() => {
     const { settingsStore } = useRootStore()
-
+    const { t } = useTranslation("home")
     const { error, data, isLoading, refetch } = useQuery("getLoveData",
         () => {
             return loveDB.getAllLoveByType(getModel(settingsStore.getSetting("model")))
-        }, {
-        cacheTime: 0
-    }
+        }
     )
 
     useEffect(() => {
@@ -38,8 +37,8 @@ const LoveVewing = observer(() => {
     if (!data || data.length === 0) {
         return (
             <div className="text-gray-400 text-center m-28">
-                <p>暂无收藏</p>
-                <p>快去收藏你喜欢的内容吧</p>
+                <p>{t('no-collection.title')}</p>
+                <p>{t('no-collection.message')}</p>
             </div>
         )
     }
@@ -63,4 +62,4 @@ const LoveVewing = observer(() => {
     )
 })
 
-export default LoveVewing
+export default Collection
