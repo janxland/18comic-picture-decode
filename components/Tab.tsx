@@ -28,8 +28,12 @@ export default function Tab(props: TabProps) {
         <button
             key={index}
             onClick={() => handleClick(index)}
-            className={`pl-3 pr-3 pt-2 pb-2 mr-2 border rounded-full text-sm break-keep ${activeTab === index ? "bg-black text-white" : "bg-white"
-                }`}
+            className={
+                clsx(
+                    "pl-3 pr-3 pt-2 pb-2 mr-2 border rounded-full text-sm break-keep ",
+                    `${activeTab === index ? "bg-black text-white dark:bg-black " : "bg-white dark:bg-zinc-700"}`
+                )
+            }
         >
             {tab.title}
         </button>

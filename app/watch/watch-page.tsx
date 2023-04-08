@@ -84,10 +84,12 @@ const WatchPage = observer(() => {
                 <Background />
                 <Layout>
                     <BaseMargin>
-                        <Play />
-                        <BaseDetail />
-                        <Episodes />
-                        <Credits />
+                        <div className="min-h-screen">
+                            <Play />
+                            <BaseDetail />
+                            <Episodes />
+                            <Credits />
+                        </div>
                         <Footer />
                     </BaseMargin>
                 </Layout>
@@ -104,7 +106,7 @@ function Footer() {
     const { t } = useTranslation("watch")
     return (
         <div className="flex justify-center items-center mb-3">
-            <div className="text-center text-black text-opacity-40">
+            <div className="text-center text-black text-opacity-40 dark:text-white dark:text-opacity-40">
                 <p>{t('footer.origin', { ext: extension.name })}</p>
                 <p>{t('footer.infomation-error')} <span className="font-bold" >{t('footer.change')}</span></p>
             </div>
@@ -157,7 +159,7 @@ function Background() {
             <div className="fixed left-0 right-0 bottom-0 top-0 -z-30 bg-cover bg-no-repeat p-4"
                 style={{ backgroundImage: `url(${background})`, minHeight: "20rem" }}>
             </div>
-            <div className="fixed left-0 lg:left-230px right-0 bottom-0 top-0 -z-10 bg-white bg-opacity-95"></div>
+            <div className="fixed left-0 lg:left-230px right-0 bottom-0 top-0 -z-10 bg-white bg-opacity-95 dark:bg-zinc-700 dark:bg-opacity-95"></div>
         </>
     )
 }
@@ -229,7 +231,7 @@ function BaseDetail() {
             </div>
             <div className=" md:w-3/4 lg:w-4/5 md:ml-5 md:mt-10">
                 <div className="text-3xl mb-1">{detail?.title}</div>
-                <div className="mb-3 text-gray-500">
+                <div className="mb-3 text-gray-500 dark:text-white dark:text-opacity-60">
                     {
                         genres?.map((g, index) => (
                             <span key={index} className="mr-1">{g}</span>
@@ -435,13 +437,13 @@ function Episodes() {
 
     return (
         <div className="mb-6" >
-            <div className="text-3xl mb-6 text-gray-500">
+            <Title>
                 {t('episodes')}
-            </div>
+            </Title>
             <div>
                 <Tab tabs={episodesTabs}></Tab>
             </div>
-        </div>
+        </div >
     )
 }
 
@@ -468,9 +470,9 @@ function Credits() {
 
     return (
         <div className="mb-3" >
-            <div className="text-3xl mb-6 text-gray-500">
+            <Title>
                 {t('starring')}
-            </div>
+            </Title>
 
             <div className="overflow-auto flex pb-3 scrollbar-none " >
                 {
@@ -491,6 +493,15 @@ function Credits() {
                     ))
                 }
             </div>
+        </div>
+    )
+}
+
+
+function Title({ children }: { children: React.ReactNode }) {
+    return (
+        <div className="text-3xl mb-6 text-gray-500 dark:text-white dark:text-opacity-60">
+            {children}
         </div>
     )
 }

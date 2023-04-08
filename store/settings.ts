@@ -1,6 +1,7 @@
 import { Settings, settingsDB } from "@/db";
 import { isClient } from "@/utils/is-client";
-import { makeAutoObservable } from "mobx";
+import { autorun, makeAutoObservable } from "mobx";
+
 
 export default class SettingsStore {
 
@@ -12,6 +13,35 @@ export default class SettingsStore {
 
     constructor() {
         makeAutoObservable(this)
+        autorun(
+            () => {
+                if (isClient()) {
+                    const theme = this.getSetting("theme")
+                    const setDark = () => document.documentElement.classList.add("dark")
+                    const setLight = () => document.documentElement.classList.remove("dark")
+                    if (theme === "auto") {
+                        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)")
+                        prefersDark.matches ? setDark() : setLight()
+                        prefersDark.addEventListener("change", (e) => {
+                            if (this.getSetting("theme") !== "auto") {
+                                return
+                            }
+                            if (e.matches) {
+                                setDark()
+                                return
+                            }
+                            setLight()
+                        })
+                    }
+                    if (theme === "dark") {
+                        setDark()
+                    }
+                    if (theme === "light") {
+                        setLight()
+                    }
+                }
+            }
+        )
     }
 
     async init() {
@@ -52,8 +82,6 @@ export default class SettingsStore {
         this.setSetting(key, this.envItems.get(key))
     }
 
-    private setReady() {
-        this.ready = true
-    }
 
 }
+
