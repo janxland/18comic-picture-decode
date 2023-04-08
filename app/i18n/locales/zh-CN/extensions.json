@@ -1,0 +1,18 @@
+{
+    "title": "扩展",
+    "install": "安装",
+    "installed": "已安装",
+    "remove": "卸载",
+    "update": "更新",
+    "repository": "仓库",
+    "settings": "设置",
+    "no-installed-extension": {
+        "title": "没有安装任何扩展",
+        "message": "你可以在仓库中找到更多扩展"
+    },
+    "not-find-extension": {
+        "title": "没找到更多扩展力",
+        "message": "以在设置里设置别的仓库地址再来试试"
+    },
+    "download-error": "下载扩展出错"
+}

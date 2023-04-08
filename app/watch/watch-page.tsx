@@ -16,20 +16,21 @@ import { Credits } from "@/types/tmdb";
 import clsx from "clsx";
 import { Heart as IconLove, Link as IconLink, X as IconClose } from 'lucide-react';
 import { observer } from "mobx-react-lite";
-import Head from "next/head";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { closeSnackbar, enqueueSnackbar } from "notistack";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "../i18n/client";
 
 
 const WatchPage = observer(() => {
     const searchParams = useSearchParams()
+    const route = useRouter()
     const { extensionStore } = useRootStore()
     const pkg = searchParams?.get("pkg") as string
     const url = searchParams?.get("url") as string
     const extension = extensionStore.getExtension(pkg)
+    const { t } = useTranslation("watch")
     const [watchData, setWatchData] = useState<WatchData>()
     const { isLoading, error, isError, data } = useQuery(`getDetail${pkg}${url}`,
         () => extension?.detail(url)
@@ -47,20 +48,13 @@ const WatchPage = observer(() => {
     }, [data])
 
     if (!pkg || !url) {
-        return (
-            <div>
-                <div className="h-screen flex justify-center items-center flex-col">
-                    <h1 className="text-2xl mb-3">访问页面出错</h1>
-                    <Link href="/">
-                        <Button>返回首页</Button>
-                    </Link>
-                </div>
-            </div>
-        )
+        // 跳转到404
+        route.push("/404")
+        return <></>
     }
     if (!extension) {
         return (
-            <ErrorView error={`扩展 ${pkg} 丢失`} ></ErrorView>
+            <ErrorView error={t('extension-lost', { pkg })} ></ErrorView>
         )
     }
 
@@ -80,15 +74,12 @@ const WatchPage = observer(() => {
 
     if (!data || !watchData) {
         return (
-            <ErrorView error={"未找到数据"}></ErrorView>
+            <ErrorView error={t('not-found-data')}></ErrorView>
         )
     }
 
     return (
         <>
-            <Head>
-                <title>{data.title}</title>
-            </Head>
             <WatchProvider value={watchData}>
                 <Background />
                 <Layout>
@@ -110,11 +101,12 @@ export default WatchPage
 
 function Footer() {
     const { extension } = useWatchContext()
+    const { t } = useTranslation("watch")
     return (
         <div className="flex justify-center items-center mb-3">
             <div className="text-center text-black text-opacity-40">
-                <p>页面数据来自扩展 <span className="font-bold">{extension?.name}</span></p>
-                <p>信息有误? <span className="font-bold" >更改</span></p>
+                <p>{t('footer.origin', { ext: extension.name })}</p>
+                <p>{t('footer.infomation-error')} <span className="font-bold" >{t('footer.change')}</span></p>
             </div>
         </div>
     )
@@ -122,7 +114,7 @@ function Footer() {
 
 function LoveButton({ pkg, url, type, data }: { pkg: string, url: string, type: any, data: Detail }) {
     const [isLove, setIsLove] = useState(false)
-
+    const { t } = useTranslation("watch")
     useEffect(() => {
         checkLove()
     }, [])
@@ -150,7 +142,7 @@ function LoveButton({ pkg, url, type, data }: { pkg: string, url: string, type: 
             onClick={handleLove}
             className="focus:ring-2 focus:ring-gray-500 border pl-4 pr-4 pt-2 pb-2 text-lg w-full bg-black text-white rounded-xl">
             <div className="flex justify-center items-center">
-                <IconLove className="mr-1" fill={isLove ? "#fff" : ''}></IconLove>{isLove ? "已收藏" : "收藏"}
+                <IconLove className="mr-1" fill={isLove ? "#fff" : ''}></IconLove>{isLove ? t('collected') : t('collect')}
             </div>
         </button>
     )
@@ -176,6 +168,7 @@ function BaseDetail() {
     const [metaData, setMetaData] = useState<Map<string, string>>(new Map())
     const [overview, setOverview] = useState<string | undefined>(detail.desc)
     const [genres, setGenres] = useState<string[]>()
+    const { t } = useTranslation("watch")
 
     // 获取 TMDB ID
     // 也许可以获取个背景（（就不判断了
@@ -204,11 +197,11 @@ function BaseDetail() {
         tmdbStore.getDetails(tmdbId, media_type!).then((res) => {
             const map = new Map<string, string>()
             if (res) {
-                map.set("原产地片名", res.original_name ?? res.original_title)
-                map.set("语言", res.original_language)
-                map.set("上映时间", res.first_air_date ?? res.release_date)
-                map.set("状态", res.status)
-                map.set("制作公司", res.production_companies.map((c) => c.name).join(","))
+                map.set(t('detail.original-name'), res.original_name ?? res.original_title)
+                map.set(t('detail.language'), res.original_language)
+                map.set(t('detail.release-date'), res.first_air_date ?? res.release_date)
+                map.set(t('detail.status'), res.status)
+                map.set(t('detail.production-company'), res.production_companies.map((c) => c.name).join(","))
                 setOverview(res.overview)
                 setGenres(res.genres.map((g) => g.name))
             }
@@ -228,7 +221,8 @@ function BaseDetail() {
                     <a target="_blank" rel="noreferrer" href={extension.webSite + url}
                         className="focus:ring-2 focus:ring-gray-500 border pl-4 pr-4 pt-2 pb-2 text-lg w-full bg-black text-white rounded-xl">
                         <div className="flex justify-center items-center">
-                            <IconLink className="mr-1"></IconLink>源站
+                            <IconLink className="mr-1"></IconLink>
+                            {t('origin-site')}
                         </div>
                     </a>
                 </div>
@@ -245,7 +239,7 @@ function BaseDetail() {
                 <div className="mb-3">
                     {
                         Array.from(metaData.entries()).map((item, index) => (
-                            <p key={index} className="mb-1"><span className="font-bold">{item[0]}：</span>{item[1]}</p>
+                            <p key={index} className="mb-1"><span className="font-bold">{item[0]}</span>{item[1]}</p>
                         ))
                     }
                 </div>
@@ -332,7 +326,7 @@ function Episodes() {
     const { detail, setWatchData, url, pkg } = useWatchContext()
     const [episodesTabs, setEpisodesTabs] = useState<Tabs[]>([])
     const [playUrl, setPlayUrl] = useState<string>("")
-
+    const { t } = useTranslation("watch")
     const handlePlay = (url: string, chapter: string) => {
         setPlayUrl(url)
         setWatchData((data) => {
@@ -368,7 +362,7 @@ function Episodes() {
                                             if (next) {
                                                 handlePlay(next.url, `${item.title}|${next.name}`)
                                             } else {
-                                                enqueueSnackbar("已经是第一章/集了", { variant: "info" })
+                                                enqueueSnackbar(t('no-next'), { variant: "info" })
                                             }
                                         },
                                         prevChapter: () => {
@@ -376,7 +370,7 @@ function Episodes() {
                                             if (prev) {
                                                 handlePlay(prev.url, `${item.title}|${prev.name}`)
                                             } else {
-                                                enqueueSnackbar("已经是最后一章/集了", { variant: "info" })
+                                                enqueueSnackbar(t('no-previous'), { variant: "info" })
 
                                             }
                                         },
@@ -409,7 +403,7 @@ function Episodes() {
             if (!res) {
                 return
             }
-            enqueueSnackbar(`上次观看到 ${res.chapter}`, {
+            enqueueSnackbar(t('last-watch', { chapter: res.chapter }), {
                 persist: false,
                 action: (key) => (
                     <Button onClick={() => {
@@ -417,7 +411,7 @@ function Episodes() {
                         let url = ""
                         const chap = res?.chapter.split("|")
                         if (!chap || chap.length !== 2) {
-                            enqueueSnackbar("播放记录异常", {
+                            enqueueSnackbar(t('watch-record-error'), {
                                 variant: "error"
                             })
                             return
@@ -432,7 +426,7 @@ function Episodes() {
                         handlePlay(url, res?.chapter!)
                         closeSnackbar(key)
                     }}>
-                        继续观看
+                        {t("continue-watch")}
                     </Button>
                 )
             })
@@ -442,7 +436,7 @@ function Episodes() {
     return (
         <div className="mb-6" >
             <div className="text-3xl mb-6 text-gray-500">
-                剧集
+                {t('episodes')}
             </div>
             <div>
                 <Tab tabs={episodesTabs}></Tab>
@@ -456,7 +450,7 @@ function Credits() {
     const { tmdbStore } = useRootStore()
     const { tmdbId, mediaType: media_type, extension } = useWatchContext()
     const [cast, setCast] = useState<Credits.Cast[]>([])
-
+    const { t } = useTranslation("watch")
     useEffect(() => {
         if (!tmdbId) {
             return
@@ -468,14 +462,14 @@ function Credits() {
         })
     }, [tmdbId])
 
-    if (extension.type !== "bangumi") {
+    if (!cast.length) {
         return <></>
     }
 
     return (
         <div className="mb-3" >
             <div className="text-3xl mb-6 text-gray-500">
-                主演
+                {t('starring')}
             </div>
 
             <div className="overflow-auto flex pb-3 scrollbar-none " >

@@ -1,0 +1,21 @@
+{
+    "title": "Settings",
+    "general": {
+        "title": "General",
+        "miru-proxy": "Miru proxy",
+        "repository": "Repository",
+        "tmdb-key": "TMDB API Key",
+        "language": "Language"
+    },
+    "data": {
+        "title": "Data",
+        "history": "History",
+        "collection": "Collection",
+        "clear": "Clear"
+    },
+    "about": {
+        "title": "About",
+        "cuurent-version": "Current version:",
+        "open-source": "Open source:"
+    }
+}

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/app/i18n/client'
 import IconLogo from '@/components/icons/IconLogo'
 import clsx from 'clsx'
 import {
@@ -5,7 +6,6 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
 
 
 function Logo() {
@@ -15,31 +15,26 @@ function Logo() {
 }
 
 export default function Sidebar() {
-    const [path, setPath] = useState<string>("")
-    const pathname = usePathname() as string
-
-    useEffect(() => {
-        setPath(pathname)
-    }, [pathname])
-
+    const path = usePathname() as string
+    const { t } = useTranslation("sidebar")
     const menu = [
         {
-            title: "首页",
+            title: t("home"),
             path: "/",
             icon: IconHome,
         },
         {
-            title: "探索",
+            title: t("search"),
             path: "/search",
             icon: IconSearh,
         },
         {
-            title: "扩展",
+            title: t("extensions"),
             path: "/extension",
             icon: IconExtension,
         },
         {
-            title: "设置",
+            title: t("settings"),
             path: "/settings",
             icon: IconSettings,
         },

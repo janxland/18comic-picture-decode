@@ -1,7 +1,9 @@
+import { useTranslation } from "@/app/i18n/client";
 import { useEffect, useState } from "react";
 
 export default function ErrorView({ error }: { error: any }) {
     const [msg, setMsg] = useState<string>("")
+    const { t } = useTranslation()
 
     useEffect(() => {
         if (typeof error === "object") {
@@ -11,7 +13,7 @@ export default function ErrorView({ error }: { error: any }) {
     }, [error])
     return (
         <div className="text-center mt-28">
-            <p className="text-2xl font-bold">发生了错误＞﹏＜</p>
+            <p className="text-2xl font-bold">{t('an-error-has-occurred')}</p>
             <p className="text-sm">{msg}</p>
         </div>
     )

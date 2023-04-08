@@ -11,20 +11,19 @@ import { useRootStore } from "@/context/root-context";
 import { Extension } from "@/extension/extension";
 import { getModel } from "@/utils/model";
 import { observer } from "mobx-react-lite";
-import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
+import { useTranslation } from "../i18n/client";
 
 
 
 const SearchPage = observer(() => {
 
     const { extensionStore, settingsStore } = useRootStore()
-
     const [tabs, setTabs] = useState<Array<Tabs>>([])
-
     const [kw, setKw] = useState<string>("")
+    const { t } = useTranslation("search")
 
     useEffect(() => {
         const newTabs: Array<Tabs> = []
@@ -48,14 +47,11 @@ const SearchPage = observer(() => {
 
     return (
         <>
-            <Head>
-                <title>探索</title>
-            </Head>
             <Layout>
                 <BaseMargin>
-                    <SwitchTitle title="探索" />
+                    <SwitchTitle title={t('title')} />
                     <form className="mb-6" onSubmit={handleSubmit}>
-                        <input type="text" className="w-full border rounded-3xl p-4" placeholder="找点什么好康的呢" />
+                        <input type="text" className="w-full border rounded-3xl p-4" placeholder={t('search-placeholder') as string} />
                     </form>
                     <Tab className="mb-6" tabs={tabs}></Tab>
                 </BaseMargin>
@@ -68,7 +64,7 @@ export default SearchPage
 
 
 function Items({ extension, kw }: { extension: Extension, kw?: string }) {
-
+    const { t } = useTranslation("search")
     const {
         data,
         isLoading,
@@ -111,7 +107,7 @@ function Items({ extension, kw }: { extension: Extension, kw?: string }) {
     if (!data?.pages || data.pages.length === 0) {
         return (
             <div className="text-center mt-28">
-                <p className="text-2xl font-bold">没有找到任何内容＞﹏＜</p>
+                <p className="text-2xl font-bold">{t('no-content')}</p>
             </div>
         )
     }
@@ -140,7 +136,7 @@ function Items({ extension, kw }: { extension: Extension, kw?: string }) {
             <div className="text-center">
                 {hasNextPage && (
                     <Button className="m-4" onClick={() => fetchNextPage()}>
-                        {isFetchingNextPage ? '加载中...' : '更多'}
+                        {isFetchingNextPage ? t('loading') : t('more')}
                     </Button>
                 )}
             </div>

@@ -1,4 +1,4 @@
-import { settingsDB, Settings } from "@/db";
+import { Settings, settingsDB } from "@/db";
 import { isClient } from "@/utils/is-client";
 import { makeAutoObservable } from "mobx";
 
@@ -26,7 +26,6 @@ export default class SettingsStore {
         })
 
         this.envItems.set("theme", process.env.NEXT_PUBLIC_MIRU_THEME);
-        this.envItems.set("language", process.env.NEXT_PUBLIC_MIRU_LANGUAGE);
         this.envItems.set("miruProxy", process.env.NEXT_PUBLIC_MIRU_PROXY_URL);
         this.envItems.set("miruRepo", process.env.NEXT_PUBLIC_MIRU_REPO_URL);
         this.envItems.set("kanban", process.env.NEXT_PUBLIC_MIRU_KANBAN);

@@ -1,4 +1,5 @@
 "use client"
+import { useTranslation } from "@/app/i18n/client"
 import { useRootStore } from "@/context/root-context"
 import { observer } from "mobx-react-lite"
 import Tab from "./Tab"
@@ -10,11 +11,11 @@ interface SwitchTitleProps {
 
 const SwitchTitle = observer((props: SwitchTitleProps) => {
     const { settingsStore } = useRootStore()
-
+    const { t } = useTranslation()
     const tabs = [
-        { title: "影视" },
-        { title: "漫画" },
-        { title: "小说" },
+        { title: t("bangumi") },
+        { title: t("manga") },
+        { title: t("fikushon") },
     ]
 
     const handleTabChange = (index: number) => {

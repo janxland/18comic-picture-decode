@@ -1,7 +1,9 @@
+import { useTranslation } from "@/app/i18n/client";
 import IconLogo from "@/components/icons/IconLogo";
 import LoadingBox from "@/components/LoadingBox";
 import { RootStore } from "@/store/root";
 import { isClient } from "@/utils/is-client";
+import { DefaultTFuncReturn } from "i18next";
 import { configure } from "mobx";
 import { enableStaticRendering } from "mobx-react-lite";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -28,16 +30,18 @@ export function useRootStore() {
 export const store = initializeStore()
 export function RootStoreProvider({ children }: { children: React.ReactNode }) {
     const [ok, setOk] = useState(false);
-    const [initMsg, setInitMsg] = useState<string>("正在初始化...")
+    const { t } = useTranslation("init")
+    const [initMsg, setInitMsg] = useState<DefaultTFuncReturn>()
 
     useEffect(() => {
         if (isClient()) {
+            setInitMsg(t('initializing'));
             (async () => {
-                setInitMsg('正在初始化设置...')
+                setInitMsg(t('initialization-settings'))
                 await store.settingsStore.init()
-                setInitMsg('正在初始化扩展...')
+                setInitMsg(t('initialization-extensions'))
                 await store.extensionStore.init()
-                setInitMsg('正在初始化历史记录...')
+                setInitMsg(t('initialization-historys'))
                 await store.historyStore.init()
                 setOk(true)
             })()

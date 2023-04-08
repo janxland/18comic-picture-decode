@@ -1,4 +1,5 @@
 import { Credits, Details, SearchResult } from "@/types/tmdb";
+import Cookies from "js-cookie";
 import { autorun } from "mobx";
 import { extend, RequestMethod } from "umi-request";
 import SettingsStore from "./settings";
@@ -7,12 +8,11 @@ export class TMDBStore {
 
     req: RequestMethod<false> | undefined
     key: string | undefined
-    language: string | undefined
+    language: string | undefined = Cookies.get("language")
 
     constructor(settingsStore: SettingsStore) {
         autorun(() => {
             this.key = settingsStore.getSetting("TMDBKey")
-            this.language = settingsStore.getSetting("language")
         })
     }
 

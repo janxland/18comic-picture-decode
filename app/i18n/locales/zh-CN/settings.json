@@ -1,0 +1,21 @@
+{
+    "title": "设置",
+    "general": {
+        "title": "常规",
+        "miru-proxy": "Miru代理",
+        "repository": "仓库",
+        "tmdb-key": "TMDB API Key",
+        "language": "语言"
+    },
+    "data": {
+        "title": "数据",
+        "history": "历史记录",
+        "collection": "收藏记录",
+        "clear": "清空"
+    },
+    "about": {
+        "title": "关于",
+        "cuurent-version": "当前版本：",
+        "open-source": "开源："
+    }
+}
