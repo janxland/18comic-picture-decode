@@ -1,9 +1,15 @@
 import BaseMargin from "@/components/BaseMargin"
 import Layout from "@/components/Layout"
 import SwitchTitle from "@/components/SwitchTitle"
+import { Metadata } from "next"
 import Collection from "./client/Collection"
 import ContinueViewing from "./client/ContinueViewing"
-import { useTranslation } from "./i18n"
+import { GetPageTitle, useTranslation } from "./i18n"
+
+export async function generateMetadata(): Promise<Metadata> {
+    const title = await GetPageTitle('home')
+    return { title }
+}
 
 export default async function Home() {
     const { t } = await useTranslation("home")

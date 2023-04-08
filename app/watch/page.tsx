@@ -1,11 +1,12 @@
 import { Metadata } from "next";
-import { useTranslation } from "../i18n";
+import { GetPageTitle } from "../i18n";
 import WatchPage from "./watch-page";
 
 export async function generateMetadata(): Promise<Metadata> {
-    const { t } = await useTranslation("watch")
-    return { title: t('title') }
+    const title = await GetPageTitle('watch')
+    return { title }
 }
+
 
 export default function Page() {
     return (

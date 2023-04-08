@@ -22,3 +22,9 @@ export async function useTranslation(ns?: string[] | string, options: any = {}) 
         i18n: i18nextInstance
     }
 }
+
+// 因为 eslint 一直报错 现就这样了（ 
+export async function GetPageTitle(ns: string) {
+    const { t } = await useTranslation(ns)
+    return t("title")
+}

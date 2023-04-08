@@ -2,7 +2,10 @@ import '@/styles/globals.css';
 import RootProvider from './client/RootProvider';
 
 export const metadata = {
-    title: 'Miru',
+    title: {
+        template: '%s | Miru',
+        default: "Miru"
+    }
 }
 
 export default async function RootLayout({
