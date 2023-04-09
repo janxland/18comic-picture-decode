@@ -4,6 +4,7 @@ import Button from "@/components/common/Button";
 import ErrorView from "@/components/ErrorView";
 import Layout from "@/components/Layout";
 import LoadingBox from "@/components/LoadingBox";
+import Modal from "@/components/Modal";
 import BangumiPlayer from "@/components/Player/Bangumi";
 import FikushonPlayer from "@/components/Player/Fikushon";
 import MangaPlayer from "@/components/Player/Manga";
@@ -14,14 +15,13 @@ import { loveDB } from "@/db";
 import { Detail } from "@/types/extension";
 import { Credits } from "@/types/tmdb";
 import clsx from "clsx";
-import { Heart as IconLove, Link as IconLink, X as IconClose } from 'lucide-react';
+import { ExternalLink as IconLink, Heart as IconLove, MoreHorizontal, X as IconClose } from 'lucide-react';
 import { observer } from "mobx-react-lite";
 import { useRouter, useSearchParams } from "next/navigation";
 import { closeSnackbar, enqueueSnackbar } from "notistack";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { useTranslation } from "../i18n/client";
-
 
 const WatchPage = observer(() => {
     const searchParams = useSearchParams()
@@ -169,6 +169,7 @@ function BaseDetail() {
     const { pkg, url, detail, extension, setWatchData, tmdbId, mediaType: media_type } = useWatchContext()
     const [metaData, setMetaData] = useState<Map<string, string>>(new Map())
     const [overview, setOverview] = useState<string | undefined>(detail.desc)
+    const [showMore, setShowMore] = useState<boolean>(false)
     const [genres, setGenres] = useState<string[]>()
     const { t } = useTranslation("watch")
 
@@ -204,6 +205,19 @@ function BaseDetail() {
                 map.set(t('detail.release-date'), res.first_air_date ?? res.release_date)
                 map.set(t('detail.status'), res.status)
                 map.set(t('detail.production-company'), res.production_companies.map((c) => c.name).join(","))
+                map.set(t('detail.production-country'), res.production_countries.map((c) => c.name).join(","))
+                map.set(t('detail.vote-average'), res.vote_average.toString())
+                map.set(t('detail.vote-count'), res.vote_count.toString())
+                if (media_type === "movie") {
+                    map.set(t('detail.runtime'), res.runtime.toString())
+                } else {
+                    map.set(t('detail.episode-run-time'), res.episode_run_time.join(","))
+                    map.set(t('detail.number-of-episodes'), res.number_of_episodes.toString())
+                    map.set(t('detail.number-of-seasons'), res.number_of_seasons.toString())
+                }
+                map.set(t('detail.spoken-language'), res.spoken_languages.map((c) => c.name).join(","))
+                map.set(t('detail.popularity'), res.popularity.toString())
+                map.set(t('detail.homepage'), res.homepage ?? "")
                 setOverview(res.overview)
                 setGenres(res.genres.map((g) => g.name))
             }
@@ -216,20 +230,14 @@ function BaseDetail() {
         <div className="md:items-end mb-5 md:mb-16 flex flex-col items-center md:flex-row">
             <div className="mb-6 md:mb-0 md:flex flex-col items-center md:w-1/4 lg:w-1/5">
                 <img
-                    className=" md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3 "
+                    className="md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3 "
                     src={detail?.cover} alt={detail.title} />
                 <div className="mt-3 md:mt-0 flex justify-between w-full flex-col xl:flex-row">
                     <LoveButton pkg={pkg} url={url} data={detail} type={extension.type}></LoveButton>
-                    <a target="_blank" rel="noreferrer" href={extension.webSite + url}
-                        className="focus:ring-2 focus:ring-gray-500 border pl-4 pr-4 pt-2 pb-2 text-lg w-full bg-black text-white rounded-xl">
-                        <div className="flex justify-center items-center">
-                            <IconLink className="mr-1"></IconLink>
-                            {t('origin-site')}
-                        </div>
-                    </a>
+
                 </div>
             </div>
-            <div className=" md:w-3/4 lg:w-4/5 md:ml-5 md:mt-10">
+            <div className="w-full md:w-3/4 lg:w-4/5 md:ml-5 md:mt-10">
                 <div className="text-3xl mb-1">{detail?.title}</div>
                 <div className="mb-3 text-gray-500 dark:text-white dark:text-opacity-60">
                     {
@@ -238,21 +246,50 @@ function BaseDetail() {
                         ))
                     }
                 </div>
-                <div className="mb-3">
-                    {
-                        Array.from(metaData.entries()).map((item, index) => (
-                            <p key={index} className="mb-1"><span className="font-bold">{item[0]}</span>{item[1]}</p>
-                        ))
-                    }
+                <div className="max-h-48 overflow-hidden">
+                    <div className="mb-3" >
+                        {
+                            Array.from(metaData.entries()).map((item, index) => (
+                                <p key={index} className="mb-1"><span className="font-bold">{item[0]}</span>{item[1]}</p>
+                            ))
+                        }
+                        <p className="mb-1 flex items-center">
+                            <span className="font-bold mr-2">{t('origin-site')}</span>
+                            <a href={extension.webSite + url} target="_blank" rel="noreferrer"><IconLink size={20} /></a>
+                        </p>
+                    </div>
+                    <div className="overflow-auto max-h-52 md:h-full">
+                        <p>
+                            {overview}
+                        </p>
+                    </div>
                 </div>
-                <div className="overflow-auto max-h-52 md:h-full">
-                    <p>
-                        {overview}
-                    </p>
+                {/* 展开按钮 */}
+                <div className="flex ">
+                    <button className="text-gray-500 dark:text-white dark:text-opacity-60 " onClick={() => setShowMore(!showMore)}>
+                        <MoreHorizontal />
+                    </button>
                 </div>
-
+                <Modal show={showMore} onClose={() => { setShowMore(false) }} title={detail.title}>
+                    <div className="mb-3">
+                        {
+                            Array.from(metaData.entries()).map((item, index) => (
+                                <p key={index} className="mb-1"><span className="font-bold">{item[0]}</span>{item[1]}</p>
+                            ))
+                        }
+                        <p className="mb-1 flex items-center">
+                            <span className="font-bold mr-2">{t('origin-site')}</span>
+                            <a href={extension.webSite + url} target="_blank" rel="noreferrer"><IconLink size={20} /></a>
+                        </p>
+                    </div>
+                    <div className="overflow-auto max-h-52 md:h-full">
+                        <p>
+                            {overview}
+                        </p>
+                    </div>
+                </Modal>
             </div>
-        </div>
+        </div >
     )
 }
 
