@@ -17,7 +17,17 @@
         "language": "语言：",
         "release-date": "上映日期：",
         "status": "状态：",
-        "production-company": "制作公司："
+        "production-company": "制作公司：",
+        "production-country": "制作国家(地区)：",
+        "vote-average": "评分：",
+        "vote-count": "评分人数：",
+        "popularity": "人气：",
+        "homepage": "官网：",
+        "number-of-episodes": "集数：",
+        "number-of-seasons": "季数：",
+        "spoken-language": "语言：",
+        "episode-run-time": "单集片长：",
+        "runtime": "片长："
     },
     "no-next": "没有下一集了",
     "no-previous": "没有上一集了",
