@@ -7,10 +7,10 @@
         "tmdb-key": "TMDB API Key",
         "language": "Language",
         "theme": {
-            "title": "theme",
-            "light": "light",
-            "dark": "dark",
-            "auto": "auto"
+            "title": "Theme",
+            "light": "Light",
+            "dark": "Dark",
+            "auto": "Auto"
         }
     },
     "data": {
