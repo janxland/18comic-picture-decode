@@ -1,14 +1,13 @@
 import { useRootStore } from "@/context/root-context";
+import { useWatchContext } from "@/context/watch-context";
+import { BangumiWatch } from "@/types/extension";
+import { isClient } from "@/utils/is-client";
 import Artplayer from "artplayer";
+import Hls from 'hls.js';
 import { useEffect, useRef } from "react";
 import { useQuery } from "react-query";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
-import Hls from 'hls.js'
-import clsx from "clsx";
-import { isClient } from "@/utils/is-client";
-import { BangumiWatch } from "@/types/extension";
-import { useWatchContext } from "@/context/watch-context";
 
 
 export default function BangumiPlayer() {
@@ -153,7 +152,11 @@ export default function BangumiPlayer() {
 
         // 销毁的时候 再添加一次历史记录
         art.on("destroy", () => {
-            addHistory()
+            // 如果播放器已经准备好了 就添加一次历史记录
+            // 防止截图为空
+            if (art.isReady) {
+                addHistory()
+            }
         })
 
         return () => {
