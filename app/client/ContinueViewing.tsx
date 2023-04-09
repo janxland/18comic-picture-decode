@@ -61,7 +61,7 @@ const ContinueVewing = observer(() => {
                             {
                                 history.type === "fikushon" && (
                                     <div className="w-full h-full " style={{ height: "200px", maxWidth: "400px" }}>
-                                        <div className="m-auto w-4/5 p-2 text-lg rounded bg-slate-200 h-full">
+                                        <div className="m-auto  p-2 text-lg rounded bg-slate-200 h-full dark:bg-black dark:bg-opacity-40">
                                             {history.cover as string}
                                         </div>
                                     </div>

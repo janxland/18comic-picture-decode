@@ -45,15 +45,17 @@ export default function MangaPlayer() {
 
 
     return (
-        <div className="text-center p-3 max-h-screen overflow-auto">
+        <div className="text-center md:p-3 py-2 max-h-screen overflow-auto">
             <Button className="mb-3" onClick={() => prevChapter?.()}>
                 上一章
             </Button>
-            {
-                data.urls.map((url, index) => {
-                    return <img key={index} src={url} alt="Manga" referrerPolicy="no-referrer" />
-                })
-            }
+            <div className="w-full md:w-auto">
+                {
+                    data.urls.map((url, index) => {
+                        return <img key={index} className="m-auto" src={url} alt="Manga" referrerPolicy="no-referrer" />
+                    })
+                }
+            </div>
             <Button className="mt-3" onClick={() => nextChapter?.()}>
                 下一章
             </Button>

@@ -310,7 +310,7 @@ function Play() {
             <div
                 ref={playerContainer}
                 className={clsx("absolute w-full md:w-2/3", {
-                    "bg-white": extension.type !== "bangumi",
+                    "bg-white dark:bg-black": extension.type !== "bangumi",
                     "left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2": fullscreenWeb !== true,
                 })}>
                 {player}
