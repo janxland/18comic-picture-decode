@@ -15,11 +15,3 @@ export function useTranslation(ns?: string[] | string, options: any = {}) {
     if (i18next.resolvedLanguage !== lng) i18next.changeLanguage(lng)
     return useTranslationOrg(ns, options)
 }
-
-// 设置语言
-export function setLanguage(lng: string) {
-    // 保存到cookie
-    cookies.set("language", lng)
-    // 刷新页面
-    window.location.reload()
-}

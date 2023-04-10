@@ -1,5 +1,6 @@
 import { Settings, settingsDB } from "@/db";
 import { isClient } from "@/utils/is-client";
+import Cookies from "js-cookie";
 import { autorun, makeAutoObservable } from "mobx";
 
 
@@ -16,6 +17,12 @@ export default class SettingsStore {
         autorun(
             () => {
                 if (isClient()) {
+                    // 设置语言
+                    if (this.getSetting("language")) {
+                        Cookies.set("language", this.getSetting("language"))
+                    }
+
+                    // 设置主题
                     const theme = this.getSetting("theme")
                     const setDark = () => document.documentElement.classList.add("dark")
                     const setLight = () => document.documentElement.classList.remove("dark")
