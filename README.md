@@ -2,7 +2,13 @@
 
 # <img src="./public/logo.svg" width="100">
 
-Miru2.0 ***一个支持扩展源的免费开源多功能播放器**(?)，灵感来自 [Tachiyomi](https://tachiyomi.org/)*
+[![License](https://img.shields.io/github/license/miru-project/miru-next)](https://github.com/miru-project/miru-next/blob/main/LICENSE)
+[![Stars](https://img.shields.io/github/stars/miru-project/miru-next)](https://github.com/miru-project/miru-next/stargazers)
+[![Forks](https://img.shields.io/github/forks/miru-project/miru-next)](https://github.com/miru-project/miru-next/network/members)
+[![Issues](https://img.shields.io/github/issues/miru-project/miru-next)](https://github.com/miru-project/miru-next/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/miru-project/miru-next)](https://github.com/miru-project/miru-next/pulls)
+
+***支持、视频、漫画、小说扩展源的多功能在线播放器**，灵感来自 [Tachiyomi](https://tachiyomi.org/)*
 
 ## 特性
 
