@@ -1,6 +1,5 @@
 import { useTranslation } from "@/app/i18n/client";
-import IconLogo from "@/components/icons/IconLogo";
-import LoadingBox from "@/components/LoadingBox";
+import InitView from "@/components/InitView";
 import { RootStore } from "@/store/root";
 import { isClient } from "@/utils/is-client";
 import { DefaultTFuncReturn } from "i18next";
@@ -50,13 +49,7 @@ export function RootStoreProvider({ children }: { children: React.ReactNode }) {
 
     if (!ok) {
         return (
-            <div className="h-screen flex justify-center items-center">
-                <div className="flex flex-col items-center">
-                    <IconLogo className="mb-3" width={110} />
-                    <LoadingBox />
-                    <p className="mt-3">{initMsg}</p>
-                </div>
-            </div>
+            <InitView msg={initMsg} />
         )
     }
 

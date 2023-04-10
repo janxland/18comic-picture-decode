@@ -16,6 +16,10 @@ export default async function RootLayout({
 }) {
     return (
         <html>
+            <head>
+                <meta charSet="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+            </head>
             <body className="dark:bg-black dark:text-white dark:bg-opacity-80">
                 <RootProvider>
                     <div className="ml-0 lg:ml-230px transition-all" style={{ maxWidth: "1400px" }}>
