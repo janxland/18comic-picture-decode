@@ -2,8 +2,8 @@ import BaseMargin from "@/components/BaseMargin"
 import Layout from "@/components/Layout"
 import SwitchTitle from "@/components/SwitchTitle"
 import { Metadata } from "next"
-import Collection from "./client/Collection"
-import ContinueViewing from "./client/ContinueViewing"
+import Collection from "./Collection"
+import ContinueViewing from "./ContinueViewing"
 import { GetPageTitle, useTranslation } from "./i18n"
 
 export async function generateMetadata(): Promise<Metadata> {

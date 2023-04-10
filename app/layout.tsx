@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-import RootProvider from './client/RootProvider';
+import RootProvider from './RootProvider';
 
 export const metadata = {
     title: {
