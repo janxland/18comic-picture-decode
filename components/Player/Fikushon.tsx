@@ -1,8 +1,8 @@
 import { useRootStore } from "@/context/root-context";
 import { useWatchContext } from "@/context/watch-context";
 import { FikushonWatch } from "@/types/extension";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { useQuery } from "react-query";
 import Button from "../common/Button";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
@@ -13,10 +13,10 @@ export default function FikushonPlayer() {
     const { extensionStore, historyStore } = useRootStore()
     const extension = extensionStore.getExtension(pkg)
 
-    const { data, error, isLoading } = useQuery(
-        `fikushon-${watchData!.url}-${pkg}`,
-        async () => extension?.watch(watchData!.url) as FikushonWatch
-    )
+    const { data, error, isLoading } = useQuery({
+        queryKey: ["fikushon", watchData?.url, pkg],
+        queryFn: () => extension?.watch(watchData!.url) as FikushonWatch
+    })
 
     useEffect(() => {
         if (!data) {

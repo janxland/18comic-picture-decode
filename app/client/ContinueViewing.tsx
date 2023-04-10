@@ -4,20 +4,18 @@ import ErrorView from "@/components/ErrorView"
 import LoadingBox from "@/components/LoadingBox"
 import { useRootStore } from "@/context/root-context"
 import { getModel } from "@/utils/model"
+import { useQuery } from "@tanstack/react-query"
 import { observer } from "mobx-react-lite"
 import Link from "next/link"
 import { useEffect } from "react"
-import { useQuery } from "react-query"
 import { useTranslation } from "../i18n/client"
 
 const ContinueVewing = observer(() => {
     const { settingsStore, historyStore } = useRootStore()
     const { t } = useTranslation("home")
-    const { error, data, isLoading, refetch } = useQuery("getHistoryData",
-        () => {
-            return historyStore.getHistoryByType(getModel(settingsStore.getSetting("model")), 8)
-        }, {
-        cacheTime: 0
+    const { error, data, isLoading, refetch } = useQuery({
+        queryKey: ["getHistoryData"],
+        queryFn: async () => historyStore.getHistoryByType(getModel(settingsStore.getSetting("model")), 8)
     })
 
     useEffect(() => {

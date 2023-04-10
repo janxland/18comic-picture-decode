@@ -2,10 +2,10 @@ import { useRootStore } from "@/context/root-context";
 import { useWatchContext } from "@/context/watch-context";
 import { BangumiWatch } from "@/types/extension";
 import { isClient } from "@/utils/is-client";
+import { useQuery } from "@tanstack/react-query";
 import Artplayer from "artplayer";
 import Hls from 'hls.js';
 import { useEffect, useRef } from "react";
-import { useQuery } from "react-query";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
 
@@ -20,10 +20,12 @@ export default function BangumiPlayer() {
     const artRef = useRef(null);
 
 
-    const { data, error, isLoading } = useQuery(`getVideoPlayer${pkg}${watchData!.url}`, () => {
-        return extension?.watch(watchData!.url) as BangumiWatch
+    const { data, error, isLoading } = useQuery({
+        queryKey: ["watch", watchData?.url, pkg],
+        queryFn: () => {
+            return extension?.watch(watchData!.url) as BangumiWatch
+        }
     })
-
 
     useEffect(() => {
         if (!artRef || !data) {

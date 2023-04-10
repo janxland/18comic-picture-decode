@@ -8,7 +8,6 @@ export class TMDBStore {
 
     req: RequestMethod<false> | undefined
     key: string | undefined
-    language: string | undefined = Cookies.get("language")
 
     constructor(settingsStore: SettingsStore) {
         autorun(() => {
@@ -17,14 +16,14 @@ export class TMDBStore {
     }
 
     async request(path: string, options?: any): Promise<any> {
-        while (!this.key || !this.language) {
+        while (!this.key) {
             await new Promise(resolve => setTimeout(resolve, 100));
         }
         this.req = extend({
             prefix: "https://api.themoviedb.org",
             params: {
                 "api_key": this.key,
-                "language": this.language
+                "language": Cookies.get("language")
             }
         });
         return this.req(path, options);

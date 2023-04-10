@@ -5,20 +5,19 @@ import LoadingBox from "@/components/LoadingBox"
 import { useRootStore } from "@/context/root-context"
 import { loveDB } from "@/db"
 import { getModel } from "@/utils/model"
+import { useQuery } from "@tanstack/react-query"
 import { observer } from "mobx-react-lite"
 import Link from "next/link"
 import { useEffect } from "react"
-import { useQuery } from "react-query"
 import { useTranslation } from "../i18n/client"
 
 const Collection = observer(() => {
     const { settingsStore } = useRootStore()
     const { t } = useTranslation("home")
-    const { error, data, isLoading, refetch } = useQuery("getLoveData",
-        () => {
-            return loveDB.getAllLoveByType(getModel(settingsStore.getSetting("model")))
-        }
-    )
+    const { error, data, isLoading, refetch } = useQuery({
+        queryKey: ["getLoveData"],
+        queryFn: async () => loveDB.getAllLoveByType(getModel(settingsStore.getSetting("model")))
+    })
 
     useEffect(() => {
         refetch()

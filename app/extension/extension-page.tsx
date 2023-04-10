@@ -9,13 +9,13 @@ import Tab from "@/components/Tab";
 import { useRootStore } from "@/context/root-context";
 import { Extension, extensionDB } from "@/db";
 import { getModel } from "@/utils/model";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
     Download as IconDownload, Settings as IconSettings, Trash as IconTrash, Upload as IconUpload
 } from 'lucide-react';
 import { observer } from "mobx-react-lite";
 import { useSnackbar } from "notistack";
 import { ReactNode, useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
 import request from "umi-request";
 import { useTranslation } from "../i18n/client";
 export default function ExtensionsPage() {
@@ -44,17 +44,18 @@ function InstalledTab() {
     const { enqueueSnackbar } = useSnackbar()
     const { t } = useTranslation("extensions")
 
-    const { data, error, isLoading } = useQuery("getInstalledExtensions",
-        () => {
-            return extensionDB.getAllExtensions()
-        }
-    )
+    const { data, error, isLoading } = useQuery({
+        queryKey: ["getInstalledExtensions"],
+        queryFn: () => extensionDB.getAllExtensions()
+    })
 
     const queryClient = useQueryClient()
 
     const mutation = useMutation(extensionDB.deleteExtension, {
         onSuccess: () => {
-            queryClient.invalidateQueries('getInstalledExtensions')
+            queryClient.invalidateQueries({
+                queryKey: ["getInstalledExtensions"]
+            })
         }
     })
 
@@ -143,14 +144,13 @@ const RepoTab = observer(() => {
         });
     }
 
-    const { data, error, isLoading, refetch } = useQuery("getRepoExtensions",
-        () => {
-            return request.get(settingsStore.getSetting("miruRepo") + "/index.json")
-                .then((res: Extension[]) => {
-                    return res.filter((extension) => extension.type === getModel(settingsStore.getSetting("model")))
-                })
+    const { data, error, isLoading, refetch } = useQuery({
+        queryKey: ["getRepoExtensions"],
+        queryFn: async () => {
+            const res = await request.get(settingsStore.getSetting("miruRepo") + "/index.json");
+            return res.filter((extension: Extension) => extension.type === getModel(settingsStore.getSetting("model")));
         }
-    )
+    })
 
     useEffect(() => {
         refetch()
@@ -206,7 +206,7 @@ const RepoTab = observer(() => {
     return (
         <div>
             {
-                data.map((extension, index) =>
+                data.map((extension: Extension, index: number) =>
                     <ListItem
                         key={index}
                         name={extension.name}
