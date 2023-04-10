@@ -1,5 +1,5 @@
 "use client"
-import { setLanguage, useTranslation } from "@/app/i18n/client"
+import { useTranslation } from "@/app/i18n/client"
 import { languages } from "@/app/i18n/settings"
 import { useRootStore } from "@/context/root-context"
 import { ChangeEvent } from "react"
@@ -22,7 +22,8 @@ export default function GeneralTab() {
     })
 
     const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        setLanguage(e.target.value)
+        settingsStore.setSetting("language", e.target.value)
+        window.location.reload()
     }
 
     const themeOptions = [
