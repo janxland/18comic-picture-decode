@@ -14,13 +14,13 @@ import { useWatchContext, WatchData, WatchProvider } from "@/context/watch-conte
 import { loveDB } from "@/db";
 import { Detail } from "@/types/extension";
 import { Credits } from "@/types/tmdb";
+import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { ExternalLink as IconLink, Heart as IconLove, MoreHorizontal, X as IconClose } from 'lucide-react';
 import { observer } from "mobx-react-lite";
 import { useRouter, useSearchParams } from "next/navigation";
 import { closeSnackbar, enqueueSnackbar } from "notistack";
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "react-query";
 import { useTranslation } from "../i18n/client";
 
 const WatchPage = observer(() => {
@@ -32,9 +32,10 @@ const WatchPage = observer(() => {
     const extension = extensionStore.getExtension(pkg)
     const { t } = useTranslation("watch")
     const [watchData, setWatchData] = useState<WatchData>()
-    const { isLoading, error, isError, data } = useQuery(`getDetail${pkg}${url}`,
-        () => extension?.detail(url)
-    )
+    const { isLoading, error, isError, data } = useQuery({
+        queryKey: ["watch", pkg, url],
+        queryFn: () => extension?.detail(url)
+    })
     useEffect(() => {
         if (data) {
             setWatchData({

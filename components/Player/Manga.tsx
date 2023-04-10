@@ -1,8 +1,8 @@
 import { useRootStore } from "@/context/root-context";
 import { useWatchContext } from "@/context/watch-context";
 import { MangaWatch } from "@/types/extension";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { useQuery } from "react-query";
 import Button from "../common/Button";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
@@ -12,10 +12,10 @@ export default function MangaPlayer() {
     const { extensionStore, historyStore } = useRootStore()
     const extension = extensionStore.getExtension(pkg)
 
-    const { data, error, isLoading } = useQuery(
-        `manga-${watchData!.url}-${pkg}`,
-        async () => extension?.watch(watchData!.url) as MangaWatch
-    )
+    const { data, error, isLoading } = useQuery({
+        queryKey: ['manga', watchData?.url, pkg],
+        queryFn: () => extension?.watch(watchData!.url) as MangaWatch
+    })
 
     useEffect(() => {
         if (!data) {

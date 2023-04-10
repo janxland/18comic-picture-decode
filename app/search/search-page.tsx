@@ -10,10 +10,10 @@ import Tab, { Tabs } from "@/components/Tab";
 import { useRootStore } from "@/context/root-context";
 import { Extension } from "@/extension/extension";
 import { getModel } from "@/utils/model";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useInfiniteQuery } from "react-query";
 import { useTranslation } from "../i18n/client";
 
 
@@ -73,12 +73,14 @@ function Items({ extension, kw }: { extension: Extension, kw?: string }) {
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
-    } = useInfiniteQuery([`getSearchItems${extension.package}${kw}`], ({ pageParam = 1 }) => {
-        if (!kw) {
-            return extension?.latest(pageParam)
-        }
-        return extension?.search(kw, pageParam)
-    }, {
+    } = useInfiniteQuery({
+        queryKey: ["getSearchItems", extension.package, kw],
+        queryFn: ({ pageParam = 1 }) => {
+            if (!kw) {
+                return extension?.latest(pageParam)
+            }
+            return extension?.search(kw, pageParam)
+        },
         retry: false,
         getNextPageParam: (lastPage, pages) => {
             if (!lastPage) {
