@@ -7,8 +7,13 @@ module.exports = {
     ],
     theme: {
         extend: {
+            height: {
+                "20vw": "20vw",
+                "30vw": "30vw",
+                "60vw": "60vw",
+            },
             width: {
-                "230px": "230px"
+                "230px": "230px",
             },
             margin: {
                 "230px": "230px",
