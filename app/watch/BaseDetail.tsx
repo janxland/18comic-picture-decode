@@ -98,6 +98,16 @@ export default function BaseDetail() {
                                 <p key={index} className="mb-1"><span className="font-bold">{item[0]}</span>{item[1]}</p>
                             ))
                         }
+                        {/* 如果tmdb找不到数据就会显示扩展的元数据 */}
+                        {
+                            detail.metadata &&
+                            Object.keys(detail.metadata).map((key, index) => (
+                                <p key={index} className="mb-1">
+                                    <span className="font-bold">{key}: </span>
+                                    {detail.metadata![key]}
+                                </p>
+                            ))
+                        }
                         <p className="mb-1 flex items-center">
                             <span className="font-bold mr-2">{t('origin-site')}</span>
                             <a href={extension.webSite + url} target="_blank" rel="noreferrer"><ExternalLink size={20} /></a>
@@ -117,9 +127,25 @@ export default function BaseDetail() {
                 </div>
                 <Modal show={showMore} onClose={() => { setShowMore(false) }} title={detail.title}>
                     <div className="mb-3">
+                        {metaData.size > 0 &&
+                            <h3 className="mb-3 font-bold border-b pb-2">{t('from-tmdb')}</h3>
+                            &&
+                            <div className="grid grid-cols-2 mb-3">
+                                {
+                                    Array.from(metaData.entries()).map((item, index) => (
+                                        <p key={index} className="mb-1"><span className="font-bold">{item[0]}</span>{item[1]}</p>
+                                    ))
+                                }
+                            </div>
+                        }
+                        <h3 className="mb-3 font-bold border-b pb-2">{t('from-extension')}</h3>
                         {
-                            Array.from(metaData.entries()).map((item, index) => (
-                                <p key={index} className="mb-1"><span className="font-bold">{item[0]}</span>{item[1]}</p>
+                            detail.metadata &&
+                            Object.keys(detail.metadata).map((key, index) => (
+                                <p key={index} className="mb-1">
+                                    <span className="font-bold">{key}: </span>
+                                    {detail.metadata![key]}
+                                </p>
                             ))
                         }
                         <p className="mb-1 flex items-center">
@@ -133,7 +159,7 @@ export default function BaseDetail() {
                         </p>
                     </div>
                 </Modal>
-            </div>
+            </div >
         </div >
     )
 }

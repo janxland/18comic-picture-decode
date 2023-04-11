@@ -7,6 +7,8 @@
     "starring": "Starring",
     "extension-lost": "Extension {{pkg}} Lost",
     "not-found-data": "Data Not Found",
+    "from-extension": "From Extension",
+    "from-tmdb": "From TMDB",
     "footer": {
         "origin": "Page data is from extension {{ext}}",
         "infomation-error": "Information Error?",

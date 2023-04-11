@@ -7,6 +7,8 @@
     "starring": "主演",
     "extension-lost": "扩展 {{pkg}} 丢失",
     "not-found-data": "未找到数据",
+    "from-extension": "来自扩展",
+    "from-tmdb": "来自 TMDB",
     "footer": {
         "origin": "页面数据来自扩展 {{ext}}",
         "infomation-error": "信息有误?",
