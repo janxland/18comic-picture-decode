@@ -1,7 +1,7 @@
 "use client"
 
-import Button from "@/components/common/Button"
 import Tab, { Tabs } from "@/components/Tab"
+import Button from "@/components/common/Button"
 import { useRootStore } from "@/context/root-context"
 import { useWatchContext } from "@/context/watch-context"
 import { closeSnackbar, enqueueSnackbar } from "notistack"
@@ -73,7 +73,7 @@ export default function Episodes() {
                                         `${item.title}|${value.name}`,
                                     )}
                                     key={index}
-                                    className={`mr-1 mb-1 ${playUrl === value.url ? "ring-2 ring-gray-500" : ""}`}>
+                                    className={`mr-1 mb-1 ${playUrl === value.url ? "ring-2 ring-gray-700 dark:ring-gray-200" : ""}`}>
                                     {value.name}
                                 </Button>
                             )
