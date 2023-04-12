@@ -14,5 +14,6 @@
         "title": "没找到更多扩展力",
         "message": "以在设置里设置别的仓库地址再来试试"
     },
-    "download-error": "下载扩展出错"
+    "download-error": "下载扩展出错",
+    "unrealized": "还没实现的（"
 }
