@@ -58,7 +58,7 @@ export default function InstalledTab() {
     }
 
     const handleSettings = (pkg: string) => {
-        enqueueSnackbar("还没实现的（", { variant: "info", })
+        enqueueSnackbar(t('unrealized'), { variant: "info", })
     }
 
     return (

@@ -14,5 +14,6 @@
         "title": "No more extensions found",
         "message": "Try again by setting another repository address in the settings"
     },
-    "download-error": "Error downloading extension"
+    "download-error": "Error downloading extension",
+    "unrealized": "Not implemented yet :("
 }
