@@ -3,11 +3,13 @@ import { Extension, ExtensionSettings } from "./table/extension";
 import { History } from "./table/history";
 import { Love } from "./table/love";
 import { Settings } from "./table/settings";
+import { TMDB } from "./table/tmdb";
 
-export * from "./table/extension"
-export * from "./table/history"
-export * from "./table/love"
-export * from "./table/settings"
+export * from "./table/extension";
+export * from "./table/history";
+export * from "./table/love";
+export * from "./table/settings";
+export * from "./table/tmdb";
 
 
 
@@ -18,15 +20,17 @@ export class MiruDB extends Dexie {
     love!: Table<Love>
     settings!: Table<Settings>
     extensionSettings!: Table<ExtensionSettings>
+    tmdb!: Table<TMDB>
 
     constructor() {
         super("MiruDB");
-        this.version(2).stores({
+        this.version(3).stores({
             history: "++id, url, title, package, cover, type, time,&[url+package]",
             extension: "++id, id, name, &package, version, language, type, script, enable, description, webSite, scriptUrl, author, icon, settings",
             love: "++id, title, package, url, cover, type,&[url+package]",
             settings: "++id, &key, value",
             extensionSettings: "++id, package, key, value, title, defaultValue, description",
+            tmdb: "++id, tmdb_id, mediaType, pkg, url,&[url+package]",
         });
     }
 }
