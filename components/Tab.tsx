@@ -41,7 +41,7 @@ export default function Tab(props: TabProps) {
     ));
 
     return (
-        <div>
+        <div className={clsx("overflow-x-scroll scrollbar-none")}>
             {
                 props.tabs.length > 0 && (
                     <>
