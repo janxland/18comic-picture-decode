@@ -22,7 +22,7 @@ export default function Item(props: ExtensionProps) {
                 <div>
                     <p className="text-lg mb-1">
                         {props.name}
-                        <span className="text-xs ml-1 pl-2 pr-2 pt-1 pb-1 rounded-full bg-black text-white">{props.version}</span>
+                        <span className="text-xs ml-1 pl-2 pr-2 pt-1 pb-1 rounded-full bg-black text-white dark:bg-neutral-600 dark:text-zinc-50">{props.version}</span>
                     </p>
                     <p className="text-sm">{props.pkg}</p>
                 </div>
