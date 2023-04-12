@@ -46,6 +46,7 @@ export default function Footer() {
 
 function TMDBModalSearchResult({ kw, onClose }: { kw: string, onClose: () => void }) {
     const { url, pkg, setWatchData } = useWatchContext()
+    const { settingsStore } = useRootStore()
     const { tmdbStore } = useRootStore()
     const { error, data, isLoading, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteQuery({
         queryKey: ["tmdbsearch", kw],
@@ -60,6 +61,7 @@ function TMDBModalSearchResult({ kw, onClose }: { kw: string, onClose: () => voi
             return pages.length + 1
         },
     })
+
 
     const handleTMDBChange = (tmdbResult: SearchResult) => {
         tmdbDB.saveTMDB({
@@ -77,7 +79,13 @@ function TMDBModalSearchResult({ kw, onClose }: { kw: string, onClose: () => voi
         })
         onClose()
     }
-
+    if (!settingsStore.getSetting("TMDBKey")) {
+        return (
+            <div className="mb-3">
+                <ErrorView error="请先在设置里设置 TMDBKey 再来尝试"></ErrorView>
+            </div>
+        )
+    }
     if (error) {
         return (
             <div className="mb-3">
