@@ -59,8 +59,8 @@ dependencies:
     specifier: ^3.0.1
     version: 3.0.1
   lucide-react:
-    specifier: ^0.138.0
-    version: 0.138.0(react@18.2.0)
+    specifier: ^0.139.0
+    version: 0.139.0(react@18.2.0)
   mobx:
     specifier: ^6.8.0
     version: 6.8.0
@@ -1957,8 +1957,8 @@ packages:
       yallist: 4.0.0
     dev: false
 
-  /lucide-react@0.138.0(react@18.2.0):
-    resolution: {integrity: sha512-gSzdhrNhuUim/uTw8R2fyDL3iAJ3aSn6QplK0UZ0X3xsv2Z3vMUNZQHGnQB9hUEEp243FlArRFEQ2gb4UtTvJw==}
+  /lucide-react@0.139.0(react@18.2.0):
+    resolution: {integrity: sha512-QVCqbEEEnlfX/wUjvXY5K9PMpDiFWfAQskUgSM9pATi326zSs2I0UzX4VIlFtRhRNn/aB6q+4gho7XsHg1J69A==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
