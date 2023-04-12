@@ -1,14 +1,14 @@
+import Button from "@/components/common/Button";
 import ErrorView from "@/components/ErrorView";
 import ItemGrid from "@/components/ItemGrid";
 import LoadingBox from "@/components/LoadingBox";
-import Button from "@/components/common/Button";
 import { Extension } from "@/extension/extension";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useTranslation } from "../i18n/client";
 
 export default function Result({ extension, kw }: { extension: Extension, kw?: string }) {
-    const { t } = useTranslation("search")
+    const { t } = useTranslation(["search", "common"])
     const {
         data,
         isLoading,

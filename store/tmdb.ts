@@ -30,10 +30,11 @@ export class TMDBStore {
     }
 
 
-    async search(kw: string): Promise<SearchResult[] | undefined> {
+    async search(kw: string, page: number = 1): Promise<SearchResult[] | undefined> {
         const data = await this.request("/3/search/multi", {
             params: {
                 query: kw,
+                page
             }
         })
         return data.results

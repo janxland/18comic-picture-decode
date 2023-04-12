@@ -31,6 +31,10 @@
         "episode-run-time": "单集片长：",
         "runtime": "片长："
     },
+    "changing-tmdb-metadata-targets": "更改 TMDB 元数据目标",
+    "enter-the-current-movie-keyword": "输入当前影视关键字",
+    "changing-tmdb-metadata-targets-tips": "如果是元数据错误： TMDB 元数据是由第三方提供的，如果您发现了错误的元数据，可以通过 TMDB 官网更改",
+    "no-tmdb-key": "请先在设置里设置 TMDBKey 再来尝试",
     "no-next": "没有下一集了",
     "no-previous": "没有上一集了",
     "last-watch": "上次观看 {{chapter}}",

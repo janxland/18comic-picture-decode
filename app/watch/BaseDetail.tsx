@@ -3,7 +3,7 @@
 import Modal from "@/components/Modal"
 import { useRootStore } from "@/context/root-context"
 import { useWatchContext } from "@/context/watch-context"
-import { loveDB } from "@/db"
+import { loveDB, tmdbDB } from "@/db"
 import { Detail } from "@/types/extension"
 import { ExternalLink, Heart, MoreHorizontal } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -21,20 +21,34 @@ export default function BaseDetail() {
     // 获取 TMDB ID
     // 也许可以获取个背景（（就不判断了
     useEffect(() => {
-        tmdbStore.search(detail.title).then((res) => {
-            if (!res || res.length === 0) {
+
+        // 先获取本地的
+        tmdbDB.getTMDB(pkg, url).then((tmdbData) => {
+            if (tmdbData) {
+                setWatchData((data) => {
+                    return {
+                        ...data!,
+                        tmdbId: tmdbData.tmdbId,
+                        mediaType: tmdbData.mediaType,
+                    }
+                })
                 return
             }
-            setWatchData((data) => {
-                return {
-                    ...data!,
-                    tmdbId: res[0].id,
-                    mediaType: res[0].media_type,
-                    background: tmdbStore.getImageUrl(res[0].backdrop_path),
+            // 本地没有，就去 TMDB 获取
+            tmdbStore.search(detail.title).then((res) => {
+                if (!res || res.length === 0) {
+                    return
                 }
+                setWatchData((data) => {
+                    return {
+                        ...data!,
+                        tmdbId: res[0].id,
+                        mediaType: res[0].media_type,
+                    }
+                })
             })
-
         })
+
     }, [])
 
     // 通过 TMDB 获取详情
@@ -67,6 +81,14 @@ export default function BaseDetail() {
                 setGenres(res.genres.map((g) => g.name))
             }
             setMetaData(map)
+
+            // 设置背景
+            setWatchData((data) => {
+                return {
+                    ...data!,
+                    background: tmdbStore.getImageUrl(res!.backdrop_path),
+                }
+            })
         })
     }, [tmdbId])
 
