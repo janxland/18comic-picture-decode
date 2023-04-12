@@ -1,8 +1,9 @@
+import { DefaultTFuncReturn } from "i18next";
 import { X } from "lucide-react";
 
 interface ModalProps {
     show: boolean;
-    title?: string;
+    title?: string | DefaultTFuncReturn;
     children: React.ReactNode;
     onClose?: () => void;
 }

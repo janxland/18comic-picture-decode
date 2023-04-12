@@ -29,15 +29,17 @@ export default function Footer() {
                 <p>{t('footer.origin', { ext: extension.name })}</p>
                 <p>{t('footer.infomation-error')} <span className="font-bold cursor-pointer" onClick={() => setShowModal(true)} >{t('footer.change')}</span></p>
             </div>
-            <Modal show={showModal} onClose={() => setShowModal(false)} title="更改 TMDB 元数据目标">
+            <Modal show={showModal} onClose={() => setShowModal(false)} title={t("changing-tmdb-metadata-targets")}>
                 {/* 搜索框 */}
                 <form className="mb-3" onSubmit={handleSearch} >
-                    <Input className="w-full" value={kw} onChange={(e) => setKw(e.target.value)} placeholder="输入当前影视关键词"></Input>
+                    <Input className="w-full" value={kw} onChange={(e) => setKw(e.target.value)} placeholder={t("enter-the-current-movie-keyword") as string}></Input>
                 </form>
                 {/* 搜索结果 */}
                 <TMDBModalSearchResult kw={serachKw} onClose={() => setShowModal(false)} />
                 <div className="text-center">
-                    <p className="text-black text-opacity-40 dark:text-white  dark:text-opacity-40 text-center">如果是元数据错误： TMDB 元数据是由第三方提供的，如果您发现了错误的元数据，可以通过 <a href="https://www.themoviedb.org/" target="_blank" rel="noreferrer">TMDB</a> 官网更改</p>
+                    <p className="text-black text-opacity-40 dark:text-white  dark:text-opacity-40 text-center">
+                        {t("changing-tmdb-metadata-targets-tips")}
+                    </p>
                 </div>
             </Modal >
         </div >
@@ -45,6 +47,7 @@ export default function Footer() {
 }
 
 function TMDBModalSearchResult({ kw, onClose }: { kw: string, onClose: () => void }) {
+    const { t } = useTranslation(["watch", "common"])
     const { url, pkg, setWatchData } = useWatchContext()
     const { settingsStore } = useRootStore()
     const { tmdbStore } = useRootStore()
@@ -82,7 +85,7 @@ function TMDBModalSearchResult({ kw, onClose }: { kw: string, onClose: () => voi
     if (!settingsStore.getSetting("TMDBKey")) {
         return (
             <div className="mb-3">
-                <ErrorView error="请先在设置里设置 TMDBKey 再来尝试"></ErrorView>
+                <ErrorView error={t("no-tmdb-key")}></ErrorView>
             </div>
         )
     }
@@ -115,7 +118,7 @@ function TMDBModalSearchResult({ kw, onClose }: { kw: string, onClose: () => voi
             </div>
             {
                 kw && data?.pages && <div className="mb-3 text-center">
-                    <Button onClick={() => fetchNextPage()}>{isFetchingNextPage ? "加载中" : "更多"}</Button>
+                    <Button onClick={() => fetchNextPage()}>{isFetchingNextPage ? t('loading') : t('more')}</Button>
                 </div>
             }
         </div>

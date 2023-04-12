@@ -31,6 +31,10 @@
         "episode-run-time": "Episode Run Time:",
         "runtime": "Runtime:"
     },
+    "changing-tmdb-metadata-targets": "Changing TMDB Metadata Targets",
+    "enter-the-current-movie-keyword": "Enter the current movie keyword",
+    "changing-tmdb-metadata-targets-tips": "If the metadata is wrong: TMDB metadata is provided by the third party, if you find the wrong metadata, you can change it through TMDB official website",
+    "no-tmdb-key": "Please set TMDBKey in the settings first and then try again.",
     "no-next": "No more episodes",
     "no-previous": "No previous episodes",
     "last-watch": "Last watched {{chapter}}",
