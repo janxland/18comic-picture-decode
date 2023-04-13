@@ -2,20 +2,23 @@
 
 import ErrorView from "@/components/ErrorView"
 import LoadingBox from "@/components/LoadingBox"
+import Modal from "@/components/Modal"
 import Button from "@/components/common/Button"
+import Input from "@/components/common/Input"
+import Select from "@/components/common/Select"
 import { useRootStore } from "@/context/root-context"
-import { extensionDB } from "@/db"
+import { ExtensionSettings, extensionDB, extensionSettingsDB } from "@/db"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Settings, Trash } from 'lucide-react'
-import { useSnackbar } from "notistack"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import Item from "./Item"
 
 export default function InstalledTab() {
 
     const { extensionStore } = useRootStore()
-    const { enqueueSnackbar } = useSnackbar()
     const { t } = useTranslation("extensions")
+    const [extSettingsPackage, setExtSettingsPackage] = useState<string>("")
 
     const { data, error, isLoading } = useQuery({
         queryKey: ["getInstalledExtensions"],
@@ -58,7 +61,7 @@ export default function InstalledTab() {
     }
 
     const handleSettings = (pkg: string) => {
-        enqueueSnackbar(t('unrealized'), { variant: "info", })
+        setExtSettingsPackage(pkg)
     }
 
     return (
@@ -87,6 +90,154 @@ export default function InstalledTab() {
                     </Item>
                 )
             }
+            <ExtSettingsModal pkg={extSettingsPackage} onClose={() => setExtSettingsPackage("")} />
         </div>
     )
+}
+
+
+function ExtSettingsModal({ pkg, onClose }: { pkg: string, onClose: () => void }) {
+    const { extensionStore } = useRootStore()
+    const extension = extensionStore.getExtension(pkg)
+
+    const Settings = () => {
+        const { error, isLoading, data, refetch } = useQuery({
+            queryKey: [pkg, "settings"],
+            queryFn: () => extensionSettingsDB.getSettings(pkg)
+        })
+
+        if (error) {
+            return <ErrorView error={error} />
+        }
+
+        if (isLoading) {
+            return <LoadingBox />
+        }
+
+        if (!data || !data.length) {
+            return null
+        }
+
+        const handleChange = (key: string, val: string | boolean) => {
+            extensionSettingsDB.setSetting(pkg, key, val)
+            refetch()
+        }
+
+        return (
+            <div>
+                <hr className="m-4" />
+                {
+                    data.map((item, index) =>
+                    (
+                        <div key={index} className="mb-3">
+                            <ExtensionSettingsItem settings={item} onChange={(v) => { handleChange(item.key, v) }} />
+                            <p className="text-black text-sm text-opacity-70">{item.description}</p>
+                        </div>
+                    ))
+                }
+            </div>
+        )
+    }
+    const metadata = [
+        {
+            name: "名称",
+            value: extension?.name
+        }, {
+            name: "包名",
+            value: extension?.package
+        }, {
+            name: "版本",
+            value: extension?.version
+        }, {
+            name: "语言",
+            value: extension?.lang
+        }, {
+            name: "扩展类型",
+            value: extension?.type
+        }, {
+            name: "源站",
+            value: extension?.webSite
+        }, {
+            name: "作者",
+            value: extension?.author
+        }, {
+            name: "许可",
+            value: extension?.license
+        }, {
+            name: "介绍",
+            value: extension?.description
+        }
+    ]
+
+    return (
+        <Modal show={Boolean(pkg)} onClose={onClose} title={`设置 ${extension?.name}`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {
+                    metadata.map((item, index) =>
+                        item.value && <p key={index}><span className="font-bold">{item.name}:</span>{item.value}</p>
+                    )
+                }
+            </div>
+            <Settings />
+        </Modal>
+    )
+}
+
+
+
+
+function ExtensionSettingsItem({
+    settings,
+    onChange
+}: {
+    settings: ExtensionSettings,
+    onChange: (v: string | boolean) => void
+}) {
+    const [value, setValue] = useState(settings.value ?? settings.defaultValue)
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setValue(e.target.value)
+        onChange(e.target.value)
+    }
+
+
+    if (settings.type === "input") {
+        return (
+            <div>
+                <h2 className="mb-3 font-bold">{settings.title}</h2>
+                <Input className="w-full mb-3" value={String(value)} onChange={handleChange} />
+            </div>
+        )
+    }
+
+    if (settings.type === "select") {
+        if (!settings.options) {
+            return null
+        }
+        return (
+            <div>
+                <h2 className="mb-2 font-bold">{settings.title}</h2>
+                <Select className="!w-full" options={settings.options} selected={String(value)} onChange={handleChange} />
+            </div>
+        )
+    }
+
+    if (settings.type === "checkbox") {
+        return (
+            <div>
+                <label htmlFor={settings.key}>
+                    <input
+                        className="inline-block mr-1"
+                        type="checkbox"
+                        id={settings.key}
+                        checked={Boolean(value)}
+                        onChange={(e) => { onChange(e.target.checked ? true : false); setValue(e.target.checked ? true : false) }} />
+                    {settings.title}
+                </label>
+
+            </div>
+        )
+    }
+
+    return null
 }

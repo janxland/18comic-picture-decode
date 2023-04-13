@@ -46,16 +46,19 @@ export default class ExtensionStore {
             if (isClient()) {
                 import(/* webpackIgnore: true */ script)
                     .then((module) => {
-                        const extension = new module.default();
+                        const extension = new module.default() as Extension;
                         // 将扩展的属性复制到扩展实例上
                         Object.assign(extension, extensionData);
 
                         // 设置代理地址
-                        extension.proxyUrl = this.proxyUrl;
+                        extension.proxyUrl = this.proxyUrl!;
 
                         // 保存扩展
                         extensionDB.addExtension(extensionData)
                         this.setExtension(extension.package, extension);
+
+                        // 运行初始化方法
+                        extension.load()
                         return resolve(extension.package);
                     })
                     .catch((error) => {

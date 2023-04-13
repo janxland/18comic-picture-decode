@@ -1,5 +1,5 @@
-import { extensionSettingsDB } from "@/db";
-import { Detail, ListItem, MangaWatch, BangumiWatch, FikushonWatch } from "@/types/extension";
+import { ExtensionSettings, extensionSettingsDB } from "@/db";
+import { BangumiWatch, Detail, FikushonWatch, ListItem, MangaWatch } from "@/types/extension";
 import request from "umi-request";
 
 
@@ -10,10 +10,13 @@ export class Extension {
     webSite = "";
     name = "";
     version = "";
-    language = "";
+    lang = "";
     script = "";
     scriptUrl = "";
-    type: "bangumi" | "manga" | "fikushon" = "bangumi";
+    author = "";
+    license = "";
+    description = "";
+    type = "bangumi";
     nsfw: boolean = false;
 
     request(url: string, options?: any) {
@@ -57,7 +60,7 @@ export class Extension {
     }
 
     // 读取设置
-    async getSettings(key: string) {
+    async getSetting(key: string) {
         const settings = await extensionSettingsDB.getSetting(this.package, key);
         if (settings) {
             return settings.value;
@@ -65,6 +68,25 @@ export class Extension {
         return "";
     }
 
+    // 注册设置
+    async registerSetting(settings: {
+        title: string;
+        key: string;
+        type: ExtensionSettings["type"];
+        defaultValue: string;
+        description?: string;
+        options?: {
+            label: string;
+            value: string;
+        }[]
+    }) {
+        await extensionSettingsDB.addSettings({
+            package: this.package,
+            ...settings,
+            value: settings.defaultValue,
+        });
+    }
 
+    load() { }
     unload() { }
 }

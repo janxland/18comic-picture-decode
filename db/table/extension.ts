@@ -9,7 +9,7 @@ export interface Extension {
     // 版本
     version: string;
     // 语言
-    language: string;
+    lang: string;
     // NSFW
     nsfw: boolean;
     // 脚本类型
@@ -34,9 +34,14 @@ export interface ExtensionSettings {
     title: string
     package: string;
     key: string;
-    value: string;
-    defaultValue: string;
-    description: string;
+    value: string | boolean;
+    type: "input" | "select" | "checkbox";
+    options?: {
+        label: string;
+        value: string;
+    }[];
+    defaultValue: string | boolean;
+    description?: string;
 }
 
 
@@ -45,7 +50,7 @@ export namespace extensionDB {
         return db.extension.toArray();
     }
 
-    export function getAllExtensionsForType(type: "bangumi" | "manga" | "fikushon") {
+    export function getAllExtensionsForType(type: Extension["type"]) {
         return db.extension.where("type").equals(type).toArray();
     }
 
@@ -79,7 +84,7 @@ export namespace extensionSettingsDB {
         }).first();
     }
 
-    export function setSetting(packageName: string, key: string, value: string) {
+    export function setSetting(packageName: string, key: string, value: string | boolean) {
         return db.extensionSettings.where("package").equals(packageName).and((item) => {
             return item.key === key;
         }).modify({
@@ -87,7 +92,24 @@ export namespace extensionSettingsDB {
         });
     }
 
-    export function addSettings(settings: ExtensionSettings) {
+    export async function addSettings(settings: ExtensionSettings) {
+        // 如果已经有了则只更新除 value 以外的属性
+        const setting = await getSetting(settings.package, settings.key);
+        if (setting) {
+            return db.extensionSettings.where("package").equals(settings.package).and((item) => {
+                return item.key === settings.key;
+            }).modify({
+                title: settings.title,
+                type: settings.type,
+                options: settings.options,
+                defaultValue: settings.defaultValue,
+                description: settings.description
+            });
+        }
         return db.extensionSettings.add(settings);
+    }
+
+    export function deleteExtensionSettings(pkg: string) {
+        return db.extensionSettings.where("package").equals(pkg).delete();
     }
 }

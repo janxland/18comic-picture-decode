@@ -23,7 +23,7 @@ export function readExtensionMateData(script: string) {
 
 // 验证是否数据是否合法
 export function verExtensionMateData(data: Extension) {
-    if (!data.name || !data.package || !data.version || !data.webSite || !data.type) {
+    if (!data.name || !data.package || !data.version || !data.webSite || !data.type || !data.lang) {
         return false
     }
     return true
