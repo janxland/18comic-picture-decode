@@ -10,7 +10,7 @@ interface ExtensionProps {
 
 export default function Item(props: ExtensionProps) {
     return (
-        <div className="flex justify-between transition-all text-black border rounded-xl p-3 mb-3 dark:bg-black dark:text-white">
+        <div className="flex justify-between transition-all text-black border rounded-xl p-3 mb-3 dark:bg-zinc-800  dark:text-white">
             <div className="flex">
                 {
                     props.icon

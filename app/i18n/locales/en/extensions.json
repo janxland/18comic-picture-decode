@@ -14,6 +14,17 @@
         "title": "No more extensions found",
         "message": "Try again by setting another repository address in the settings"
     },
-    "download-error": "Error downloading extension",
-    "unrealized": "Not implemented yet :("
+    "ext-metadata": {
+        "title": "{{extName}} Settings",
+        "name": "Name",
+        "package": "Package",
+        "version": "Version",
+        "author": "Author",
+        "description": "Description",
+        "original-site": "Original Site",
+        "license": "License",
+        "language": "Language",
+        "ext-type": "Extension Type"
+    },
+    "download-error": "Error downloading extension"
 }

@@ -14,6 +14,17 @@
         "title": "没找到更多扩展力",
         "message": "以在设置里设置别的仓库地址再来试试"
     },
-    "download-error": "下载扩展出错",
-    "unrealized": "还没实现的（"
+    "ext-metadata": {
+        "title": "{{extName}} 设置",
+        "name": "名称",
+        "package": "包名",
+        "version": "版本",
+        "author": "作者",
+        "description": "描述",
+        "original-site": "原始网站",
+        "license": "许可证",
+        "language": "语言",
+        "ext-type": "扩展类型"
+    },
+    "download-error": "下载扩展出错"
 }

@@ -24,12 +24,12 @@ export class MiruDB extends Dexie {
 
     constructor() {
         super("MiruDB");
-        this.version(3).stores({
+        this.version(4).stores({
             history: "++id, url, title, package, cover, type, time,&[url+package]",
-            extension: "++id, id, name, &package, version, language, type, script, enable, description, webSite, scriptUrl, author, icon, settings",
+            extension: "++id, id, name, &package, version, lang, type, script, enable, description, webSite, scriptUrl, author, icon, settings",
             love: "++id, title, package, url, cover, type,&[url+package]",
             settings: "++id, &key, value",
-            extensionSettings: "++id, package, key, value, title, defaultValue, description",
+            extensionSettings: "++id, title, package, key, value, type, options, defaultValue, description, &[package+key]",
             tmdb: "++id, tmdb_id, mediaType, pkg, url,&[url+package]",
         });
     }
