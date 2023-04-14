@@ -1,13 +1,13 @@
 "use client"
 
-import ErrorView from "@/components/ErrorView"
-import LoadingBox from "@/components/LoadingBox"
-import Modal from "@/components/Modal"
 import Button from "@/components/common/Button"
 import Input from "@/components/common/Input"
 import Select from "@/components/common/Select"
+import ErrorView from "@/components/ErrorView"
+import LoadingBox from "@/components/LoadingBox"
+import Modal from "@/components/Modal"
 import { useRootStore } from "@/context/root-context"
-import { ExtensionSettings, extensionDB, extensionSettingsDB } from "@/db"
+import { extensionDB, ExtensionSettings, extensionSettingsDB } from "@/db"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Settings, Trash } from 'lucide-react'
 import { useState } from "react"
@@ -99,6 +99,7 @@ export default function InstalledTab() {
 function ExtSettingsModal({ pkg, onClose }: { pkg: string, onClose: () => void }) {
     const { extensionStore } = useRootStore()
     const extension = extensionStore.getExtension(pkg)
+    const { t } = useTranslation("extensions")
 
     const Settings = () => {
         const { error, isLoading, data, refetch } = useQuery({
@@ -140,41 +141,41 @@ function ExtSettingsModal({ pkg, onClose }: { pkg: string, onClose: () => void }
     }
     const metadata = [
         {
-            name: "名称",
+            name: t("ext-metadata.name"),
             value: extension?.name
         }, {
-            name: "包名",
+            name: t("ext-metadata.package"),
             value: extension?.package
         }, {
-            name: "版本",
+            name: t("ext-metadata.version"),
             value: extension?.version
         }, {
-            name: "语言",
+            name: t("ext-metadata.language"),
             value: extension?.lang
         }, {
-            name: "扩展类型",
+            name: t("ext-metadata.ext-type"),
             value: extension?.type
         }, {
-            name: "源站",
+            name: t("ext-metadata.original-site"),
             value: extension?.webSite
         }, {
-            name: "作者",
+            name: t("ext-metadata.author"),
             value: extension?.author
         }, {
-            name: "许可",
+            name: t("ext-metadata.license"),
             value: extension?.license
         }, {
-            name: "介绍",
+            name: t("ext-metadata.nadescriptionme"),
             value: extension?.description
         }
     ]
 
     return (
-        <Modal show={Boolean(pkg)} onClose={onClose} title={`设置 ${extension?.name}`}>
+        <Modal show={Boolean(pkg)} onClose={onClose} title={t("ext-metadata.title", { extName: extension?.name })}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {
                     metadata.map((item, index) =>
-                        item.value && <p key={index}><span className="font-bold">{item.name}:</span>{item.value}</p>
+                        item.value && <p key={index}><span className="font-bold">{item.name}: </span>{item.value}</p>
                     )
                 }
             </div>
