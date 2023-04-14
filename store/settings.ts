@@ -19,7 +19,7 @@ export default class SettingsStore {
                 if (isClient()) {
                     // 设置语言
                     if (this.getSetting("language")) {
-                        Cookies.set("language", this.getSetting("language"))
+                        Cookies.set("language", this.getSetting("language"), { expires: 365 })
                     }
 
                     // 设置主题
