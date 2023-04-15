@@ -1,8 +1,6 @@
 "use client"
 import BaseMargin from "@/components/BaseMargin";
 import ErrorView from "@/components/ErrorView";
-import Layout from "@/components/Layout";
-import LoadingBox from "@/components/LoadingBox";
 import { useRootStore } from "@/context/root-context";
 import { WatchData, WatchProvider } from "@/context/watch-context";
 import { useQuery } from "@tanstack/react-query";
@@ -16,6 +14,7 @@ import Credits from "./Credits";
 import Episodes from "./Episodes";
 import Footer from "./Footer";
 import Player from "./Player";
+import Skeletion from "./Skeletion";
 
 const WatchPage = observer(() => {
     const searchParams = useSearchParams()
@@ -23,6 +22,7 @@ const WatchPage = observer(() => {
     const { extensionStore } = useRootStore()
     const pkg = searchParams?.get("pkg") as string
     const url = searchParams?.get("url") as string
+    const cover = searchParams?.get("cover") as string
     const extension = extensionStore.getExtension(pkg)
     const { t } = useTranslation("watch")
     const [watchData, setWatchData] = useState<WatchData>()
@@ -61,9 +61,7 @@ const WatchPage = observer(() => {
 
     if (isLoading || !watchData) {
         return (
-            <div className="h-screen w-full flex justify-center items-center">
-                <LoadingBox></LoadingBox>
-            </div>
+            <Skeletion cover={cover} />
         )
     }
 
@@ -76,17 +74,15 @@ const WatchPage = observer(() => {
     return (
         <WatchProvider value={watchData} >
             <Background />
-            <Layout>
-                <BaseMargin>
-                    <div className="min-h-screen">
-                        <Player />
-                        <BaseDetail />
-                        <Episodes />
-                        <Credits />
-                    </div>
-                    <Footer />
-                </BaseMargin>
-            </Layout>
+            <BaseMargin>
+                <div className="min-h-screen">
+                    <Player />
+                    <BaseDetail />
+                    <Episodes />
+                    <Credits />
+                </div>
+                <Footer />
+            </BaseMargin>
         </ WatchProvider>
     )
 })

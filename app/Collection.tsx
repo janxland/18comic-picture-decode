@@ -50,7 +50,8 @@ const Collection = observer(() => {
                         pathname: "/watch",
                         query: {
                             pkg: love.package,
-                            url: love.url
+                            url: love.url,
+                            cover: love.cover
                         }
                     }}>
                         <ItemGrid.Fragment itemData={love}></ItemGrid.Fragment>
