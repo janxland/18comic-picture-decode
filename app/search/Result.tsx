@@ -1,4 +1,5 @@
 import Button from "@/components/common/Button";
+import LazyElement from "@/components/common/LazyElement";
 import ErrorView from "@/components/ErrorView";
 import ItemGrid from "@/components/ItemGrid";
 import SkeletonBlock from "@/components/SkeletonBlock";
@@ -69,20 +70,21 @@ export default function Result({ extension, kw }: { extension: Extension, kw?: s
             <ItemGrid.Grid>
                 {data.pages && data.pages.map((value, index) =>
                     value.map((value, index) =>
-                        <Link
-                            key={index}
-                            href={{
-                                pathname: "/watch",
-                                query: {
-                                    pkg: extension.package,
-                                    url: value.url,
-                                    cover: value.cover
-                                }
-                            }}
-                            className="w-full h-full"
-                        >
-                            <ItemGrid.Fragment itemData={value}></ItemGrid.Fragment>
-                        </Link>
+                        <LazyElement key={index} placeholder={ <div className="h-32"></div>}>
+                            <Link
+                                href={{
+                                    pathname: "/watch",
+                                    query: {
+                                        pkg: extension.package,
+                                        url: value.url,
+                                        cover: value.cover
+                                    }
+                                }}
+                                className="w-full h-full"
+                            >
+                                <ItemGrid.Fragment itemData={value}></ItemGrid.Fragment>
+                            </Link>
+                        </LazyElement>
                     )
                 )}
             </ItemGrid.Grid>
@@ -93,7 +95,7 @@ export default function Result({ extension, kw }: { extension: Extension, kw?: s
                     </Button>
                 )}
             </div>
-        </div>
+        </div >
 
     )
 }

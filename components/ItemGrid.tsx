@@ -1,6 +1,7 @@
 import { ListItem } from "@/types/extension";
 import clsx from "clsx";
 import { HTMLProps } from "react";
+import LoadingImg from "./common/LoadingImg";
 
 function Grid(props: HTMLProps<HTMLDivElement>) {
   return (
@@ -19,7 +20,7 @@ function Fragment({ itemData }: { itemData: ListItem }) {
     <>
       <div className="h-60vw md:h-30vw lg:h-20vw max-h-96 w-full">
         {(itemData.cover && (
-          <img
+          <LoadingImg
             className="rounded-lg object-cover h-full w-full"
             src={itemData.cover}
             alt={itemData.title}

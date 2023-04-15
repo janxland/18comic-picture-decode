@@ -1,5 +1,6 @@
 "use client";
 import CheckUpdate from "@/components/CheckUpdata";
+import LoadingImg from "@/components/common/LoadingImg";
 import ErrorView from "@/components/ErrorView";
 import LoadingBox from "@/components/LoadingBox";
 import { useRootStore } from "@/context/root-context";
@@ -68,7 +69,7 @@ const ContinueVewing = observer(() => {
                 </div>
               </div>
             )) || (
-              <img
+              <LoadingImg
                 className="object-cover w-full h-full"
                 src={history.cover as string}
                 alt={history.title}
@@ -76,7 +77,6 @@ const ContinueVewing = observer(() => {
             )}
             <div className="absolute left-0 right-0 bottom-0 p-2 bg-gradient-to-t from-black">
               <p className=" text-neutral-300 text-xs mt-3 mb-1">
-                {" "}
                 <CheckUpdate
                   pkg={history.package}
                   url={history.url}

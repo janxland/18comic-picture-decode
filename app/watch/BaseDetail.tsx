@@ -1,5 +1,6 @@
 "use client"
 
+import LoadingImg from "@/components/common/LoadingImg"
 import Modal from "@/components/Modal"
 import { useRootStore } from "@/context/root-context"
 import { useWatchContext } from "@/context/watch-context"
@@ -97,7 +98,7 @@ export default function BaseDetail() {
     return (
         <div className="md:items-end mb-5 md:mb-16 flex flex-col items-center md:flex-row">
             <div className="mb-6 md:mb-0 md:flex flex-col items-center md:w-1/4 lg:w-1/5">
-                <img
+                <LoadingImg
                     className="md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3"
                     src={detail?.cover} alt={detail.title} />
                 <div className="mt-3 md:mt-0 flex justify-between w-full flex-col xl:flex-row">
