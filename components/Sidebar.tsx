@@ -1,4 +1,4 @@
-import { useTranslation } from '@/app/i18n/client'
+import { useTranslation } from '@/app/i18n'
 import clsx from 'clsx'
 import {
     Home as IconHome, LayoutGrid as IconExtension, Search as IconSearh, Settings as IconSettings

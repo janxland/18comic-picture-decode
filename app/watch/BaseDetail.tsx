@@ -7,7 +7,8 @@ import { loveDB, tmdbDB } from "@/db"
 import { Detail } from "@/types/extension"
 import { ExternalLink, Heart, MoreHorizontal } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useTranslation } from "../i18n/client"
+import { useTranslation } from "../i18n"
+
 
 export default function BaseDetail() {
     const { tmdbStore } = useRootStore()
@@ -97,11 +98,10 @@ export default function BaseDetail() {
         <div className="md:items-end mb-5 md:mb-16 flex flex-col items-center md:flex-row">
             <div className="mb-6 md:mb-0 md:flex flex-col items-center md:w-1/4 lg:w-1/5">
                 <img
-                    className="md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3 "
+                    className="md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3"
                     src={detail?.cover} alt={detail.title} />
                 <div className="mt-3 md:mt-0 flex justify-between w-full flex-col xl:flex-row">
                     <LoveButton pkg={pkg} url={url} data={detail} type={extension.type}></LoveButton>
-
                 </div>
             </div>
             <div className="w-full md:w-3/4 lg:w-4/5 md:ml-5 md:mt-10">
@@ -181,8 +181,8 @@ export default function BaseDetail() {
                         </p>
                     </div>
                 </Modal>
-            </div >
-        </div >
+            </div>
+        </div>
     )
 }
 

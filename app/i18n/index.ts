@@ -1,30 +1,17 @@
-import { createInstance } from 'i18next';
-import resourcesToBackend from 'i18next-resources-to-backend';
-import { cookies } from "next/headers";
-import { initReactI18next } from 'react-i18next/initReactI18next';
-import { fallbackLng, getOptions } from './settings';
+'use client'
+import i18next from 'i18next'
+import resourcesToBackend from 'i18next-resources-to-backend'
+import cookies from "js-cookie"
+import { initReactI18next, useTranslation as useTranslationOrg } from 'react-i18next'
+import { fallbackLng, getOptions } from './settings'
 
-const initI18next = async (lng: string, ns?: string[] | string) => {
-    const i18nInstance = createInstance()
-    await i18nInstance
-        .use(initReactI18next)
-        .use(resourcesToBackend((language: string, namespace: string) => import(`./locales/${language}/${namespace}.json`)))
-        .init(getOptions(lng, ns))
-    return i18nInstance
-}
+i18next
+    .use(initReactI18next)
+    .use(resourcesToBackend((language: string, namespace: string) => import(`./locales/${language}/${namespace}.json`)))
+    .init(getOptions())
 
-export async function useTranslation(ns?: string[] | string, options: any = {}) {
-    const cookie = cookies()
-    const lng = cookie.get("language")?.value || fallbackLng
-    const i18nextInstance = await initI18next(lng, ns)
-    return {
-        t: i18nextInstance.getFixedT(lng, Array.isArray(ns) ? ns[0] : ns, options.keyPrefix),
-        i18n: i18nextInstance
-    }
-}
-
-// 因为 eslint 一直报错 现就这样了（ 
-export async function GetPageTitle(ns: string) {
-    const { t } = await useTranslation(ns)
-    return t("title")
+export function useTranslation(ns?: string[] | string, options: any = {}) {
+    const lng = cookies.get("language") ?? fallbackLng
+    if (i18next.resolvedLanguage !== lng) i18next.changeLanguage(lng)
+    return useTranslationOrg(ns, options)
 }

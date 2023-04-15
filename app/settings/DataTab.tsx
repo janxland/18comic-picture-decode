@@ -1,5 +1,5 @@
 "use client"
-import { useTranslation } from "@/app/i18n/client"
+import { useTranslation } from "@/app/i18n"
 import Button from "@/components/common/Button"
 import { useRootStore } from "@/context/root-context"
 import { loveDB } from "@/db"

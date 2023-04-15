@@ -1,4 +1,4 @@
-import { useTranslation } from "@/app/i18n/client";
+import { useTranslation } from "@/app/i18n";
 import { useEffect, useState } from "react";
 
 export default function ErrorView({ error }: { error: any }) {

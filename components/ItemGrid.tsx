@@ -17,17 +17,19 @@ function Grid(props: HTMLProps<HTMLDivElement>) {
 function Fragment({ itemData }: { itemData: ListItem }) {
   return (
     <>
-      {(itemData.cover && (
-        <img
-          className="rounded-lg object-cover h-60vw md:h-30vw lg:h-20vw max-h-96 w-full"
-          src={itemData.cover}
-          alt={itemData.title}
-        />
-      )) || (
-        <div className="relative rounded-lg w-full bg-gray-200 p-3 flex justify-center items-center text-xl ">
-          {itemData.title}
-        </div>
-      )}
+      <div className="h-60vw md:h-30vw lg:h-20vw max-h-96 w-full">
+        {(itemData.cover && (
+          <img
+            className="rounded-lg object-cover h-full w-full"
+            src={itemData.cover}
+            alt={itemData.title}
+          />
+        )) || (
+            <div className="rounded-lg w-full h-full bg-gray-200 p-3 flex justify-center items-center text-xl ">
+              {itemData.title}
+            </div>
+          )}
+      </div>
       <div>
         <p className="text-gray-400 text-xs mt-3 mb-1"> {itemData.update}</p>
         <p>{itemData.title}</p>

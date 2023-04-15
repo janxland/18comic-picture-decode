@@ -2,7 +2,7 @@ import { useRootStore } from "@/context/root-context"
 import { useWatchContext } from "@/context/watch-context"
 import { Credits as TypeCredits } from "@/types/tmdb"
 import { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "../i18n"
 import Title from "./Title"
 
 // 主演

@@ -1,11 +1,12 @@
 import Button from "@/components/common/Button";
 import ErrorView from "@/components/ErrorView";
 import ItemGrid from "@/components/ItemGrid";
-import LoadingBox from "@/components/LoadingBox";
+import SkeletonBlock from "@/components/SkeletonBlock";
 import { Extension } from "@/extension/extension";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useTranslation } from "../i18n/client";
+import { useTranslation } from "../i18n";
+
 
 export default function Result({ extension, kw }: { extension: Extension, kw?: string }) {
     const { t } = useTranslation(["search", "common"])
@@ -25,7 +26,6 @@ export default function Result({ extension, kw }: { extension: Extension, kw?: s
             }
             return extension?.search(kw, pageParam)
         },
-        retry: false,
         getNextPageParam: (lastPage, pages) => {
             if (!lastPage) {
                 return undefined
@@ -37,15 +37,21 @@ export default function Result({ extension, kw }: { extension: Extension, kw?: s
         }
     })
 
-    if (isError) {
+    if (isLoading) {
         return (
-            <ErrorView error={error}></ErrorView>
+            <ItemGrid.Grid>
+                {
+                    new Array(20).fill(0).map((_, i) => (
+                        <SkeletonBlock key={i} className="h-60vw md:h-30vw lg:h-20vw max-h-96 !rounded-lg" />
+                    ))
+                }
+            </ItemGrid.Grid>
         )
     }
 
-    if (isLoading) {
+    if (isError) {
         return (
-            <LoadingBox />
+            <ErrorView error={error}></ErrorView>
         )
     }
 
@@ -69,7 +75,8 @@ export default function Result({ extension, kw }: { extension: Extension, kw?: s
                                 pathname: "/watch",
                                 query: {
                                     pkg: extension.package,
-                                    url: value.url
+                                    url: value.url,
+                                    cover: value.cover
                                 }
                             }}
                             className="w-full h-full"
