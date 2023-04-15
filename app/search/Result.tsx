@@ -5,7 +5,7 @@ import SkeletonBlock from "@/components/SkeletonBlock";
 import { Extension } from "@/extension/extension";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useTranslation } from "../i18n/client";
+import { useTranslation } from "../i18n";
 
 
 export default function Result({ extension, kw }: { extension: Extension, kw?: string }) {

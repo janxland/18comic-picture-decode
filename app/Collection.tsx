@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query"
 import { observer } from "mobx-react-lite"
 import Link from "next/link"
 import { useEffect } from "react"
-import { useTranslation } from "./i18n/client"
+import { useTranslation } from "./i18n"
 
 const Collection = observer(() => {
     const { settingsStore } = useRootStore()

@@ -11,7 +11,7 @@ import { tmdbDB } from "@/db"
 import { SearchResult } from "@/types/tmdb"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { useTranslation } from "../i18n/client"
+import { useTranslation } from "../i18n"
 
 export default function Footer() {
     const { extension } = useWatchContext()

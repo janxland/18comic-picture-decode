@@ -1,12 +1,12 @@
 "use client"
 
-import Tab, { Tabs } from "@/components/Tab"
 import Button from "@/components/common/Button"
+import Tab, { Tabs } from "@/components/Tab"
 import { useRootStore } from "@/context/root-context"
 import { useWatchContext } from "@/context/watch-context"
 import { closeSnackbar, enqueueSnackbar } from "notistack"
 import { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "../i18n"
 import Title from "./Title"
 
 // 剧集

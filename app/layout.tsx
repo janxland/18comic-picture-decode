@@ -2,10 +2,7 @@ import '@/styles/globals.css';
 import RootProvider from './RootProvider';
 
 export const metadata = {
-    title: {
-        template: '%s | Miru',
-        default: "Miru"
-    }
+    title: "Miru"
 }
 
 

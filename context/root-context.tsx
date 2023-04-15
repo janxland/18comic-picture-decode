@@ -1,4 +1,4 @@
-import { useTranslation } from "@/app/i18n/client";
+import { useTranslation } from "@/app/i18n";
 import InitView from "@/components/InitView";
 import { RootStore } from "@/store/root";
 import { isClient } from "@/utils/is-client";

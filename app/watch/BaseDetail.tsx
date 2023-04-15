@@ -7,7 +7,7 @@ import { loveDB, tmdbDB } from "@/db"
 import { Detail } from "@/types/extension"
 import { ExternalLink, Heart, MoreHorizontal } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useTranslation } from "../i18n/client"
+import { useTranslation } from "../i18n"
 
 
 export default function BaseDetail() {

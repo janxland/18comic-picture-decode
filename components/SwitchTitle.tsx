@@ -1,5 +1,5 @@
 "use client"
-import { useTranslation } from "@/app/i18n/client"
+import { useTranslation } from "@/app/i18n"
 import { useRootStore } from "@/context/root-context"
 import { observer } from "mobx-react-lite"
 import Tab from "./Tab"

@@ -1,19 +1,14 @@
+"use client"
 import BaseMargin from "@/components/BaseMargin";
 import Layout from "@/components/Layout";
 import Tab from "@/components/Tab";
-import { Metadata } from "next";
-import { GetPageTitle, useTranslation } from "../i18n";
+import { useTranslation } from "../i18n";
 import AboutTab from "./AboutTab";
 import DataTab from "./DataTab";
 import GeneralTab from "./GeneralTab";
 
-export async function generateMetadata(): Promise<Metadata> {
-    const title = await GetPageTitle('settings')
-    return { title }
-}
-
-export default async function Page() {
-    const { t } = await useTranslation("settings")
+export default function Page() {
+    const { t } = useTranslation("settings")
     return (
         <Layout>
             <BaseMargin>

@@ -1,8 +1,8 @@
 "use client"
 
+import Button from "@/components/common/Button"
 import ErrorView from "@/components/ErrorView"
 import LoadingBox from "@/components/LoadingBox"
-import Button from "@/components/common/Button"
 import { useRootStore } from "@/context/root-context"
 import { Extension, extensionDB } from "@/db"
 import { getModel } from "@/utils/model"
@@ -11,8 +11,8 @@ import { Download, Trash, Upload } from 'lucide-react'
 import { observer } from "mobx-react-lite"
 import { useSnackbar } from "notistack"
 import { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
 import request from "umi-request"
+import { useTranslation } from "../i18n"
 import Item from "./Item"
 
 const RepoTab = observer(() => {
