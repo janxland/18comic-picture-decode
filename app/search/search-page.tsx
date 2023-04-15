@@ -48,6 +48,13 @@ const SearchPage = observer(() => {
                         <input type="text" className="w-full border rounded-3xl p-4 dark:text-white dark:bg-black" placeholder={t('search-placeholder') as string} />
                     </form>
                     <Tab className="mb-6" tabs={tabs}></Tab>
+                    {
+                        tabs.length === 0 &&
+                        <div className="text-center mt-28">
+                            <p className="text-2xl font-bold">{t("no-extension")}</p>
+                            <p className="text-sm">{t("no-extension-tips")}</p>
+                        </div>
+                    }
                 </BaseMargin>
             </Layout>
         </>
