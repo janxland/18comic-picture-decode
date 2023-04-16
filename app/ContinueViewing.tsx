@@ -49,7 +49,7 @@ const ContinueVewing = observer(() => {
       <div className="ml-230px"></div>
       {data.map((history, index) => (
         <div
-          className="mr-4 relative rounded-lg overflow-hidden shrink-0"
+          className="mr-4 relative rounded-lg overflow-hidden flex-shrink-0"
           key={index}
           style={{ width: "350px", height: "200px" }}
         >

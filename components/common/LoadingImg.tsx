@@ -4,7 +4,7 @@ import SkeletonBlock from "../SkeletonBlock";
 
 interface LoadingImgProps extends ImgHTMLAttributes<HTMLImageElement> {
     loadView?: React.ReactNode;
-    fallback?: React.ReactNode;
+    errorView?: React.ReactNode;
 }
 export default function LoadingImg(props: LoadingImgProps) {
     const imgRef = useRef<HTMLImageElement>(null)
@@ -34,7 +34,7 @@ export default function LoadingImg(props: LoadingImgProps) {
     if (error) {
         return (
             <>
-                {props.fallback ?? <div className="w-full h-full bg-gray-200"></div>}
+                {props.errorView ?? <div className="w-full h-full bg-gray-200"></div>}
             </>
         )
     }
