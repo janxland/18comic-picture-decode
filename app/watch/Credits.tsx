@@ -1,3 +1,5 @@
+import LoadingImg from "@/components/common/LoadingImg"
+import SkeletonBlock from "@/components/SkeletonBlock"
 import { useRootStore } from "@/context/root-context"
 import { useWatchContext } from "@/context/watch-context"
 import { Credits as TypeCredits } from "@/types/tmdb"
@@ -22,8 +24,12 @@ export default function Credits() {
         })
     }, [tmdbId])
 
-    if (!cast.length) {
-        return <></>
+    if (!tmdbId) {
+        return null
+    }
+
+    if (cast.length) {
+        <SkeletonBlock className="h-56 mb-6" />
     }
 
     return (
@@ -31,11 +37,19 @@ export default function Credits() {
             <Title>
                 {t('starring')}
             </Title>
-            <div className="overflow-auto flex pb-3 scrollbar-none " >
+            <div className="overflow-auto flex pb-3 scrollbar-none" >
                 {
                     cast.map((item, index) => (
-                        <div key={index} className="mr-3" style={{ minWidth: "130px", maxWidth: "130px" }} >
-                            <img className="w-full rounded-lg" src={tmdbStore.getImageUrl(item.profile_path)} />
+                        <div key={index} className="mr-3 flex-shrink-0" style={{ width: "130px" }} >
+                            {
+                                tmdbStore.getImageUrl(item.profile_path) ?
+                                    <LoadingImg
+                                        className="w-full rounded-lg"
+                                        errorView={<div className="flex justify-center items-center" style={{ width: "130px", height: "190px" }} > 加载错误 </div>}
+                                        loadView={<SkeletonBlock style={{ width: "130px", height: "190px" }} />}
+                                        src={tmdbStore.getImageUrl(item.profile_path)} /> :
+                                    <div className="flex justify-center items-center" style={{ width: "130px", height: "190px" }} > 无图片 </div>
+                            }
                             <a href={`https://www.themoviedb.org/person/${item.id}`} target="_blank" rel="noreferrer">
                                 <div className="p-3 break-keep text-sm ">
                                     <div className="font-bold">
@@ -50,7 +64,7 @@ export default function Credits() {
                     ))
                 }
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -4,6 +4,8 @@ import { MangaWatch } from "@/types/extension";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import Button from "../common/Button";
+import LazyElement from "../common/LazyElement";
+import LoadingImg from "../common/LoadingImg";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
 
@@ -52,7 +54,15 @@ export default function MangaPlayer() {
             <div className="w-full md:w-auto">
                 {
                     data.urls.map((url, index) => {
-                        return <img key={index} className="m-auto" src={url} alt="Manga" referrerPolicy="no-referrer" />
+                                return <LazyElement key={index} placeholder={<div className="h-40 w-full"><LoadingBox></LoadingBox></div>}>
+                            <LoadingImg
+                                loadView={<div className="h-40 w-full"><LoadingBox></LoadingBox></div>}
+                                className="m-auto"
+                                src={url}
+                                alt="Manga"
+                                referrerPolicy="no-referrer"
+                            />
+                        </LazyElement>
                     })
                 }
             </div>
