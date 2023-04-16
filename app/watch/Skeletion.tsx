@@ -1,4 +1,5 @@
 import BaseMargin from "@/components/BaseMargin";
+import LoadingImg from "@/components/common/LoadingImg";
 import Layout from "@/components/Layout";
 import SkeletonBlock from "@/components/SkeletonBlock";
 
@@ -11,7 +12,7 @@ export default function Skeletion({ cover }: { cover?: string }) {
                         <div className="mb-6 md:mb-0 md:flex flex-col items-center md:w-1/4 lg:w-1/5">
                             {
                                 cover ?
-                                    <img
+                                    <LoadingImg
                                         className="md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3 "
                                         src={cover} alt="cover" />
                                     :
