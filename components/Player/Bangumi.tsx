@@ -17,7 +17,7 @@ export default function BangumiPlayer() {
 
     const extension = extensionStore.getExtension(pkg)
 
-    const artRef = useRef(null);
+    const artRef = useRef<HTMLDivElement>(null);
 
 
     const { data, error, isLoading } = useQuery({
@@ -32,9 +32,14 @@ export default function BangumiPlayer() {
             return
         }
 
+        if (data.noDefaultPlayer) {
+            extension?.customPlayer(artRef.current as any, data.url, {} as any)
+            return
+        }
+
         const autoMini = isClient() && window.innerWidth > 768
         const art = new Artplayer({
-            container: artRef.current as unknown as HTMLDivElement,
+            container: artRef.current!,
             url: data.url,
             type: data.type,
             pip: true,
@@ -118,6 +123,7 @@ export default function BangumiPlayer() {
             },
             customType: {
                 hls: playM3u8,
+                custom: extension?.customPlayer,
             },
         });
         art.on('ready', () => {

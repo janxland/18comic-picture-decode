@@ -32,6 +32,8 @@ export interface Episode {
 export interface BangumiWatch {
   type: "hls" | "mp4";
   url: string;
+  // 是否禁用默认播放器
+  noDefaultPlayer: boolean;
 }
 
 // 漫画 watch Props

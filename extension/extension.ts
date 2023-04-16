@@ -1,5 +1,6 @@
 import { ExtensionSettings, extensionSettingsDB } from "@/db";
 import { BangumiWatch, Detail, FikushonWatch, ListItem, MangaWatch } from "@/types/extension";
+import Artplayer from "artplayer";
 import request from "umi-request";
 
 
@@ -66,6 +67,11 @@ export class Extension {
             return settings.value;
         }
         return "";
+    }
+
+    // 自定义播放器
+    customPlayer(video: HTMLMediaElement, url: string, art: Artplayer) {
+        art.notice.show = "not implement customPlayer";
     }
 
     // 注册设置
