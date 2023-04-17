@@ -10,7 +10,6 @@ export interface Love {
 }
 
 export namespace loveDB {
-
     export function getAllLove() {
         return db.love.toArray();
     }

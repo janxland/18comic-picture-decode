@@ -12,12 +12,13 @@ export default function Loading() {
                 <SkeletonBlock className="h-10 mr-3 w-20 inline-block" />
             </div>
             <div>
-                {
-                    new Array(5).fill(0).map((_, i) => (
-                        <SkeletonBlock key={i} className="h-10 w-full md:w-96 mb-3" />
-                    ))
-                }
+                {new Array(5).fill(0).map((_, i) => (
+                    <SkeletonBlock
+                        key={i}
+                        className="h-10 w-full md:w-96 mb-3"
+                    />
+                ))}
             </div>
         </BaseMargin>
-    )
+    );
 }

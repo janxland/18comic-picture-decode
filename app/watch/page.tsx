@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import BaseMargin from "@/components/BaseMargin";
 import ErrorView from "@/components/ErrorView";
 import { useRootStore } from "@/context/root-context";
@@ -17,19 +17,19 @@ import Player from "./Player";
 import Skeletion from "./Skeletion";
 
 const WatchPage = observer(() => {
-    const searchParams = useSearchParams()
-    const route = useRouter()
-    const { extensionStore } = useRootStore()
-    const pkg = searchParams?.get("pkg") as string
-    const url = searchParams?.get("url") as string
-    const cover = searchParams?.get("cover") as string
-    const extension = extensionStore.getExtension(pkg)
-    const { t } = useTranslation("watch")
-    const [watchData, setWatchData] = useState<WatchData>()
+    const searchParams = useSearchParams();
+    const route = useRouter();
+    const { extensionStore } = useRootStore();
+    const pkg = searchParams?.get("pkg") as string;
+    const url = searchParams?.get("url") as string;
+    const cover = searchParams?.get("cover") as string;
+    const extension = extensionStore.getExtension(pkg);
+    const { t } = useTranslation("watch");
+    const [watchData, setWatchData] = useState<WatchData>();
     const { isLoading, error, isError, data } = useQuery({
         queryKey: ["watch", pkg, url],
-        queryFn: () => extension?.detail(url)
-    })
+        queryFn: () => extension?.detail(url),
+    });
     useEffect(() => {
         if (data) {
             setWatchData({
@@ -38,41 +38,33 @@ const WatchPage = observer(() => {
                 url,
                 extension: extension!,
                 setWatchData,
-            })
+            });
         }
-    }, [data])
+    }, [data]);
 
     if (!pkg || !url) {
         // 跳转到404
-        route.push("/404")
-        return <></>
+        route.push("/404");
+        return <></>;
     }
     if (!extension) {
-        return (
-            <ErrorView error={t('extension-lost', { pkg })} ></ErrorView>
-        )
+        return <ErrorView error={t("extension-lost", { pkg })}></ErrorView>;
     }
 
     if (isError) {
-        return (
-            <ErrorView error={error} />
-        )
+        return <ErrorView error={error} />;
     }
 
     if (isLoading || !watchData) {
-        return (
-            <Skeletion cover={cover} />
-        )
+        return <Skeletion cover={cover} />;
     }
 
     if (!data) {
-        return (
-            <ErrorView error={t('not-found-data')}></ErrorView>
-        )
+        return <ErrorView error={t("not-found-data")}></ErrorView>;
     }
 
     return (
-        <WatchProvider value={watchData} >
+        <WatchProvider value={watchData}>
             <Background />
             <BaseMargin>
                 <div className="min-h-screen">
@@ -83,9 +75,8 @@ const WatchPage = observer(() => {
                 </div>
                 <Footer />
             </BaseMargin>
-        </ WatchProvider>
-    )
-})
+        </WatchProvider>
+    );
+});
 
-export default WatchPage
-
+export default WatchPage;

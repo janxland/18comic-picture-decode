@@ -14,7 +14,7 @@ export default function LazyElement(props: LazyElement) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    setChild(props.children)
+                    setChild(props.children);
                     observer.unobserve(entry.target);
                 }
             });
@@ -24,11 +24,11 @@ export default function LazyElement(props: LazyElement) {
         }
         return () => {
             observer.disconnect();
-        }
-    })
+        };
+    });
     return (
         <div ref={elementRef} className={props.className}>
             {child}
         </div>
-    )
+    );
 }

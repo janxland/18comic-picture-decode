@@ -11,32 +11,31 @@ export * from "./table/love";
 export * from "./table/settings";
 export * from "./table/tmdb";
 
-
-
 export class MiruDB extends Dexie {
-
-    history!: Table<History>
-    extension!: Table<Extension>
-    love!: Table<Love>
-    settings!: Table<Settings>
-    extensionSettings!: Table<ExtensionSettings>
-    tmdb!: Table<TMDB>
+    history!: Table<History>;
+    extension!: Table<Extension>;
+    love!: Table<Love>;
+    settings!: Table<Settings>;
+    extensionSettings!: Table<ExtensionSettings>;
+    tmdb!: Table<TMDB>;
 
     constructor() {
         super("MiruDB");
         this.version(5).stores({
-            history: "++id, url, title, package, cover, type, time,&[url+package]",
-            extension: "++id, id, name, &package, version, lang, type, script, enable, description, webSite, scriptUrl, author, icon, settings",
+            history:
+                "++id, url, title, package, cover, type, time,&[url+package]",
+            extension:
+                "++id, id, name, &package, version, lang, type, script, enable, description, webSite, scriptUrl, author, icon, settings",
             love: "++id, title, package, url, cover, type,&[url+package]",
             settings: "++id, &key, value",
-            extensionSettings: "++id, title, package, key, value, type, options, defaultValue, description, &[package+key]",
+            extensionSettings:
+                "++id, title, package, key, value, type, options, defaultValue, description, &[package+key]",
             tmdb: "++id, tmdb_id, mediaType, pkg, url,&[url+pkg]",
         });
     }
 }
 
-
-export const db = new MiruDB()
+export const db = new MiruDB();
 
 export function exportData() {
     return Promise.all([
@@ -44,7 +43,7 @@ export function exportData() {
         db.extension.toArray(),
         db.love.toArray(),
         db.settings.toArray(),
-    ])
+    ]);
 }
 
 export function importData(data: any) {
@@ -53,6 +52,5 @@ export function importData(data: any) {
         db.extension.bulkPut(data[1]),
         db.love.bulkPut(data[2]),
         db.settings.bulkPut(data[3]),
-    ])
+    ]);
 }
-

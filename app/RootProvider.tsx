@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import Player from "@/components/Player/Index";
 import Sidebar from "@/components/Sidebar";
 import { RootStoreProvider } from "@/context/root-context";
 import { logMiruInfo } from "@/utils/miru-log";
@@ -8,19 +9,26 @@ import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
-
-export default function RootProvider({ children }: { children: React.ReactNode }) {
+export default function RootProvider({
+    children,
+}: {
+    children: React.ReactElement;
+}) {
     useEffect(() => {
-        logMiruInfo()
-    }, [])
+        logMiruInfo();
+    }, []);
     return (
-        <RootStoreProvider >
+        <RootStoreProvider>
             <QueryClientProvider client={queryClient}>
-                <SnackbarProvider anchorOrigin={{ horizontal: "right", vertical: "top" }} autoHideDuration={3000} >
+                <SnackbarProvider
+                    anchorOrigin={{ horizontal: "right", vertical: "top" }}
+                    autoHideDuration={3000}
+                >
                     <Sidebar />
+                    <Player />
                     {children}
                 </SnackbarProvider>
             </QueryClientProvider>
         </RootStoreProvider>
-    )
+    );
 }

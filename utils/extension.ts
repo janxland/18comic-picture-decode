@@ -6,7 +6,7 @@ export function readExtensionMateData(script: string) {
         /MiruExtension([\s\S]+?)\/MiruExtension/
     )?.[1];
     if (!scriptMetaData) {
-        return undefined
+        return undefined;
     }
     const data: any = {};
     const lines = scriptMetaData.split("\n");
@@ -17,15 +17,20 @@ export function readExtensionMateData(script: string) {
             data[property[0]] = property.slice(1).join(" ").trim();
         }
     }
-    return data as Extension
-
+    return data as Extension;
 }
 
 // 验证是否数据是否合法
 export function verExtensionMateData(data: Extension) {
-    if (!data.name || !data.package || !data.version || !data.webSite || !data.type || !data.lang) {
-        return false
+    if (
+        !data.name ||
+        !data.package ||
+        !data.version ||
+        !data.webSite ||
+        !data.type ||
+        !data.lang
+    ) {
+        return false;
     }
-    return true
+    return true;
 }
-

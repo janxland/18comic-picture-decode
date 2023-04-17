@@ -1,17 +1,18 @@
-import { useTranslation } from "@/app/i18n"
-import clsx from "clsx"
+import { useTranslation } from "@/app/i18n";
+import clsx from "clsx";
 import {
-    Home as IconHome, LayoutGrid as IconExtension, Search as IconSearh, Settings as IconSettings
-} from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import Logo from "./Logo"
-
-
+    Home as IconHome,
+    LayoutGrid as IconExtension,
+    Search as IconSearh,
+    Settings as IconSettings,
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Logo from "./Logo";
 
 export default function Sidebar() {
-    const path = usePathname() as string
-    const { t } = useTranslation("sidebar")
+    const path = usePathname() as string;
+    const { t } = useTranslation("sidebar");
     const menu = [
         {
             title: t("home"),
@@ -33,8 +34,10 @@ export default function Sidebar() {
             path: "/settings",
             icon: IconSettings,
         },
-    ]
-    const baseClassNames = clsx("flex-col w-20 h-20 lg:h-auto lg:w-auto lg:flex-row items-center cursor-pointer lg:mb-2 p-4 rounded-3xl flex ")
+    ];
+    const baseClassNames = clsx(
+        "flex-col w-20 h-20 lg:h-auto lg:w-auto lg:flex-row items-center cursor-pointer lg:mb-2 p-4 rounded-3xl flex "
+    );
 
     return (
         <>
@@ -43,24 +46,38 @@ export default function Sidebar() {
                     <Logo />
                 </div>
                 <ul className="flex justify-center lg:block">
-                    {
-                        menu.map((item, i) =>
-                            <li key={i}>
-                                <Link
-                                    href={item.path}
-                                    className={(path === item.path ? clsx(baseClassNames, "bg-black text-white ring-4 ring-gray-300 dark:bg-zinc-700 dark:text-white") : clsx(baseClassNames, "hover:opacity-50"))}>
-                                    <item.icon
-                                        className={clsx("mb-1 lg:mr-2 lg:mb-0", { "text-white ": path === item.path }, {
-                                        })}
-                                        width={24}
-                                    />
-                                    <div className="text-sm lg:text-lg">{item.title}</div>
-                                </Link>
-                            </li>
-                        )
-                    }
+                    {menu.map((item, i) => (
+                        <li key={i}>
+                            <Link
+                                href={item.path}
+                                className={
+                                    path === item.path
+                                        ? clsx(
+                                              baseClassNames,
+                                              "bg-black text-white ring-4 ring-gray-300 dark:bg-zinc-700 dark:text-white"
+                                          )
+                                        : clsx(
+                                              baseClassNames,
+                                              "hover:opacity-50"
+                                          )
+                                }
+                            >
+                                <item.icon
+                                    className={clsx(
+                                        "mb-1 lg:mr-2 lg:mb-0",
+                                        { "text-white ": path === item.path },
+                                        {}
+                                    )}
+                                    width={24}
+                                />
+                                <div className="text-sm lg:text-lg">
+                                    {item.title}
+                                </div>
+                            </Link>
+                        </li>
+                    ))}
                 </ul>
             </div>
         </>
-    )
+    );
 }

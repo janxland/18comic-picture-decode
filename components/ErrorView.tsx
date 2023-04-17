@@ -2,19 +2,19 @@ import { useTranslation } from "@/app/i18n";
 import { useEffect, useState } from "react";
 
 export default function ErrorView({ error }: { error: any }) {
-    const [msg, setMsg] = useState<string>("")
-    const { t } = useTranslation()
+    const [msg, setMsg] = useState<string>("");
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (typeof error === "object") {
-            return setMsg((error as Object).toString())
+            return setMsg((error as Object).toString());
         }
-        setMsg(error)
-    }, [error])
+        setMsg(error);
+    }, [error]);
     return (
         <div className="text-center my-28">
-            <p className="text-2xl font-bold">{t('an-error-has-occurred')}</p>
+            <p className="text-2xl font-bold">{t("an-error-has-occurred")}</p>
             <p className="text-sm">{msg}</p>
         </div>
-    )
+    );
 }

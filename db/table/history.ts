@@ -19,20 +19,29 @@ export interface History {
 }
 
 export namespace historyDB {
-
     export async function getAllHistory() {
         // 返回最新修改的
-        return db.history.reverse().sortBy("time")
+        return db.history.reverse().sortBy("time");
     }
 
-    export function getAllHistoryByType(type: "bangumi" | "manga" | "fikushon", limit: number) {
-        return db.history.where("type").equals(type).reverse().limit(limit).sortBy("time");
+    export function getAllHistoryByType(
+        type: "bangumi" | "manga" | "fikushon",
+        limit: number
+    ) {
+        return db.history
+            .where("type")
+            .equals(type)
+            .reverse()
+            .limit(limit)
+            .sortBy("time");
     }
 
     export async function addHistory(history: History) {
         history.time = Date.now();
         if (await getHistory(history.url, history.package)) {
-            return db.history.where({ url: history.url, package: history.package }).modify(history);
+            return db.history
+                .where({ url: history.url, package: history.package })
+                .modify(history);
         }
         return db.history.add(history);
     }
@@ -48,6 +57,4 @@ export namespace historyDB {
     export function getHistory(url: string, pkg: string) {
         return db.history.where({ url, package: pkg }).first();
     }
-
-
 }

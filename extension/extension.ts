@@ -1,11 +1,15 @@
 import { ExtensionSettings, extensionSettingsDB } from "@/db";
-import { BangumiWatch, Detail, FikushonWatch, ListItem, MangaWatch } from "@/types/extension";
+import {
+    BangumiWatch,
+    Detail,
+    FikushonWatch,
+    ListItem,
+    MangaWatch,
+} from "@/types/extension";
 import Artplayer from "artplayer";
 import request from "umi-request";
 
-
 export class Extension {
-
     package = "";
     proxyUrl = "";
     webSite = "";
@@ -30,10 +34,9 @@ export class Extension {
         if (!options.headers["Miru-Url"]) {
             options.headers = { ...options.headers, "Miru-Url": this.webSite };
         }
-        const miruProxy = this.proxyUrl + url
+        const miruProxy = this.proxyUrl + url;
         return request(miruProxy, options);
     }
-
 
     // 最近更新
     latest(page: number): ListItem[] {
@@ -62,7 +65,10 @@ export class Extension {
 
     // 读取设置
     async getSetting(key: string) {
-        const settings = await extensionSettingsDB.getSetting(this.package, key);
+        const settings = await extensionSettingsDB.getSetting(
+            this.package,
+            key
+        );
         if (settings) {
             return settings.value;
         }
@@ -84,7 +90,7 @@ export class Extension {
         options?: {
             label: string;
             value: string;
-        }[]
+        }[];
     }) {
         await extensionSettingsDB.addSettings({
             package: this.package,
@@ -93,6 +99,6 @@ export class Extension {
         });
     }
 
-    load() { }
-    unload() { }
+    load() {}
+    unload() {}
 }

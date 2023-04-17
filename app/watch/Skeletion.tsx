@@ -10,14 +10,15 @@ export default function Skeletion({ cover }: { cover?: string }) {
                 <div className="min-h-screen">
                     <div className="md:items-end mb-5 md:mb-16 flex flex-col items-center md:flex-row">
                         <div className="mb-6 md:mb-0 md:flex flex-col items-center md:w-1/4 lg:w-1/5">
-                            {
-                                cover ?
-                                    <LoadingImg
-                                        className="md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3 "
-                                        src={cover} alt="cover" />
-                                    :
-                                    <SkeletonBlock className="md:block mb-3 h-80 w-60 md:w-full" />
-                            }
+                            {cover ? (
+                                <LoadingImg
+                                    className="md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3 "
+                                    src={cover}
+                                    alt="cover"
+                                />
+                            ) : (
+                                <SkeletonBlock className="md:block mb-3 h-80 w-60 md:w-full" />
+                            )}
                             <div className="mt-3 md:mt-0 flex justify-between w-full flex-col xl:flex-row">
                                 <SkeletonBlock className="w-full h-11" />
                             </div>
@@ -38,5 +39,5 @@ export default function Skeletion({ cover }: { cover?: string }) {
                 </div>
             </BaseMargin>
         </Layout>
-    )
+    );
 }

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { ImgHTMLAttributes, useEffect, useRef, useState } from "react";
 import SkeletonBlock from "../SkeletonBlock";
 
@@ -7,41 +7,44 @@ interface LoadingImgProps extends ImgHTMLAttributes<HTMLImageElement> {
     errorView?: React.ReactNode;
 }
 export default function LoadingImg(props: LoadingImgProps) {
-    const imgRef = useRef<HTMLImageElement>(null)
-    const [loaded, setLoaded] = useState(false)
-    const [error, setError] = useState(false)
+    const imgRef = useRef<HTMLImageElement>(null);
+    const [loaded, setLoaded] = useState(false);
+    const [error, setError] = useState(false);
     useEffect(() => {
         if (imgRef.current) {
             if (imgRef.current.complete) {
-                setLoaded(true)
-                return
+                setLoaded(true);
+                return;
             }
             imgRef.current.onload = () => {
-                setLoaded(true)
-            }
+                setLoaded(true);
+            };
             imgRef.current.addEventListener("error", () => {
-                setError(true)
-            })
+                setError(true);
+            });
         }
-        return (() => {
+        return () => {
             if (imgRef.current) {
                 imgRef.current!.removeEventListener("error", () => {
                     console.log("error");
-                })
+                });
             }
-        })
-    }, [props.src])
+        };
+    }, [props.src]);
     if (error) {
         return (
             <>
-                {props.errorView ?? <div className="w-full h-full bg-gray-200"></div>}
+                {props.errorView ?? (
+                    <div className="w-full h-full bg-gray-200"></div>
+                )}
             </>
-        )
+        );
     }
     return (
         <>
-            {!loaded && (props.loadView ?? <SkeletonBlock className="h-full w-full" />)}
+            {!loaded &&
+                (props.loadView ?? <SkeletonBlock className="h-full w-full" />)}
             <img hidden={!loaded} ref={imgRef} {...props} />
         </>
-    )
+    );
 }

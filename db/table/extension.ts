@@ -28,10 +28,9 @@ export interface Extension {
     license?: string;
 }
 
-
 export interface ExtensionSettings {
-    id?: number
-    title: string
+    id?: number;
+    title: string;
     package: string;
     key: string;
     value: string | boolean;
@@ -43,7 +42,6 @@ export interface ExtensionSettings {
     defaultValue: string | boolean;
     description?: string;
 }
-
 
 export namespace extensionDB {
     export function getAllExtensions() {
@@ -60,9 +58,12 @@ export namespace extensionDB {
 
     export async function addExtension(extension: Extension) {
         // 如果已经存在则更新
-        const ext = await getExtension(extension.package)
+        const ext = await getExtension(extension.package);
         if (ext) {
-            return db.extension.where("package").equals(extension.package).modify(extension);
+            return db.extension
+                .where("package")
+                .equals(extension.package)
+                .modify(extension);
         }
         return db.extension.add(extension);
     }
@@ -70,41 +71,59 @@ export namespace extensionDB {
     export function getExtension(packageName: string) {
         return db.extension.where("package").equals(packageName).first();
     }
-
 }
 
 export namespace extensionSettingsDB {
     export function getSettings(packageName: string) {
-        return db.extensionSettings.where("package").equals(packageName).toArray();
+        return db.extensionSettings
+            .where("package")
+            .equals(packageName)
+            .toArray();
     }
 
     export function getSetting(packageName: string, key: string) {
-        return db.extensionSettings.where("package").equals(packageName).and((item) => {
-            return item.key === key;
-        }).first();
+        return db.extensionSettings
+            .where("package")
+            .equals(packageName)
+            .and((item) => {
+                return item.key === key;
+            })
+            .first();
     }
 
-    export function setSetting(packageName: string, key: string, value: string | boolean) {
-        return db.extensionSettings.where("package").equals(packageName).and((item) => {
-            return item.key === key;
-        }).modify({
-            value
-        });
+    export function setSetting(
+        packageName: string,
+        key: string,
+        value: string | boolean
+    ) {
+        return db.extensionSettings
+            .where("package")
+            .equals(packageName)
+            .and((item) => {
+                return item.key === key;
+            })
+            .modify({
+                value,
+            });
     }
 
     export async function addSettings(settings: ExtensionSettings) {
         // 如果已经有了则只更新除 value 以外的属性
         const setting = await getSetting(settings.package, settings.key);
         if (setting) {
-            return db.extensionSettings.where("package").equals(settings.package).and((item) => {
-                return item.key === settings.key;
-            }).modify({
-                title: settings.title,
-                type: settings.type,
-                options: settings.options,
-                defaultValue: settings.defaultValue,
-                description: settings.description
-            });
+            return db.extensionSettings
+                .where("package")
+                .equals(settings.package)
+                .and((item) => {
+                    return item.key === settings.key;
+                })
+                .modify({
+                    title: settings.title,
+                    type: settings.type,
+                    options: settings.options,
+                    defaultValue: settings.defaultValue,
+                    description: settings.description,
+                });
         }
         return db.extensionSettings.add(settings);
     }
