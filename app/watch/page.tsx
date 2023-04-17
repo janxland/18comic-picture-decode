@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useTranslation } from "../i18n";
+import { useTranslation } from "@/app/i18n";
 import { Background } from "./Background";
 import BaseDetail from "./BaseDetail";
 import Credits from "./Credits";
@@ -15,7 +15,6 @@ import Episodes from "./Episodes";
 import Footer from "./Footer";
 import Player from "./Player";
 import Skeletion from "./Skeletion";
-;
 
 const WatchPage = observer(() => {
     const searchParams = useSearchParams()

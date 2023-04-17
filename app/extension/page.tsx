@@ -3,7 +3,7 @@ import BaseMargin from "@/components/BaseMargin";
 import Layout from "@/components/Layout";
 import SwitchTitle from "@/components/SwitchTitle";
 import Tab from "@/components/Tab";
-import { useTranslation } from "../i18n";
+import { useTranslation } from "@/app/i18n";
 import InstalledTab from "./InstalledTab";
 import RepoTab from "./RepoTab";
 

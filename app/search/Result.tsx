@@ -6,7 +6,7 @@ import SkeletonBlock from "@/components/SkeletonBlock";
 import { Extension } from "@/extension/extension";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useTranslation } from "../i18n";
+import { useTranslation } from "@/app/i18n";
 
 
 export default function Result({ extension, kw }: { extension: Extension, kw?: string }) {
@@ -68,7 +68,7 @@ export default function Result({ extension, kw }: { extension: Extension, kw?: s
     return (
         <div>
             <ItemGrid.Grid>
-                {data.pages && data.pages.map((value, index) =>
+                {data.pages && data.pages.map((value) =>
                     value.map((value, index) =>
                         <LazyElement key={index} placeholder={ <div className="h-32"></div>}>
                             <Link

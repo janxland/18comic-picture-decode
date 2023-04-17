@@ -2,7 +2,7 @@
 import BaseMargin from "@/components/BaseMargin";
 import Layout from "@/components/Layout";
 import Tab from "@/components/Tab";
-import { useTranslation } from "../i18n";
+import { useTranslation } from "@/app/i18n";
 import AboutTab from "./AboutTab";
 import DataTab from "./DataTab";
 import GeneralTab from "./GeneralTab";
