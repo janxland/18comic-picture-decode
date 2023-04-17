@@ -11,7 +11,7 @@ import { extensionDB, ExtensionSettings, extensionSettingsDB } from "@/db"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Settings, Trash } from 'lucide-react'
 import { useState } from "react"
-import { useTranslation } from "../i18n"
+import { useTranslation } from "@/app/i18n"
 import Item from "./Item"
 
 export default function InstalledTab() {

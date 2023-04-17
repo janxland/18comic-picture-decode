@@ -4,7 +4,7 @@ import Layout from "@/components/Layout"
 import SwitchTitle from "@/components/SwitchTitle"
 import Collection from "./Collection"
 import ContinueViewing from "./ContinueViewing"
-import { useTranslation } from "./i18n"
+import { useTranslation } from "@/app/i18n"
 
 
 export default function Home() {

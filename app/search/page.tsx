@@ -8,7 +8,7 @@ import { Extension } from "@/extension/extension";
 import { getModel } from "@/utils/model";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { useTranslation } from "../i18n";
+import { useTranslation } from "@/app/i18n";
 import Result from "./Result";
 
 

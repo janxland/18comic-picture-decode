@@ -11,7 +11,7 @@ import { tmdbDB } from "@/db"
 import { SearchResult } from "@/types/tmdb"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { useTranslation } from "../i18n"
+import { useTranslation } from "@/app/i18n"
 
 export default function Footer() {
     const { extension } = useWatchContext()
@@ -51,7 +51,7 @@ function TMDBModalSearchResult({ kw, onClose }: { kw: string, onClose: () => voi
     const { url, pkg, setWatchData } = useWatchContext()
     const { settingsStore } = useRootStore()
     const { tmdbStore } = useRootStore()
-    const { error, data, isLoading, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteQuery({
+    const { error, data, isLoading, isFetchingNextPage, fetchNextPage} = useInfiniteQuery({
         queryKey: ["tmdbsearch", kw],
         queryFn: ({ pageParam }) => tmdbStore.search(kw, pageParam),
         getNextPageParam: (lastPage, pages) => {
