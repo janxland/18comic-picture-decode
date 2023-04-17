@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
-import RootProvider from "./RootProvider";
+import RootProvider from "@/app/RootProvider";
+import {ReactNode} from "react";
 
 export const metadata = {
     title: "Miru",
@@ -8,7 +9,7 @@ export const metadata = {
 export default async function RootLayout({
     children,
 }: {
-    children: React.ReactNode;
+    children: ReactNode;
 }) {
     return (
         <html>
