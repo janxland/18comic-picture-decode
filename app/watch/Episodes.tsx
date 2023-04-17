@@ -6,7 +6,7 @@ import { useRootStore } from "@/context/root-context"
 import { useWatchContext } from "@/context/watch-context"
 import { closeSnackbar, enqueueSnackbar } from "notistack"
 import { useEffect, useState } from "react"
-import { useTranslation } from "../i18n"
+import { useTranslation } from "@/app/i18n"
 import Title from "./Title"
 
 // 剧集

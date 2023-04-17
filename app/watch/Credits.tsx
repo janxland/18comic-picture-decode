@@ -4,13 +4,13 @@ import { useRootStore } from "@/context/root-context"
 import { useWatchContext } from "@/context/watch-context"
 import { Credits as TypeCredits } from "@/types/tmdb"
 import { useEffect, useState } from "react"
-import { useTranslation } from "../i18n"
+import { useTranslation } from "@/app/i18n"
 import Title from "./Title"
 
 // 主演
 export default function Credits() {
     const { tmdbStore } = useRootStore()
-    const { tmdbId, mediaType: media_type, extension } = useWatchContext()
+    const { tmdbId, mediaType: media_type} = useWatchContext()
     const [cast, setCast] = useState<TypeCredits.Cast[]>([])
     const { t } = useTranslation("watch")
     useEffect(() => {

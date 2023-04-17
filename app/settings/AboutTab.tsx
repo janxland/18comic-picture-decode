@@ -1,7 +1,7 @@
 "use client"
 import Logo from "@/components/Logo";
 import packageInfo from "../../package.json";
-import { useTranslation } from "../i18n";
+import { useTranslation } from "@/app/i18n";
 
 export default function AboutTab() {
     const { t } = useTranslation('settings')

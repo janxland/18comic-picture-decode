@@ -12,7 +12,7 @@ import { observer } from "mobx-react-lite"
 import { useSnackbar } from "notistack"
 import { useEffect, useState } from "react"
 import request from "umi-request"
-import { useTranslation } from "../i18n"
+import { useTranslation } from "@/app/i18n"
 import Item from "./Item"
 
 const RepoTab = observer(() => {

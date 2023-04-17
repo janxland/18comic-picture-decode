@@ -1,11 +1,11 @@
-import { useTranslation } from '@/app/i18n'
-import clsx from 'clsx'
+import { useTranslation } from "@/app/i18n"
+import clsx from "clsx"
 import {
     Home as IconHome, LayoutGrid as IconExtension, Search as IconSearh, Settings as IconSettings
-} from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import Logo from './Logo'
+} from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import Logo from "./Logo"
 
 
 
