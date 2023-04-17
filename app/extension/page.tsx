@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import BaseMargin from "@/components/BaseMargin";
 import Layout from "@/components/Layout";
 import SwitchTitle from "@/components/SwitchTitle";
@@ -7,20 +7,19 @@ import { useTranslation } from "@/app/i18n";
 import InstalledTab from "./InstalledTab";
 import RepoTab from "./RepoTab";
 
-
 export default function Page() {
-    const { t } = useTranslation("extensions")
+    const { t } = useTranslation("extensions");
     return (
         <Layout>
             <BaseMargin>
-                <SwitchTitle title={t('title')}></SwitchTitle>
+                <SwitchTitle title={t("title")}></SwitchTitle>
                 <Tab
                     tabs={[
-                        { title: t('installed'), content: <InstalledTab /> },
-                        { title: t('repository'), content: <RepoTab /> },
+                        { title: t("installed"), content: <InstalledTab /> },
+                        { title: t("repository"), content: <RepoTab /> },
                     ]}
                 />
             </BaseMargin>
         </Layout>
-    )
+    );
 }

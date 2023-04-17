@@ -20,12 +20,12 @@ module.exports = {
             },
             inset: {
                 "230px": "230px",
-            }
+            },
         },
     },
-    darkMode: 'class',
+    darkMode: "class",
     plugins: [
-        require('tailwind-scrollbar'),
-        require('@tailwindcss/typography'),
+        require("tailwind-scrollbar"),
+        require("@tailwindcss/typography"),
     ],
-}
+};

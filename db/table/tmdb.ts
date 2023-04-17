@@ -26,5 +26,4 @@ export namespace tmdbDB {
             return db.tmdb.add(tmdb);
         }
     }
-
 }

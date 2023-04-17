@@ -14,11 +14,11 @@ export default function GET(req, res) {
             "user-agent": req.headers["miru-ua"] ?? req.headers["user-agent"],
             referer: req.headers["miru-referer"] ?? req.headers["referer"],
         },
-        pathRewrite: [{
-            patternStr: '^/api/request',
-            replaceStr: ''
-        }]
+        pathRewrite: [
+            {
+                patternStr: "^/api/request",
+                replaceStr: "",
+            },
+        ],
     });
-
-
-};
+}

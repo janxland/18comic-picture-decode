@@ -5,17 +5,17 @@ import SettingsStore from "./settings";
 import { TMDBStore } from "./tmdb";
 
 export interface RootStore {
-    settingsStore: SettingsStore
-    tmdbStore: TMDBStore
-    extensionStore: ExtensionStore
-    historyStore: HistoryStore
+    settingsStore: SettingsStore;
+    tmdbStore: TMDBStore;
+    extensionStore: ExtensionStore;
+    historyStore: HistoryStore;
 }
 
 export class RootStore {
     constructor() {
         this.settingsStore = new SettingsStore();
-        this.tmdbStore = new TMDBStore(this.settingsStore)
-        this.extensionStore = new ExtensionStore(this.settingsStore)
-        this.historyStore = new HistoryStore()
+        this.tmdbStore = new TMDBStore(this.settingsStore);
+        this.extensionStore = new ExtensionStore(this.settingsStore);
+        this.historyStore = new HistoryStore();
     }
 }

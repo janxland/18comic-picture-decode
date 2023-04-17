@@ -4,40 +4,47 @@ import { BangumiWatch } from "@/types/extension";
 import { isClient } from "@/utils/is-client";
 import { useQuery } from "@tanstack/react-query";
 import Artplayer from "artplayer";
-import Hls from 'hls.js';
+import Hls from "hls.js";
 import { useEffect, useRef } from "react";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
 
-
 export default function BangumiPlayer() {
-    const { url, pkg, watchData, detail, prevChapter, nextChapter, fullscreenWeb, setWatchData } = useWatchContext()
+    const {
+        url,
+        pkg,
+        watchData,
+        detail,
+        prevChapter,
+        nextChapter,
+        fullscreenWeb,
+        setWatchData,
+    } = useWatchContext();
 
-    const { extensionStore, historyStore } = useRootStore()
+    const { extensionStore, historyStore } = useRootStore();
 
-    const extension = extensionStore.getExtension(pkg)
+    const extension = extensionStore.getExtension(pkg);
 
     const artRef = useRef<HTMLDivElement>(null);
-
 
     const { data, error, isLoading } = useQuery({
         queryKey: ["watch", watchData?.url, pkg],
         queryFn: () => {
-            return extension?.watch(watchData!.url) as BangumiWatch
-        }
-    })
+            return extension?.watch(watchData!.url) as BangumiWatch;
+        },
+    });
 
     useEffect(() => {
         if (!artRef || !data) {
-            return
+            return;
         }
 
         if (data.noDefaultPlayer) {
-            extension?.customPlayer(artRef.current as any, data.url, {} as any)
-            return
+            extension?.customPlayer(artRef.current as any, data.url, {} as any);
+            return;
         }
 
-        const autoMini = isClient() && window.innerWidth > 768
+        const autoMini = isClient() && window.innerWidth > 768;
         const art = new Artplayer({
             container: artRef.current!,
             url: data.url,
@@ -61,47 +68,47 @@ export default function BangumiPlayer() {
             autoPlayback: true,
             airplay: true,
             moreVideoAttr: {
-                crossOrigin: 'anonymous',
+                crossOrigin: "anonymous",
             },
             settings: [
                 {
                     width: 200,
-                    html: '字幕',
+                    html: "字幕",
                     selector: [
                         {
-                            html: 'Display',
-                            tooltip: 'Show',
+                            html: "Display",
+                            tooltip: "Show",
                             switch: true,
                             onSwitch: function (item) {
-                                item.tooltip = item.switch ? 'Hide' : 'Show';
+                                item.tooltip = item.switch ? "Hide" : "Show";
                                 art.subtitle.show = !item.switch;
                                 return !item.switch;
                             },
                         },
                         {
                             default: false,
-                            html: '选择字幕文件',
+                            html: "选择字幕文件",
                         },
                     ],
                     onSelect: function (item) {
-                        if (item.html === '选择字幕文件') {
+                        if (item.html === "选择字幕文件") {
                             // 选择字幕文件
-                            const input = document.createElement('input');
-                            input.type = 'file';
-                            input.accept = 'text/srt';
+                            const input = document.createElement("input");
+                            input.type = "file";
+                            input.accept = "text/srt";
                             input.click();
                             input.onchange = function () {
                                 if (!input.files) {
-                                    return
+                                    return;
                                 }
                                 const file = input.files[0];
                                 if (file) {
-                                    item.url = URL.createObjectURL(file)
+                                    item.url = URL.createObjectURL(file);
                                     art.subtitle.switch(item.url, {
                                         name: file.name,
                                     });
                                 }
-                            }
+                            };
                             return item.html;
                         }
 
@@ -110,32 +117,33 @@ export default function BangumiPlayer() {
                         });
                         return item.html;
                     },
-                }
+                },
             ],
             subtitle: {
-                type: 'srt',
+                type: "srt",
                 style: {
-                    color: '#000',
-                    fontSize: '20px',
-                    textShadow: '0 1px white, 1px 0 white, -1px 0 white, 0 -1px white',
+                    color: "#000",
+                    fontSize: "20px",
+                    textShadow:
+                        "0 1px white, 1px 0 white, -1px 0 white, 0 -1px white",
                 },
-                encoding: 'utf-8',
+                encoding: "utf-8",
             },
             customType: {
                 hls: playM3u8,
                 custom: extension?.customPlayer,
             },
         });
-        art.on('ready', () => {
+        art.on("ready", () => {
             art.autoHeight = true;
         });
-        art.on('resize', () => {
+        art.on("resize", () => {
             if (art.fullscreenWeb !== fullscreenWeb) {
                 setWatchData((data) => {
                     return {
                         ...data!,
-                        fullscreenWeb: !!art.fullscreenWeb
-                    }
+                        fullscreenWeb: !!art.fullscreenWeb,
+                    };
                 });
             }
             art.autoHeight = true;
@@ -150,22 +158,22 @@ export default function BangumiPlayer() {
                 chapter: watchData!.chapter,
                 type: "bangumi",
                 cover: await art.getDataURL(),
-            })
-        }
+            });
+        };
 
         // 播放的时候 添加一次记录
         art.on("play", () => {
-            addHistory()
-        })
+            addHistory();
+        });
 
         // 销毁的时候 再添加一次历史记录
         art.on("destroy", () => {
             // 如果播放器已经准备好了 就添加一次历史记录
             // 防止截图为空
             if (art.isReady) {
-                addHistory()
+                addHistory();
             }
-        })
+        });
 
         return () => {
             if (art && art.destroy) {
@@ -174,38 +182,29 @@ export default function BangumiPlayer() {
         };
     }, [data]);
 
-
-
-
     if (error) {
-        return <ErrorView error={error}></ErrorView>
+        return <ErrorView error={error}></ErrorView>;
     }
 
     if (isLoading) {
-        return <LoadingBox />
+        return <LoadingBox />;
     }
 
     if (!data) {
-        return (
-            <ErrorView error={"地址获取失败"} />
-        )
+        return <ErrorView error={"地址获取失败"} />;
     }
 
-
-    return <div ref={artRef} className={"max-h-screen h-36"}></div>;
+    return <div ref={artRef} className={"h-36 max-h-screen"}></div>;
 }
-
-
 
 function playM3u8(video: HTMLMediaElement, url: string, art: Artplayer) {
     if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(url);
         hls.attachMedia(video);
-
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
         video.src = url;
     } else {
-        art.notice.show = 'Unsupported playback format: m3u8';
+        art.notice.show = "Unsupported playback format: m3u8";
     }
 }

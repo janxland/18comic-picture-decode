@@ -7,20 +7,20 @@ import Button from "../common/Button";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
 
-
 export default function FikushonPlayer() {
-    const { url, pkg, watchData, detail, prevChapter, nextChapter } = useWatchContext()
-    const { extensionStore, historyStore } = useRootStore()
-    const extension = extensionStore.getExtension(pkg)
+    const { url, pkg, watchData, detail, prevChapter, nextChapter } =
+        useWatchContext();
+    const { extensionStore, historyStore } = useRootStore();
+    const extension = extensionStore.getExtension(pkg);
 
     const { data, error, isLoading } = useQuery({
         queryKey: ["fikushon", watchData?.url, pkg],
-        queryFn: () => extension?.watch(watchData!.url) as FikushonWatch
-    })
+        queryFn: () => extension?.watch(watchData!.url) as FikushonWatch,
+    });
 
     useEffect(() => {
         if (!data) {
-            return
+            return;
         }
         historyStore.addHistory({
             package: pkg,
@@ -29,45 +29,44 @@ export default function FikushonPlayer() {
             chapter: watchData?.chapter!,
             type: "fikushon",
             cover: data.content[0],
-        })
-    }, [data])
+        });
+    }, [data]);
 
     if (isLoading) {
-        return <LoadingBox></LoadingBox>
+        return <LoadingBox></LoadingBox>;
     }
 
     if (error) {
-        return <ErrorView error={error} />
+        return <ErrorView error={error} />;
     }
 
     if (!data) {
-        return <ErrorView error={new Error("No data")} />
+        return <ErrorView error={new Error("No data")} />;
     }
 
-
     return (
-        <div className="text-center md:p-3 py-2 max-h-screen overflow-auto">
+        <div className="max-h-screen overflow-auto py-2 text-center md:p-3">
             <Button className="mb-3" onClick={() => prevChapter?.()}>
                 上一章
             </Button>
 
-            <div className="border text-left p-5 bg-slate-200 dark:bg-zinc-700 ">
-                <div className="text-center mb-6">
+            <div className="border bg-slate-200 p-5 text-left dark:bg-zinc-700 ">
+                <div className="mb-6 text-center">
                     <h1 className="text-2xl font-bold">{data.title}</h1>
                     <h2 className="text-lg">{data.subtitle}</h2>
                 </div>
-                {
-                    data.content.map((item, index) => {
-                        return (
-                            <p className="text-lg mb-3" key={index}>{item}</p>
-                        )
-                    })
-                }
+                {data.content.map((item, index) => {
+                    return (
+                        <p className="mb-3 text-lg" key={index}>
+                            {item}
+                        </p>
+                    );
+                })}
             </div>
 
             <Button className="mt-3" onClick={() => nextChapter?.()}>
                 下一章
             </Button>
         </div>
-    )
+    );
 }
