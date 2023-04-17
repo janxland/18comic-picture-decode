@@ -6,7 +6,7 @@ export default function SkeletonBlock(props: HTMLProps<HTMLDivElement>) {
         <div
             {...props}
             className={clsx(
-                "w-full h-full bg-slate-200 dark:bg-zinc-700 animate-pulse rounded-xl",
+                "h-full w-full animate-pulse rounded-xl bg-slate-200 dark:bg-zinc-700",
                 props.className
             )}
         ></div>

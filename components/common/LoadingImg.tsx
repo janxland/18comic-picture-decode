@@ -35,7 +35,7 @@ export default function LoadingImg(props: LoadingImgProps) {
         return (
             <>
                 {props.errorView ?? (
-                    <div className="w-full h-full bg-gray-200"></div>
+                    <div className="h-full w-full bg-gray-200"></div>
                 )}
             </>
         );

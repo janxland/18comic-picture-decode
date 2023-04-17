@@ -73,7 +73,7 @@ const RepoTab = observer(() => {
 
     if (!data || data.length === 0) {
         return (
-            <div className="text-center mt-28">
+            <div className="mt-28 text-center">
                 <p className="text-2xl font-bold">
                     {t("not-find-extension.title")}
                 </p>
@@ -128,10 +128,10 @@ const RepoTab = observer(() => {
                                 onClick={() => {
                                     handleUpdate(extension.package);
                                 }}
-                                className="flex items-center ml-1"
+                                className="ml-1 flex items-center"
                             >
                                 <Upload size={18}></Upload>
-                                <span className="hidden md:inline-block ml-1">
+                                <span className="ml-1 hidden md:inline-block">
                                     {t("update")}
                                 </span>
                             </Button>
@@ -141,10 +141,10 @@ const RepoTab = observer(() => {
                             onClick={() => {
                                 handleUninstall(extension.package);
                             }}
-                            className="flex items-center ml-1"
+                            className="ml-1 flex items-center"
                         >
                             <Trash size={18}></Trash>
-                            <span className="hidden md:inline-block ml-1">
+                            <span className="ml-1 hidden md:inline-block">
                                 {t("remove")}
                             </span>
                         </Button>
@@ -153,10 +153,10 @@ const RepoTab = observer(() => {
                             onClick={() => {
                                 handleInstall(extension.package);
                             }}
-                            className="flex items-center ml-1"
+                            className="ml-1 flex items-center"
                         >
                             <Download size={18}></Download>
-                            <span className="hidden md:inline-block ml-1">
+                            <span className="ml-1 hidden md:inline-block">
                                 {t("install")}
                             </span>
                         </Button>

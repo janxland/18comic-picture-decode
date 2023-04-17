@@ -45,13 +45,13 @@ const SearchPage = observer(() => {
                 <form className="mb-6" onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        className="w-full border rounded-3xl p-4 dark:text-white dark:bg-black"
+                        className="w-full rounded-3xl border p-4 dark:bg-black dark:text-white"
                         placeholder={t("search-placeholder") as string}
                     />
                 </form>
                 <Tab className="mb-6" tabs={tabs}></Tab>
                 {tabs.length === 0 && (
-                    <div className="text-center mt-28">
+                    <div className="mt-28 text-center">
                         <p className="text-2xl font-bold">
                             {t("no-extension")}
                         </p>

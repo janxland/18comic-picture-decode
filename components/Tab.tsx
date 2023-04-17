@@ -33,7 +33,7 @@ export default function Tab(props: TabProps) {
             key={index}
             onClick={() => handleClick(index)}
             className={clsx(
-                "pl-3 pr-3 pt-2 pb-2 mr-2 border rounded-full text-sm break-keep ",
+                "mr-2 break-keep rounded-full border pl-3 pr-3 pt-2 pb-2 text-sm ",
                 `${
                     activeTab === index
                         ? "bg-black text-white dark:bg-black "
@@ -51,7 +51,7 @@ export default function Tab(props: TabProps) {
                 <>
                     <div
                         className={clsx(
-                            "overflow-auto flex scrollbar-none",
+                            "flex overflow-auto scrollbar-none",
                             props.className
                         )}
                     >

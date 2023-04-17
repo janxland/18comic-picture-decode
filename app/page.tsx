@@ -12,11 +12,11 @@ export default function Home() {
         <Layout>
             <BaseMargin>
                 <SwitchTitle title={t("title")}></SwitchTitle>
-                <h2 className="text-2xl font-bold mb-5">
+                <h2 className="mb-5 text-2xl font-bold">
                     {t("continue-viewing")}
                 </h2>
                 <ContinueViewing />
-                <h2 className="text-2xl font-bold mb-5">{t("collection")}</h2>
+                <h2 className="mb-5 text-2xl font-bold">{t("collection")}</h2>
                 <Collection />
             </BaseMargin>
         </Layout>

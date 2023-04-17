@@ -44,7 +44,7 @@ export default function InstalledTab() {
 
     if (!data || data.length === 0) {
         return (
-            <div className="text-center mt-28">
+            <div className="mt-28 text-center">
                 <p className="text-2xl font-bold">
                     {t("no-installed-extension.title")}
                 </p>
@@ -76,10 +76,10 @@ export default function InstalledTab() {
                         onClick={() => {
                             handleSettings(extension.package);
                         }}
-                        className="flex items-center ml-1"
+                        className="ml-1 flex items-center"
                     >
                         <Settings size={18}></Settings>
-                        <span className="hidden md:inline-block ml-1">
+                        <span className="ml-1 hidden md:inline-block">
                             {t("settings")}
                         </span>
                     </Button>
@@ -87,10 +87,10 @@ export default function InstalledTab() {
                         onClick={() => {
                             handleUninstall(extension.package);
                         }}
-                        className="flex items-center ml-1"
+                        className="ml-1 flex items-center"
                     >
                         <Trash size={18}></Trash>
-                        <span className="hidden md:inline-block ml-1">
+                        <span className="ml-1 hidden md:inline-block">
                             {t("remove")}
                         </span>
                     </Button>
@@ -149,7 +149,7 @@ function ExtSettingsModal({
                                 handleChange(item.key, v);
                             }}
                         />
-                        <p className="text-black text-sm text-opacity-70">
+                        <p className="text-sm text-black text-opacity-70">
                             {item.description}
                         </p>
                     </div>
@@ -202,7 +202,7 @@ function ExtSettingsModal({
             onClose={onClose}
             title={t("ext-metadata.title", { extName: extension?.name })}
         >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                 {metadata.map(
                     (item, index) =>
                         item.value && (
@@ -239,7 +239,7 @@ function ExtensionSettingsItem({
             <div>
                 <h2 className="mb-3 font-bold">{settings.title}</h2>
                 <Input
-                    className="w-full mb-3"
+                    className="mb-3 w-full"
                     value={String(value)}
                     onChange={handleChange}
                 />
@@ -269,7 +269,7 @@ function ExtensionSettingsItem({
             <div>
                 <label htmlFor={settings.key}>
                     <input
-                        className="inline-block mr-1"
+                        className="mr-1 inline-block"
                         type="checkbox"
                         id={settings.key}
                         checked={Boolean(value)}

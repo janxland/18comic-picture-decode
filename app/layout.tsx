@@ -19,7 +19,7 @@ export default async function RootLayout({
                     content="width=device-width, initial-scale=1"
                 />
             </head>
-            <body className="dark:bg-black dark:text-white dark:bg-opacity-80">
+            <body className="dark:bg-black dark:bg-opacity-80 dark:text-white">
                 <RootProvider>
                     <div className="ml-0 lg:ml-230px">
                         <div className="m-auto" style={{ maxWidth: "1400px" }}>

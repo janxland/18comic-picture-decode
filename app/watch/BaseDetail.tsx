@@ -124,14 +124,14 @@ export default function BaseDetail() {
     }, [tmdbId]);
 
     return (
-        <div className="md:items-end mb-5 md:mb-16 flex flex-col items-center md:flex-row">
-            <div className="mb-6 md:mb-0 md:flex flex-col items-center md:w-1/4 lg:w-1/5">
+        <div className="mb-5 flex flex-col items-center md:mb-16 md:flex-row md:items-end">
+            <div className="mb-6 flex-col items-center md:mb-0 md:flex md:w-1/4 lg:w-1/5">
                 <LoadingImg
-                    className="md:block w-56 md:w-full ring-4 ring-gray-300 rounded-xl shadow-2xl mb-3"
+                    className="mb-3 w-56 rounded-xl shadow-2xl ring-4 ring-gray-300 md:block md:w-full"
                     src={detail?.cover}
                     alt={detail.title}
                 />
-                <div className="mt-3 md:mt-0 flex justify-between w-full flex-col xl:flex-row">
+                <div className="mt-3 flex w-full flex-col justify-between md:mt-0 xl:flex-row">
                     <LoveButton
                         pkg={pkg}
                         url={url}
@@ -140,8 +140,8 @@ export default function BaseDetail() {
                     ></LoveButton>
                 </div>
             </div>
-            <div className="w-full md:w-3/4 lg:w-4/5 md:ml-5 md:mt-10">
-                <div className="text-3xl mb-1">{detail?.title}</div>
+            <div className="w-full md:ml-5 md:mt-10 md:w-3/4 lg:w-4/5">
+                <div className="mb-1 text-3xl">{detail?.title}</div>
                 <div className="mb-3 text-gray-500 dark:text-white dark:text-opacity-60">
                     {genres?.map((g, index) => (
                         <span key={index} className="mr-1">
@@ -166,7 +166,7 @@ export default function BaseDetail() {
                                 </p>
                             ))}
                         <p className="mb-1 flex items-center">
-                            <span className="font-bold mr-2">
+                            <span className="mr-2 font-bold">
                                 {t("origin-site")}
                             </span>
                             <a
@@ -178,7 +178,7 @@ export default function BaseDetail() {
                             </a>
                         </p>
                     </div>
-                    <div className="overflow-auto max-h-52 md:h-full">
+                    <div className="max-h-52 overflow-auto md:h-full">
                         <p>{overview}</p>
                     </div>
                 </div>
@@ -200,11 +200,11 @@ export default function BaseDetail() {
                 >
                     <div className="mb-3">
                         {metaData.size > 0 && (
-                                <h3 className="mb-3 font-bold border-b pb-2">
+                                <h3 className="mb-3 border-b pb-2 font-bold">
                                     {t("from-tmdb")}
                                 </h3>
                             ) && (
-                                <div className="grid grid-cols-2 mb-3">
+                                <div className="mb-3 grid grid-cols-2">
                                     {Array.from(metaData.entries()).map(
                                         (item, index) => (
                                             <p key={index} className="mb-1">
@@ -217,7 +217,7 @@ export default function BaseDetail() {
                                     )}
                                 </div>
                             )}
-                        <h3 className="mb-3 font-bold border-b pb-2">
+                        <h3 className="mb-3 border-b pb-2 font-bold">
                             {t("from-extension")}
                         </h3>
                         {detail.metadata &&
@@ -228,7 +228,7 @@ export default function BaseDetail() {
                                 </p>
                             ))}
                         <p className="mb-1 flex items-center">
-                            <span className="font-bold mr-2">
+                            <span className="mr-2 font-bold">
                                 {t("origin-site")}
                             </span>
                             <a
@@ -240,7 +240,7 @@ export default function BaseDetail() {
                             </a>
                         </p>
                     </div>
-                    <div className="overflow-auto max-h-52 md:h-full">
+                    <div className="max-h-52 overflow-auto md:h-full">
                         <p>{overview}</p>
                     </div>
                 </Modal>
@@ -289,9 +289,9 @@ function LoveButton({
     return (
         <button
             onClick={handleLove}
-            className="focus:ring-2 focus:ring-gray-500 border pl-4 pr-4 pt-2 pb-2 text-lg w-full bg-black text-white rounded-xl"
+            className="w-full rounded-xl border bg-black pl-4 pr-4 pt-2 pb-2 text-lg text-white focus:ring-2 focus:ring-gray-500"
         >
-            <div className="flex justify-center items-center">
+            <div className="flex items-center justify-center">
                 <Heart className="mr-1" fill={isLove ? "#fff" : ""}></Heart>
                 {isLove ? t("collected") : t("collect")}
             </div>

@@ -18,21 +18,21 @@ function Grid(props: HTMLProps<HTMLDivElement>) {
 function Fragment({ itemData }: { itemData: ListItem }) {
     return (
         <>
-            <div className="h-60vw md:h-30vw lg:h-20vw max-h-96 w-full">
+            <div className="h-60vw max-h-96 w-full md:h-30vw lg:h-20vw">
                 {(itemData.cover && (
                     <LoadingImg
-                        className="rounded-lg object-cover h-full w-full"
+                        className="h-full w-full rounded-lg object-cover"
                         src={itemData.cover}
                         alt={itemData.title}
                     />
                 )) || (
-                    <div className="rounded-lg w-full h-full bg-gray-200 p-3 flex justify-center items-center text-xl ">
+                    <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-200 p-3 text-xl ">
                         {itemData.title}
                     </div>
                 )}
             </div>
             <div>
-                <p className="text-gray-400 text-xs mt-3 mb-1">
+                <p className="mt-3 mb-1 text-xs text-gray-400">
                     {" "}
                     {itemData.update}
                 </p>

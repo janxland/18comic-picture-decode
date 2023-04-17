@@ -6,7 +6,7 @@ export default function Input(props: InputHTMLAttributes<HTMLInputElement>) {
         <input
             {...props}
             className={clsx(
-                "border pl-4 pr-4 pt-2 pb-2 text-sm dark:bg-black dark:text-white rounded-3xl",
+                "rounded-3xl border pl-4 pr-4 pt-2 pb-2 text-sm dark:bg-black dark:text-white",
                 props.className
             )}
         />

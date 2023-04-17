@@ -45,19 +45,19 @@ export default function FikushonPlayer() {
     }
 
     return (
-        <div className="text-center md:p-3 py-2 max-h-screen overflow-auto">
+        <div className="max-h-screen overflow-auto py-2 text-center md:p-3">
             <Button className="mb-3" onClick={() => prevChapter?.()}>
                 上一章
             </Button>
 
-            <div className="border text-left p-5 bg-slate-200 dark:bg-zinc-700 ">
-                <div className="text-center mb-6">
+            <div className="border bg-slate-200 p-5 text-left dark:bg-zinc-700 ">
+                <div className="mb-6 text-center">
                     <h1 className="text-2xl font-bold">{data.title}</h1>
                     <h2 className="text-lg">{data.subtitle}</h2>
                 </div>
                 {data.content.map((item, index) => {
                     return (
-                        <p className="text-lg mb-3" key={index}>
+                        <p className="mb-3 text-lg" key={index}>
                             {item}
                         </p>
                     );

@@ -37,7 +37,7 @@ const ContinueVewing = observer(() => {
 
     if (!data || data.length === 0) {
         return (
-            <div className="text-gray-400 text-center m-14">
+            <div className="m-14 text-center text-gray-400">
                 <p>{t("no-continue-viewing.title")}</p>
                 <p>{t("no-continue-viewing.message")}</p>
             </div>
@@ -45,11 +45,11 @@ const ContinueVewing = observer(() => {
     }
 
     return (
-        <div className="flex overflow-auto pb-3 scrollbar-none -ml-230px">
+        <div className="-ml-230px flex overflow-auto pb-3 scrollbar-none">
             <div className="ml-230px"></div>
             {data.map((history, index) => (
                 <div
-                    className="mr-4 relative rounded-lg overflow-hidden flex-shrink-0"
+                    className="relative mr-4 flex-shrink-0 overflow-hidden rounded-lg"
                     key={index}
                     style={{ width: "350px", height: "200px" }}
                 >
@@ -63,20 +63,20 @@ const ContinueVewing = observer(() => {
                         }}
                     >
                         {(history.type === "fikushon" && (
-                            <div className="w-full h-full ">
-                                <div className="m-auto  p-2 text-lg rounded bg-slate-200 h-full dark:bg-black dark:bg-opacity-40">
+                            <div className="h-full w-full ">
+                                <div className="m-auto  h-full rounded bg-slate-200 p-2 text-lg dark:bg-black dark:bg-opacity-40">
                                     {history.cover as string}
                                 </div>
                             </div>
                         )) || (
                             <LoadingImg
-                                className="object-cover w-full h-full"
+                                className="h-full w-full object-cover"
                                 src={history.cover as string}
                                 alt={history.title}
                             />
                         )}
-                        <div className="absolute left-0 right-0 bottom-0 p-2 bg-gradient-to-t from-black">
-                            <p className=" text-neutral-300 text-xs mt-3 mb-1">
+                        <div className="absolute left-0 right-0 bottom-0 bg-gradient-to-t from-black p-2">
+                            <p className=" mt-3 mb-1 text-xs text-neutral-300">
                                 <CheckUpdate
                                     pkg={history.package}
                                     url={history.url}

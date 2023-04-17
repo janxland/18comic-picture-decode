@@ -194,7 +194,7 @@ export default function BangumiPlayer() {
         return <ErrorView error={"地址获取失败"} />;
     }
 
-    return <div ref={artRef} className={"max-h-screen h-36"}></div>;
+    return <div ref={artRef} className={"h-36 max-h-screen"}></div>;
 }
 
 function playM3u8(video: HTMLMediaElement, url: string, art: Artplayer) {

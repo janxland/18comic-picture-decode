@@ -25,7 +25,7 @@ const SwitchTitle = observer((props: SwitchTitleProps) => {
 
     return (
         <div className="flex justify-between">
-            <h1 className="text-3xl font-bold mb-5">{props.title}</h1>
+            <h1 className="mb-5 text-3xl font-bold">{props.title}</h1>
             <Tab
                 tabs={tabs}
                 onChange={handleTabChange}

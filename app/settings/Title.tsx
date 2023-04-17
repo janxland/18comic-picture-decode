@@ -8,6 +8,6 @@ export default function Title({
     className?: string;
 }) {
     return (
-        <h1 className={`text-1xl font-bold mb-3 ${className}`}>{children}</h1>
+        <h1 className={`text-1xl mb-3 font-bold ${className}`}>{children}</h1>
     );
 }

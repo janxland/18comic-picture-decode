@@ -29,13 +29,13 @@ export default function Credits() {
     }
 
     if (cast.length) {
-        <SkeletonBlock className="h-56 mb-6" />;
+        <SkeletonBlock className="mb-6 h-56" />;
     }
 
     return (
         <div className="mb-3">
             <Title>{t("starring")}</Title>
-            <div className="overflow-auto flex pb-3 scrollbar-none">
+            <div className="flex overflow-auto pb-3 scrollbar-none">
                 {cast.map((item, index) => (
                     <div
                         key={index}
@@ -47,7 +47,7 @@ export default function Credits() {
                                 className="w-full rounded-lg"
                                 errorView={
                                     <div
-                                        className="flex justify-center items-center"
+                                        className="flex items-center justify-center"
                                         style={{
                                             width: "130px",
                                             height: "190px",
@@ -69,7 +69,7 @@ export default function Credits() {
                             />
                         ) : (
                             <div
-                                className="flex justify-center items-center"
+                                className="flex items-center justify-center"
                                 style={{ width: "130px", height: "190px" }}
                             >
                                 {" "}
@@ -81,7 +81,7 @@ export default function Credits() {
                             target="_blank"
                             rel="noreferrer"
                         >
-                            <div className="p-3 break-keep text-sm ">
+                            <div className="break-keep p-3 text-sm ">
                                 <div className="font-bold">{item.name}</div>
                                 <div>{item.character}</div>
                             </div>

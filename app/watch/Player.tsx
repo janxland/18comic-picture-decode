@@ -67,14 +67,14 @@ export default function Player() {
     return (
         <div className="fixed left-0 right-0 top-0 bottom-0 z-50">
             <div
-                className="fixed left-0 right-0 top-0 bottom-0 bg-black opacity-75 -z-20"
+                className="fixed left-0 right-0 top-0 bottom-0 -z-20 bg-black opacity-75"
                 onClick={handleClose}
             ></div>
             <div
                 ref={playerContainer}
                 className={clsx("absolute w-full md:w-2/3", {
                     "bg-white dark:bg-black": extension.type !== "bangumi",
-                    "left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2":
+                    "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2":
                         fullscreenWeb !== true,
                 })}
             >

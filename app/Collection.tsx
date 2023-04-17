@@ -36,7 +36,7 @@ const Collection = observer(() => {
 
     if (!data || data.length === 0) {
         return (
-            <div className="text-gray-400 text-center m-28">
+            <div className="m-28 text-center text-gray-400">
                 <p>{t("no-collection.title")}</p>
                 <p>{t("no-collection.message")}</p>
             </div>

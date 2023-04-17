@@ -12,7 +12,7 @@ export default function Page() {
     return (
         <Layout>
             <BaseMargin>
-                <h1 className="text-3xl font-bold mb-6">{t("title")}</h1>
+                <h1 className="mb-6 text-3xl font-bold">{t("title")}</h1>
                 <Tab
                     className="mb-6"
                     tabs={[

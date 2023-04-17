@@ -8,7 +8,7 @@ export default function InitView({
     msg?: string | DefaultTFuncReturn;
 }) {
     return (
-        <div className="h-screen flex justify-center items-center">
+        <div className="flex h-screen items-center justify-center">
             <div className="flex flex-col items-center">
                 <IconLogo className="mb-3" width={110} />
                 <LoadingBox />

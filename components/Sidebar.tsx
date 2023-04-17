@@ -41,7 +41,7 @@ export default function Sidebar() {
 
     return (
         <>
-            <div className="fixed right-0 left-0 bottom-0 z-50 p-2 overflow-auto bg-slate-100 bg-opacity-80 backdrop-blur transition-all lg:p-5 lg:w-230px lg:left-0 lg:top-0 dark:bg-black dark:backdrop-blur dark:bg-opacity-80">
+            <div className="fixed right-0 left-0 bottom-0 z-50 overflow-auto bg-slate-100 bg-opacity-80 p-2 backdrop-blur transition-all dark:bg-black dark:bg-opacity-80 dark:backdrop-blur lg:left-0 lg:top-0 lg:w-230px lg:p-5">
                 <div className="mb-6 ml-4 hidden lg:block">
                     <Logo />
                 </div>

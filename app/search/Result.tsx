@@ -49,7 +49,7 @@ export default function Result({
                 {new Array(20).fill(0).map((_, i) => (
                     <SkeletonBlock
                         key={i}
-                        className="h-60vw md:h-30vw lg:h-20vw max-h-96 !rounded-lg"
+                        className="h-60vw max-h-96 !rounded-lg md:h-30vw lg:h-20vw"
                     />
                 ))}
             </ItemGrid.Grid>
@@ -62,7 +62,7 @@ export default function Result({
 
     if (!data?.pages || data.pages.length === 0) {
         return (
-            <div className="text-center mt-28">
+            <div className="mt-28 text-center">
                 <p className="text-2xl font-bold">{t("no-content")}</p>
             </div>
         );
@@ -87,7 +87,7 @@ export default function Result({
                                             cover: value.cover,
                                         },
                                     }}
-                                    className="w-full h-full"
+                                    className="h-full w-full"
                                 >
                                     <ItemGrid.Fragment
                                         itemData={value}

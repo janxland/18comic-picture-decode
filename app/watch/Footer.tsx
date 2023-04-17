@@ -24,13 +24,13 @@ export default function Footer() {
         setSearchKw(kw);
     };
     return (
-        <div className="flex justify-center items-center mb-3">
+        <div className="mb-3 flex items-center justify-center">
             <div className="text-center text-black text-opacity-40 dark:text-white dark:text-opacity-40">
                 <p>{t("footer.origin", { ext: extension.name })}</p>
                 <p>
                     {t("footer.infomation-error")}{" "}
                     <span
-                        className="font-bold cursor-pointer"
+                        className="cursor-pointer font-bold"
                         onClick={() => setShowModal(true)}
                     >
                         {t("footer.change")}
@@ -59,7 +59,7 @@ export default function Footer() {
                     onClose={() => setShowModal(false)}
                 />
                 <div className="text-center">
-                    <p className="text-black text-opacity-40 dark:text-white  dark:text-opacity-40 text-center">
+                    <p className="text-center text-black text-opacity-40  dark:text-white dark:text-opacity-40">
                         {t("changing-tmdb-metadata-targets-tips")}
                     </p>
                 </div>
@@ -139,11 +139,11 @@ function TMDBModalSearchResult({
                         page!.map((item, index) => (
                             <div
                                 key={index}
-                                className="hover:opacity-80 cursor-pointer"
+                                className="cursor-pointer hover:opacity-80"
                                 onClick={() => handleTMDBChange(item)}
                             >
                                 <img
-                                    className="rounded-md object-cover w-full"
+                                    className="w-full rounded-md object-cover"
                                     src={tmdbStore.getImageUrl(
                                         item.poster_path
                                     )}

@@ -8,10 +8,10 @@ export default function Error404() {
             <Head>
                 <title>404 Not Found</title>
             </Head>
-            <div className="h-screen flex justify-center items-center flex-col">
-                <h1 className="text-2xl mb-3">404 Not Found</h1>
+            <div className="flex h-screen flex-col items-center justify-center">
+                <h1 className="mb-3 text-2xl">404 Not Found</h1>
                 <Link href="/">
-                    <button className="focus:ring-2 focus:ring-gray-500 border pl-4 pr-4 pt-2 pb-2 text-sm bg-black text-white rounded-3xl">
+                    <button className="rounded-3xl border bg-black pl-4 pr-4 pt-2 pb-2 text-sm text-white focus:ring-2 focus:ring-gray-500">
                         Home
                     </button>
                 </Link>

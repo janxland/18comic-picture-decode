@@ -47,7 +47,7 @@ export default function MangaPlayer() {
     }
 
     return (
-        <div className="text-center md:p-3 py-2 max-h-screen overflow-auto">
+        <div className="max-h-screen overflow-auto py-2 text-center md:p-3">
             <Button className="mb-3" onClick={() => prevChapter?.()}>
                 上一章
             </Button>

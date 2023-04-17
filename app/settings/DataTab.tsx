@@ -49,7 +49,7 @@ function ClearCacheBotton(props: {
             <span className="mr-3">
                 {" "}
                 {props.title}{" "}
-                <span className="pl-2 pr-2  bg-black text-white rounded-lg">
+                <span className="rounded-lg bg-black  pl-2 pr-2 text-white">
                     {count}
                 </span>{" "}
             </span>
