@@ -1,5 +1,4 @@
 "use client";
-import Player from "@/components/Player/Index";
 import Sidebar from "@/components/Sidebar";
 import { RootStoreProvider } from "@/context/root-context";
 import { logMiruInfo } from "@/utils/miru-log";
@@ -25,7 +24,6 @@ export default function RootProvider({
                     autoHideDuration={3000}
                 >
                     <Sidebar />
-                    <Player />
                     {children}
                 </SnackbarProvider>
             </QueryClientProvider>
