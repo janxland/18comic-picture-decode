@@ -4,14 +4,14 @@ import { RootStoreProvider } from "@/context/root-context";
 import { logMiruInfo } from "@/utils/miru-log";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
-import { useEffect } from "react";
+import {ReactElement, useEffect} from "react";
 
 const queryClient = new QueryClient();
 
 export default function RootProvider({
     children,
 }: {
-    children: React.ReactElement;
+    children: ReactElement;
 }) {
     useEffect(() => {
         logMiruInfo();
