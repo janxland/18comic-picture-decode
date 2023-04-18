@@ -3,17 +3,7 @@ import RootProvider from "@/app/RootProvider";
 import {ReactNode} from "react";
 
 export const metadata = {
-    title: {
-        default: 'Miru',
-        template: '%s - Miru',
-    },
-    viewport: {
-        width: 'device-width',
-        initialScale: 1,
-        minimumScale: 1,
-        maximumScale: 1,
-        userScalable: false,
-    },
+    title: "Miru",
 };
 
 export default async function RootLayout({
@@ -23,6 +13,13 @@ export default async function RootLayout({
 }) {
     return (
         <html>
+            <head>
+                <meta charSet="utf-8" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
+            </head>
             <body className="dark:bg-black dark:bg-opacity-80 dark:text-white">
                 <RootProvider>
                     <div className="ml-0 lg:ml-230px">
