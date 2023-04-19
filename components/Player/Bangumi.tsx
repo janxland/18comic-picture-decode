@@ -279,7 +279,7 @@ const BangumiPlayer = observer(() => {
     }
 
     if (isLoading) {
-        return <LoadingBox />;
+        return <LoadingBox className="!min-h-[250px] w-[250px]" />;
     }
 
     if (!data) {
@@ -290,7 +290,7 @@ const BangumiPlayer = observer(() => {
         <div
             className={clsx({
                 "h-52 w-full flex-shrink lg:h-screen": !playerStore.mini,
-                "relative h-20 w-full lg:h-40 lg:w-96": playerStore.mini,
+                "relative h-16 w-full lg:h-40 lg:w-96": playerStore.mini,
                 "!h-screen": playerStore.fullScreen,
             })}
         >

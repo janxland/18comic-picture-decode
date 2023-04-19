@@ -42,7 +42,7 @@ const FikushonPlayer = observer(() => {
     }
 
     if (isLoading) {
-        return <LoadingBox></LoadingBox>;
+        return <LoadingBox className="!h-screen" ></LoadingBox>;
     }
 
     if (error) {
