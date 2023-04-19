@@ -11,23 +11,32 @@ import Title from "./Title";
 
 // 剧集
 export default function Episodes() {
-    const { historyStore } = useRootStore();
-    const { detail, setWatchData, url, pkg } = useWatchContext();
+    const { historyStore, playerStore } = useRootStore();
+    const { detail, url: pageUrl, pkg, extension } = useWatchContext();
     const [episodesTabs, setEpisodesTabs] = useState<Tabs[]>([]);
-    const [playUrl, setPlayUrl] = useState<string>("");
     const { t } = useTranslation("watch");
-    const handlePlay = (url: string, chapter: string) => {
-        setPlayUrl(url);
-        setWatchData((data) => {
-            return {
-                ...data!,
-                showPlayer: true,
-                watchData: {
-                    url,
-                    chapter,
-                },
-            };
+
+    const handlePlay = (
+        index: number,
+        nextPlayers: { url: string; chapter: string }[]
+    ) => {
+        // 清空列表
+        playerStore.clearPlayList();
+
+        nextPlayers.map((item, _) => {
+            playerStore.addNextPlay({
+                url: item.url,
+                chapter: item.chapter,
+                pageUrl,
+                pkg: pkg,
+                title: detail.title,
+                type: extension.type,
+            });
         });
+
+        // 切换播放
+        playerStore.togglePlay(index);
+        playerStore.toggleMini(false);
     };
 
     useEffect(() => {
@@ -42,57 +51,22 @@ export default function Episodes() {
                     content: (
                         <div className="max-h-80 overflow-auto p-1">
                             {item.urls.map((value, index) => {
-                                // 设置下一章和上一章的方法
-                                if (playUrl === value.url) {
-                                    setWatchData((data) => {
-                                        return {
-                                            ...data!,
-                                            nextChapter: () => {
-                                                const next =
-                                                    item.urls[index + 1];
-                                                if (next) {
-                                                    handlePlay(
-                                                        next.url,
-                                                        `${item.title}|${next.name}`
-                                                    );
-                                                } else {
-                                                    enqueueSnackbar(
-                                                        t("no-next"),
-                                                        { variant: "info" }
-                                                    );
-                                                }
-                                            },
-                                            prevChapter: () => {
-                                                const prev =
-                                                    item.urls[index - 1];
-                                                if (prev) {
-                                                    handlePlay(
-                                                        prev.url,
-                                                        `${item.title}|${prev.name}`
-                                                    );
-                                                } else {
-                                                    enqueueSnackbar(
-                                                        t("no-previous"),
-                                                        {
-                                                            variant: "info",
-                                                        }
-                                                    );
-                                                }
-                                            },
-                                        };
-                                    });
-                                }
                                 return (
                                     <Button
                                         onClick={() =>
                                             handlePlay(
-                                                value.url,
-                                                `${item.title}|${value.name}`
+                                                index,
+                                                item.urls.map((value, _) => ({
+                                                    url: value.url,
+                                                    chapter: `${item.title}|${value.name}`,
+                                                }))
                                             )
                                         }
                                         key={index}
                                         className={`mr-1 mb-1 ${
-                                            playUrl === value.url
+                                            playerStore.currentPlay &&
+                                            playerStore.currentPlay.url ===
+                                                value.url
                                                 ? "ring-2 ring-gray-700 dark:ring-gray-200"
                                                 : ""
                                         }`}
@@ -106,11 +80,11 @@ export default function Episodes() {
                 };
             })
         );
-    }, [detail, playUrl]);
+    }, [detail, playerStore.index]);
 
     useEffect(() => {
         // 获取历史记录提示播放到哪一集
-        historyStore.getHistory(url, pkg).then((res) => {
+        historyStore.getHistory(pageUrl, pkg).then((res) => {
             if (!res) {
                 return;
             }
@@ -120,7 +94,6 @@ export default function Episodes() {
                     <Button
                         onClick={() => {
                             // 通过detail.episodes找到对应的url
-                            let url = "";
                             const chap = res?.chapter.split("|");
                             if (!chap || chap.length !== 2) {
                                 enqueueSnackbar(t("watch-record-error"), {
@@ -129,16 +102,21 @@ export default function Episodes() {
                                 return;
                             }
                             detail.episodes?.map((item, _) => {
-                                item.urls.map((value, _) => {
+                                item.urls.map((value, index) => {
                                     if (
                                         item.title === chap[0] &&
                                         value.name === chap[1]
                                     ) {
-                                        url = value.url;
+                                        handlePlay(
+                                            index,
+                                            item.urls.map((value, _) => ({
+                                                url: value.url,
+                                                chapter: `${item.title}|${value.name}`,
+                                            }))
+                                        );
                                     }
                                 });
                             });
-                            handlePlay(url, res?.chapter!);
                             closeSnackbar(key);
                         }}
                     >

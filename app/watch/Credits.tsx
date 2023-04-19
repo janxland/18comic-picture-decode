@@ -45,7 +45,7 @@ export default function Credits() {
                         {tmdbStore.getImageUrl(item.profile_path) ? (
                             <LoadingImg
                                 className="w-full rounded-lg"
-                                errorView={
+                                errorview={
                                     <div
                                         className="flex items-center justify-center"
                                         style={{
@@ -57,7 +57,7 @@ export default function Credits() {
                                         加载错误{" "}
                                     </div>
                                 }
-                                loadView={
+                                loadview={
                                     <SkeletonBlock
                                         style={{
                                             width: "130px",
