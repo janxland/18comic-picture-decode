@@ -13,7 +13,6 @@ import BaseDetail from "./BaseDetail";
 import Credits from "./Credits";
 import Episodes from "./Episodes";
 import Footer from "./Footer";
-import Player from "./Player";
 import Skeletion from "./Skeletion";
 
 const WatchPage = observer(() => {
@@ -68,7 +67,6 @@ const WatchPage = observer(() => {
             <Background />
             <BaseMargin>
                 <div className="min-h-screen">
-                    <Player />
                     <BaseDetail />
                     <Episodes />
                     <Credits />

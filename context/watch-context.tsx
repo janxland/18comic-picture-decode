@@ -6,15 +6,10 @@ export interface WatchData {
     detail: Detail;
     pkg: string;
     url: string;
-    watchData?: { url: string; chapter: string };
     extension: Extension;
     background?: string;
     tmdbId?: number;
     mediaType?: "movie" | "tv";
-    showPlayer?: boolean;
-    fullscreenWeb?: boolean;
-    nextChapter?: () => void;
-    prevChapter?: () => void;
     setWatchData: (value: SetStateAction<WatchData | undefined>) => void;
 }
 

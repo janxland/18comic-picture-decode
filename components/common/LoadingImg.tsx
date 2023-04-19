@@ -3,8 +3,8 @@ import { ImgHTMLAttributes, useEffect, useRef, useState } from "react";
 import SkeletonBlock from "../SkeletonBlock";
 
 interface LoadingImgProps extends ImgHTMLAttributes<HTMLImageElement> {
-    loadView?: React.ReactNode;
-    errorView?: React.ReactNode;
+    loadview?: React.ReactNode;
+    errorview?: React.ReactNode;
 }
 export default function LoadingImg(props: LoadingImgProps) {
     const imgRef = useRef<HTMLImageElement>(null);
@@ -34,7 +34,7 @@ export default function LoadingImg(props: LoadingImgProps) {
     if (error) {
         return (
             <>
-                {props.errorView ?? (
+                {props.errorview ?? (
                     <div className="h-full w-full bg-gray-200"></div>
                 )}
             </>
@@ -43,7 +43,7 @@ export default function LoadingImg(props: LoadingImgProps) {
     return (
         <>
             {!loaded &&
-                (props.loadView ?? <SkeletonBlock className="h-full w-full" />)}
+                (props.loadview ?? <SkeletonBlock className="h-full w-full" />)}
             <img hidden={!loaded} ref={imgRef} {...props} />
         </>
     );

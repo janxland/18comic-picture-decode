@@ -1,4 +1,8 @@
-import { ExtensionSettings, extensionSettingsDB } from "@/db";
+import {
+    ExtensionSettings,
+    extensionSettingsDB,
+    Extension as ExtensionType,
+} from "@/db";
 import {
     BangumiWatch,
     Detail,
@@ -21,7 +25,7 @@ export class Extension {
     author = "";
     license = "";
     description = "";
-    type = "bangumi";
+    type: ExtensionType["type"] = "bangumi";
     nsfw: boolean = false;
 
     request(url: string, options?: any) {
