@@ -128,7 +128,7 @@ const Player = observer(() => {
                             playerStore.mini,
                     })}
                 >
-                    <div className="flex h-full items-center">
+                    <div className="flex h-full items-center overflow-hidden">
                         <div
                             className={clsx(
                                 "relative flex h-full justify-center",
