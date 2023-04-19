@@ -7,9 +7,9 @@ export default function Control() {
     return (
         <div
             hidden={playerStore.mini}
-            className="absolute bottom-0 left-0 right-0 bg-black h-16"
+            className="absolute bottom-0 left-0 right-0 h-16 bg-black"
         >
-            <div className="flex justify-between items-center m-2">
+            <div className="m-2 flex items-center justify-between">
                 <div>
                     <Button
                         className="mr-2"

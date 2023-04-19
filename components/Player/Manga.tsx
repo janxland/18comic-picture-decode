@@ -22,7 +22,6 @@ const MangaPlayer = observer(() => {
         queryFn: () => extension?.watch(url) as MangaWatch,
     });
 
-
     useEffect(() => {
         if (!data || type !== "manga") {
             return;
@@ -42,7 +41,7 @@ const MangaPlayer = observer(() => {
     }, [data]);
 
     if (isLoading) {
-        return <LoadingBox ></LoadingBox>;
+        return <LoadingBox></LoadingBox>;
     }
 
     if (error) {
@@ -59,59 +58,59 @@ const MangaPlayer = observer(() => {
 
     return (
         <>
-        <div
-            className={clsx(
-                "text-center max-w-5xl relative",
-                {
-                    "overflow-auto max-h-screen": !playerStore.mini,
-                },
-                // mini 时不显示滚动条 且不能滚动 只做预览
-                {
-                    "scrollbar-none overflow-hidden max-h-56": playerStore.mini,
-                }
-            )}
-        >
-            <div className="w-full md:w-auto mb-16">
-                {data.urls.map((url, index) => {
-                    return (
-                        <LazyElement
-                            key={index}
-                            placeholder={
-                                <div className="h-40 w-full">
-                                    <LoadingBox></LoadingBox>
-                                </div>
-                            }
-                        >
-                            <LoadingImg
-                                loadview={
+            <div
+                className={clsx(
+                    "relative max-w-5xl text-center",
+                    {
+                        "max-h-screen overflow-auto": !playerStore.mini,
+                    },
+                    // mini 时不显示滚动条 且不能滚动 只做预览
+                    {
+                        "max-h-56 overflow-hidden scrollbar-none":
+                            playerStore.mini,
+                    }
+                )}
+            >
+                <div className="mb-16 w-full md:w-auto">
+                    {data.urls.map((url, index) => {
+                        return (
+                            <LazyElement
+                                key={index}
+                                placeholder={
                                     <div className="h-40 w-full">
                                         <LoadingBox></LoadingBox>
                                     </div>
                                 }
-                                className="m-auto"
-                                src={url}
-                                alt="Manga"
-                                referrerPolicy="no-referrer"
-                            />
-                        </LazyElement>
-                    );
-                })}
-            </div>
-            {/* mini 时显示的按钮 */}
-           {
-                playerStore.mini &&(
+                            >
+                                <LoadingImg
+                                    loadview={
+                                        <div className="h-40 w-full">
+                                            <LoadingBox></LoadingBox>
+                                        </div>
+                                    }
+                                    className="m-auto"
+                                    src={url}
+                                    alt="Manga"
+                                    referrerPolicy="no-referrer"
+                                />
+                            </LazyElement>
+                        );
+                    })}
+                </div>
+                {/* mini 时显示的按钮 */}
+                {playerStore.mini && (
                     <div className="absolute left-0 right-0 bottom-0 top-0 opacity-0 hover:opacity-100">
-             <div className="bg-black bg-opacity-60 w-full h-full flex justify-center items-center">
-                 <Button onClick={()=>playerStore.toggleMini(false)}>
-                     继续观看
-                 </Button>
-             </div>
-         </div>
-                )
-             
-           }
-        </div>
-          <Control />
+                        <div className="flex h-full w-full items-center justify-center bg-black bg-opacity-60">
+                            <Button
+                                onClick={() => playerStore.toggleMini(false)}
+                            >
+                                继续观看
+                            </Button>
+                        </div>
+                    </div>
+                )}
+            </div>
+            <Control />
         </>
     );
 });

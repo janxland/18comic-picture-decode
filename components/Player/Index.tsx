@@ -99,14 +99,14 @@ const Player = observer(() => {
                     "top-0 left-0 right-0 h-screen": !playerStore.mini,
                 },
                 {
-                    "left-0 right-0 bottom-24 h-20 w-full lg:left-auto lg:right-4 lg:bottom-4 lg:max-w-md lg:w-auto lg:h-auto lg:max-h-64 overflow-hidden lg:rounded-lg":
+                    "left-0 right-0 bottom-24 h-20 w-full overflow-hidden lg:left-auto lg:right-4 lg:bottom-4 lg:h-auto lg:max-h-64 lg:w-auto lg:max-w-md lg:rounded-lg":
                         playerStore.mini,
                 }
             )}
         >
             {/* 操作栏 */}
             {playerStore.mini && (
-                <div className="hidden lg:flex w-full justify-between bg-black text-white dark:bg-zinc-700  p-2">
+                <div className="hidden w-full justify-between bg-black p-2 text-white dark:bg-zinc-700  lg:flex">
                     <button onClick={() => playerStore.clearPlayList()}>
                         <X />
                     </button>
@@ -116,10 +116,10 @@ const Player = observer(() => {
                 </div>
             )}
             {/* 播放器内容 */}
-            <div className="flex flex-col lg:flex-row h-full">
+            <div className="flex h-full flex-col lg:flex-row">
                 <div
-                    className={clsx("w-full",{
-                        "flex h-full justify-between items-center px-3 lg:p-0":
+                    className={clsx("w-full", {
+                        "flex h-full items-center justify-between px-3 lg:p-0":
                             playerStore.mini,
                     })}
                 >
@@ -127,25 +127,23 @@ const Player = observer(() => {
                     {playerStore.mini && (
                         <button
                             onClick={() => playerStore.clearPlayList()}
-                            className="flex items-center justify-center w-10 h-10 lg:hidden"
+                            className="flex h-10 w-10 items-center justify-center lg:hidden"
                         >
                             <X />
                         </button>
                     )}
                     <div
-                        className={clsx(
-                            "h-full flex justify-center relative",
-                            {
-                                "w-full": !playerStore.mini,
-                                "w-48 overflow-hidden mx-6 lg:m-0 lg:w-auto": playerStore.mini,
-                            }
-                        )}
+                        className={clsx("relative flex h-full justify-center", {
+                            "w-full": !playerStore.mini,
+                            "mx-6 w-48 overflow-hidden lg:m-0 lg:w-auto":
+                                playerStore.mini,
+                        })}
                     >
                         {player}
                     </div>
                     {/* 标题 */}
                     {playerStore.mini && (
-                        <div className="flex items-center justify-center h-10 lg:hidden">
+                        <div className="flex h-10 items-center justify-center lg:hidden">
                             <div className="truncate">
                                 {playerStore.currentPlay?.title}
                             </div>
@@ -155,7 +153,7 @@ const Player = observer(() => {
                     {playerStore.mini && (
                         <button
                             onClick={() => playerStore.toggleMini()}
-                            className="flex items-center justify-center w-10 h-10 lg:hidden"
+                            className="flex h-10 w-10 items-center justify-center lg:hidden"
                         >
                             <ChevronUp />
                         </button>
@@ -164,7 +162,7 @@ const Player = observer(() => {
                 <div
                     hidden={playerStore.mini}
                     className={clsx(
-                        "w-full h-full transition-all flex flex-col bg-neutral-100  dark:bg-neutral-700  ",
+                        "flex h-full w-full flex-col bg-neutral-100 transition-all  dark:bg-neutral-700  ",
                         {
                             "w-0 overflow-hidden": !playerStore.showPlayList,
                             "lg:w-1/4": playerStore.showPlayList,
@@ -174,8 +172,8 @@ const Player = observer(() => {
                         }
                     )}
                 >
-                    <div className="flex justify-between items-center px-2 h-10 flex-shrink-0">
-                        <div >播放列表</div>
+                    <div className="flex h-10 flex-shrink-0 items-center justify-between px-2">
+                        <div>播放列表</div>
                         <div className="flex">
                             <button
                                 onClick={() => playerStore.toggleShowPlayList()}
@@ -205,16 +203,16 @@ const Player = observer(() => {
                         {playerStore.playlist.map((item, index) => (
                             <div
                                 key={item.url}
-                                className="flex items-center px-2 my-2 cursor-pointer"
+                                className="my-2 flex cursor-pointer items-center px-2"
                                 onClick={() => {
                                     playerStore.togglePlay(index);
                                 }}
                             >
                                 <div
                                     className={clsx(
-                                        "rounded-xl flex transition truncate hover:bg-black hover:bg-opacity-40 w-full p-2",
+                                        "flex w-full truncate rounded-xl p-2 transition hover:bg-black hover:bg-opacity-40",
                                         {
-                                            "ring-2 ring-black dark:ring-white bg-black bg-opacity-20":
+                                            "bg-black bg-opacity-20 ring-2 ring-black dark:ring-white":
                                                 item.url ===
                                                 playerStore.currentPlay?.url,
                                         }

@@ -19,7 +19,6 @@ const FikushonPlayer = observer(() => {
         queryFn: () => extension?.watch(url) as FikushonWatch,
     });
 
-
     useEffect(() => {
         if (!data || type !== "fikushon") {
             return;
@@ -56,45 +55,45 @@ const FikushonPlayer = observer(() => {
 
     return (
         <>
-        <div
-        className={clsx(
-            "text-center max-w-5xl relative",
-            {
-                "overflow-auto max-h-screen": !playerStore.mini,
-            },
-            // mini 时不显示滚动条 且不能滚动 只做预览
-            {
-                "scrollbar-none overflow-hidden max-h-56": playerStore.mini,
-            }
-        )}
-    >
-            <div className="max-w-5xl bg-slate-200 p-3 text-left dark:bg-zinc-700 mb-16">
-                <div className="mb-6 text-center">
-                    <h1 className="text-2xl font-bold">{data.title}</h1>
-                    <h2 className="text-lg">{data.subtitle}</h2>
+            <div
+                className={clsx(
+                    "relative max-w-5xl text-center",
+                    {
+                        "max-h-screen overflow-auto": !playerStore.mini,
+                    },
+                    // mini 时不显示滚动条 且不能滚动 只做预览
+                    {
+                        "max-h-56 overflow-hidden scrollbar-none":
+                            playerStore.mini,
+                    }
+                )}
+            >
+                <div className="mb-16 max-w-5xl bg-slate-200 p-3 text-left dark:bg-zinc-700">
+                    <div className="mb-6 text-center">
+                        <h1 className="text-2xl font-bold">{data.title}</h1>
+                        <h2 className="text-lg">{data.subtitle}</h2>
+                    </div>
+                    {data.content.map((item, index) => {
+                        return (
+                            <p className="mb-3 text-lg" key={index}>
+                                {item}
+                            </p>
+                        );
+                    })}
                 </div>
-                {data.content.map((item, index) => {
-                    return (
-                        <p className="mb-3 text-lg" key={index}>
-                            {item}
-                        </p>
-                    );
-                })}
-            </div>
-            {
-                playerStore.mini &&(
+                {playerStore.mini && (
                     <div className="absolute left-0 right-0 bottom-0 top-0 opacity-0 hover:opacity-100">
-             <div className="bg-black bg-opacity-60 w-full h-full flex justify-center items-center">
-                 <Button onClick={()=>playerStore.toggleMini(false)}>
-                     继续观看
-                 </Button>
-             </div>
-         </div>
-                )
-             
-           }
-        </div>
-        <Control />
+                        <div className="flex h-full w-full items-center justify-center bg-black bg-opacity-60">
+                            <Button
+                                onClick={() => playerStore.toggleMini(false)}
+                            >
+                                继续观看
+                            </Button>
+                        </div>
+                    </div>
+                )}
+            </div>
+            <Control />
         </>
     );
 });

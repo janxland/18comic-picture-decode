@@ -37,6 +37,8 @@ const BangumiPlayer = observer(() => {
         if (!artRef || !data) {
             return;
         }
+        // 切换非悬浮播放列表
+        playerStore.toggleFloatPlayList(false);
 
         // 如果不需要默认播放器
         if (data.noDefaultPlayer) {
@@ -282,16 +284,16 @@ const BangumiPlayer = observer(() => {
     return (
         <div
             className={clsx({
-                "w-full lg:h-full h-52 flex-shrink-0 lg:flex-shrink":
+                "h-52 w-full flex-shrink-0 lg:h-full lg:flex-shrink":
                     !playerStore.mini,
-                "w-full h-20 lg:w-96 lg:h-40 relative": playerStore.mini,
+                "relative h-20 w-full lg:h-40 lg:w-96": playerStore.mini,
             })}
         >
-            <div className="w-full h-full" ref={artRef}></div>
+            <div className="h-full w-full" ref={artRef}></div>
             {playerStore.mini && art && (
                 // 缩小后的播放控件
-                <div className="absolute top-0 left-0 w-full h-full z-40 ">
-                    <div className="flex transition-all items-center justify-center opacity-0 hover:opacity-100 hover:bg-black hover:bg-opacity-70 h-full w-full">
+                <div className="absolute top-0 left-0 z-40 h-full w-full ">
+                    <div className="flex h-full w-full items-center justify-center opacity-0 transition-all hover:bg-black hover:bg-opacity-70 hover:opacity-100">
                         <button
                             className="mx-3"
                             onClick={() => playerStore.togglePrevPlay()}

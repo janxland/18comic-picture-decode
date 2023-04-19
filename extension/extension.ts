@@ -1,4 +1,8 @@
-import { ExtensionSettings, extensionSettingsDB, Extension as ExtensionType } from "@/db";
+import {
+    ExtensionSettings,
+    extensionSettingsDB,
+    Extension as ExtensionType,
+} from "@/db";
 import {
     BangumiWatch,
     Detail,
@@ -99,6 +103,6 @@ export class Extension {
         });
     }
 
-    load() { }
-    unload() { }
+    load() {}
+    unload() {}
 }

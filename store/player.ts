@@ -12,7 +12,6 @@ export interface PlayerListType {
 }
 
 export default class PlayerStore {
-
     playlist: PlayerListType[] = [];
     // 全屏
     fullScreen: boolean = false;
@@ -25,17 +24,15 @@ export default class PlayerStore {
     floatPlayList: boolean = false;
 
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this);
     }
 
     // 从 localStorage 读取上次记录
-    async init() {
-
-    }
+    async init() {}
 
     // 当前播放
     get currentPlay() {
-        return this.playlist[this.index]
+        return this.playlist[this.index];
     }
 
     // 添加播放并切换到当前播放
@@ -52,7 +49,7 @@ export default class PlayerStore {
     // 添加下个播放
     addNextPlay(play: PlayerListType) {
         // 如果有一样的就先删除再添加
-        const index = this.playlist.findIndex(v => v.url === play.url);
+        const index = this.playlist.findIndex((v) => v.url === play.url);
         if (index !== -1) {
             this.playlist.splice(index, 1);
         }
@@ -64,7 +61,7 @@ export default class PlayerStore {
     toggleNextPlay() {
         if (this.index + 1 >= this.playlist.length) {
             // 提示
-            enqueueSnackbar("已经是最后一集了", { variant: "info" })
+            enqueueSnackbar("已经是最后一集了", { variant: "info" });
             return;
         }
         this.index++;
@@ -74,7 +71,7 @@ export default class PlayerStore {
     togglePrevPlay() {
         if (this.index - 1 < 0) {
             // 提示
-            enqueueSnackbar("已经是第一集了", { variant: "info" })
+            enqueueSnackbar("已经是第一集了", { variant: "info" });
             return;
         }
         this.index--;
@@ -120,5 +117,4 @@ export default class PlayerStore {
         }
         this.mini = !this.mini;
     }
-
 }

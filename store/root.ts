@@ -10,7 +10,7 @@ export interface RootStore {
     tmdbStore: TMDBStore;
     extensionStore: ExtensionStore;
     historyStore: HistoryStore;
-    playerStore: PlayerStore
+    playerStore: PlayerStore;
 }
 
 export class RootStore {

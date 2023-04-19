@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import RootProvider from "@/app/RootProvider";
-import {ReactNode} from "react";
+import { ReactNode } from "react";
 
 export const metadata = {
     title: "Miru",
