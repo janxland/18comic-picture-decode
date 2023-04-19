@@ -293,7 +293,7 @@ const BangumiPlayer = observer(() => {
             {playerStore.mini && art && (
                 // 缩小后的播放控件
                 <div className="absolute top-0 left-0 z-40 h-full w-full ">
-                    <div className="flex h-full w-full items-center justify-center opacity-0 transition-all hover:bg-black hover:bg-opacity-70 hover:opacity-100">
+                    <div className="flex h-full w-full items-center text-white justify-center opacity-0 transition-all hover:bg-black hover:bg-opacity-70 hover:opacity-100">
                         <button
                             className="mx-3"
                             onClick={() => playerStore.togglePrevPlay()}
