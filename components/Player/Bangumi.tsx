@@ -40,6 +40,11 @@ const BangumiPlayer = observer(() => {
         // 切换非悬浮播放列表
         playerStore.toggleFloatPlayList(false);
 
+        // 如果不是全屏则打开列表
+        if (!playerStore.fullScreen) {
+            playerStore.toggleShowPlayList(true);
+        }
+
         // 如果不需要默认播放器
         if (data.noDefaultPlayer) {
             extension?.customPlayer(artRef.current as any, data.url, {} as any);

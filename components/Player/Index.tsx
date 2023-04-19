@@ -90,16 +90,16 @@ const Player = observer(() => {
 
     return (
         <motion.div
-            transition={{ type: "tween" }}
+            layout="preserve-aspect"
             ref={playRef}
             layoutId="player"
             className={clsx(
-                "fixed z-50 bg-neutral-100  dark:bg-neutral-700  lg:shadow-2xl ",
+                "fixed right-0 z-50 bg-neutral-100  dark:bg-neutral-700  lg:shadow-2xl ",
                 {
-                    "top-0 left-0 right-0 h-screen": !playerStore.mini,
+                    "top-0 left-0  h-screen": !playerStore.mini,
                 },
                 {
-                    "left-0 right-0 bottom-24 h-20 w-full overflow-hidden lg:left-auto lg:right-4 lg:bottom-4 lg:h-auto lg:max-h-64 lg:w-auto lg:max-w-md lg:rounded-lg":
+                    "left-0 bottom-24 h-16 w-full overflow-hidden lg:left-auto lg:right-4 lg:bottom-4 lg:h-auto lg:max-h-64 lg:w-auto lg:max-w-md lg:rounded-lg":
                         playerStore.mini,
                 }
             )}
@@ -124,50 +124,57 @@ const Player = observer(() => {
             >
                 <div
                     className={clsx("w-full", {
-                        "flex h-full items-center justify-between px-3 lg:p-0":
+                        "flex h-full items-center justify-between lg:p-0":
                             playerStore.mini,
                     })}
                 >
-                    {/* 关闭按钮 */}
-                    {playerStore.mini && (
-                        <button
-                            onClick={() => playerStore.clearPlayList()}
-                            className="flex h-10 w-10 items-center justify-center lg:hidden"
+                    <div className="flex h-full items-center">
+                        <div
+                            className={clsx(
+                                "relative flex h-full justify-center",
+                                {
+                                    "w-full": !playerStore.mini,
+                                    "mr-2 w-48 overflow-hidden lg:m-0 lg:w-auto":
+                                        playerStore.mini,
+                                }
+                            )}
                         >
-                            <X />
-                        </button>
-                    )}
-                    <div
-                        className={clsx("relative flex h-full justify-center", {
-                            "w-full": !playerStore.mini,
-                            "mx-6 w-48 overflow-hidden lg:m-0 lg:w-auto":
-                                playerStore.mini,
-                        })}
-                    >
-                        {player}
-                    </div>
-                    {/* 标题 */}
-                    {playerStore.mini && (
-                        <div className="flex h-10 items-center justify-center lg:hidden">
-                            <div className="truncate">
-                                {playerStore.currentPlay?.title}
-                            </div>
+                            {player}
                         </div>
-                    )}
-                    {/* 展开按钮 */}
-                    {playerStore.mini && (
-                        <button
-                            onClick={() => playerStore.toggleMini()}
-                            className="flex h-10 w-10 items-center justify-center lg:hidden"
-                        >
-                            <ChevronUp />
-                        </button>
-                    )}
+                        {/* 标题 */}
+                        {playerStore.mini && (
+                            <div className="flex h-10 items-center justify-center lg:hidden">
+                                <div className="truncate">
+                                    {playerStore.currentPlay?.title}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    <div className="flex">
+                        {/* 展开按钮 */}
+                        {playerStore.mini && (
+                            <button
+                                onClick={() => playerStore.toggleMini()}
+                                className="flex h-10 w-10 items-center justify-center lg:hidden"
+                            >
+                                <ChevronUp />
+                            </button>
+                        )}
+                        {/* 关闭按钮 */}
+                        {playerStore.mini && (
+                            <button
+                                onClick={() => playerStore.clearPlayList()}
+                                className="flex h-10 w-10 items-center justify-center lg:hidden"
+                            >
+                                <X />
+                            </button>
+                        )}
+                    </div>
                 </div>
                 <div
                     hidden={playerStore.mini}
                     className={clsx(
-                        "flex h-full w-full flex-col bg-neutral-100 transition-all  dark:bg-neutral-700  ",
+                        "flex h-full w-full flex-col overflow-auto bg-neutral-100 transition-all dark:bg-neutral-700 lg:overflow-hidden",
                         {
                             "w-0 overflow-hidden": !playerStore.showPlayList,
                             "lg:w-1/4": playerStore.showPlayList,
@@ -204,7 +211,7 @@ const Player = observer(() => {
                             </button>
                         </div>
                     </div>
-                    <div className="w-full overflow-y-auto">
+                    <div className="w-full h-full lg:overflow-auto">
                         {playerStore.playlist.map((item, index) => (
                             <div
                                 key={item.url}
