@@ -284,9 +284,9 @@ const BangumiPlayer = observer(() => {
     return (
         <div
             className={clsx({
-                "h-52 w-full flex-shrink-0 lg:h-full lg:flex-shrink":
-                    !playerStore.mini,
+                "h-52 w-full flex-shrink lg:h-screen": !playerStore.mini,
                 "relative h-20 w-full lg:h-40 lg:w-96": playerStore.mini,
+                "!h-screen": playerStore.fullScreen,
             })}
         >
             <div className="h-full w-full" ref={artRef}></div>

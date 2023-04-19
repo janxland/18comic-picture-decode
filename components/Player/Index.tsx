@@ -116,7 +116,12 @@ const Player = observer(() => {
                 </div>
             )}
             {/* 播放器内容 */}
-            <div className="flex h-full flex-col lg:flex-row">
+            <div
+                className={clsx("flex h-full lg:flex-row", {
+                    "flex-col": !playerStore.fullScreen,
+                    "flex-row": playerStore.fullScreen,
+                })}
+            >
                 <div
                     className={clsx("w-full", {
                         "flex h-full items-center justify-between px-3 lg:p-0":
