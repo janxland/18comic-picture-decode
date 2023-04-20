@@ -14,7 +14,7 @@ export default function AboutTab() {
             <p>
                 {t("about.open-source")}
                 <a
-                    href="https://github.com/miru-project/miru"
+                    href="https://github.com/miru-project/miru-next"
                     target="_blank"
                     rel="noreferrer"
                 >
