@@ -10,7 +10,7 @@ export function logMiruInfo() {
         `background: url(${logo}) no-repeat;background-size: 100% 100%;padding: 50px;`
     );
     console.log(
-        `%c Miru v${packageInfo.version} %c https://github.com/miru-project/miru `,
+        `%c Miru v${packageInfo.version} %c https://miru.js.org `,
         "color: #fff;font-weight: 900;; background-color: rgb(246, 0, 78); padding:5px 0;",
         "background-color: rgb(255, 219, 219); padding:5px 0;"
     );
