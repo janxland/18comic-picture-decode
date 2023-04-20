@@ -14,6 +14,7 @@ import Credits from "./Credits";
 import Episodes from "./Episodes";
 import Footer from "./Footer";
 import Skeletion from "./Skeletion";
+import changeTitle from "@/utils/title-change";
 
 const WatchPage = observer(() => {
     const searchParams = useSearchParams();
@@ -38,6 +39,8 @@ const WatchPage = observer(() => {
                 extension: extension!,
                 setWatchData,
             });
+            // 更改标题
+            changeTitle(data.title)
         }
     }, [data]);
 

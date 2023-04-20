@@ -41,7 +41,7 @@ const MangaPlayer = observer(() => {
     }, [data]);
 
     if (isLoading) {
-        return <LoadingBox className="!h-screen" ></LoadingBox>;
+        return <LoadingBox className="!h-screen"></LoadingBox>;
     }
 
     if (error) {

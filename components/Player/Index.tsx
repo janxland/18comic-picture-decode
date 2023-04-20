@@ -211,7 +211,7 @@ const Player = observer(() => {
                             </button>
                         </div>
                     </div>
-                    <div className="w-full h-full lg:overflow-auto">
+                    <div className="h-full w-full lg:overflow-auto">
                         {playerStore.playlist.map((item, index) => (
                             <div
                                 key={item.url}

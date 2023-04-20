@@ -6,9 +6,14 @@ import Tab from "@/components/Tab";
 import { useTranslation } from "@/app/i18n";
 import InstalledTab from "./InstalledTab";
 import RepoTab from "./RepoTab";
+import changeTitle from "@/utils/title-change";
+import { useEffect } from "react";
 
 export default function Page() {
     const { t } = useTranslation("extensions");
+    useEffect(() => {
+        changeTitle(t("title"));
+    }, []);
     return (
         <Layout>
             <BaseMargin>
