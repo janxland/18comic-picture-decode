@@ -10,12 +10,16 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useTranslation } from "@/app/i18n";
 import Result from "./Result";
+import changeTitle from "@/utils/title-change";
 
 const SearchPage = observer(() => {
     const { extensionStore, settingsStore } = useRootStore();
     const [tabs, setTabs] = useState<Array<Tabs>>([]);
     const [kw, setKw] = useState<string>("");
     const { t } = useTranslation("search");
+    useEffect(() => {
+        changeTitle(t("title"));
+    }, []);
 
     useEffect(() => {
         const newTabs: Array<Tabs> = [];

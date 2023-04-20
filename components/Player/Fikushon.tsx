@@ -42,7 +42,7 @@ const FikushonPlayer = observer(() => {
     }
 
     if (isLoading) {
-        return <LoadingBox className="!h-screen" ></LoadingBox>;
+        return <LoadingBox className="!h-screen"></LoadingBox>;
     }
 
     if (error) {
@@ -60,9 +60,7 @@ const FikushonPlayer = observer(() => {
                     "relative max-w-5xl text-center",
                     {
                         "max-h-screen overflow-auto": !playerStore.mini,
-                    },
-                    // mini 时不显示滚动条 且不能滚动 只做预览
-                    {
+                         // mini 时不显示滚动条 且不能滚动 只做预览
                         "max-h-56 overflow-hidden scrollbar-none":
                             playerStore.mini,
                     }

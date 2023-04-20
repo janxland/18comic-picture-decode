@@ -6,9 +6,14 @@ import { useTranslation } from "@/app/i18n";
 import AboutTab from "./AboutTab";
 import DataTab from "./DataTab";
 import GeneralTab from "./GeneralTab";
+import changeTitle from "@/utils/title-change";
+import { useEffect } from "react";
 
 export default function Page() {
     const { t } = useTranslation("settings");
+    useEffect(() => {
+        changeTitle(t("title"));
+    }, []);
     return (
         <Layout>
             <BaseMargin>
