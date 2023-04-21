@@ -15,6 +15,7 @@ import { observer } from "mobx-react-lite";
 import clsx from "clsx";
 import MangaPlayer from "./Manga";
 import FikushonPlayer from "./Fikushon";
+import IconButton from "../common/IconButton";
 
 const Player = observer(() => {
     const { playerStore } = useRootStore();
@@ -174,7 +175,7 @@ const Player = observer(() => {
                 <div
                     hidden={playerStore.mini}
                     className={clsx(
-                        "flex h-full w-full flex-col overflow-auto bg-neutral-100 transition-all dark:bg-neutral-700 lg:overflow-hidden",
+                        "flex h-full w-full flex-col overflow-hidden bg-neutral-200 transition-all dark:bg-neutral-800 ",
                         {
                             "w-0 overflow-hidden": !playerStore.showPlayList,
                             "lg:w-1/4": playerStore.showPlayList,
@@ -184,10 +185,10 @@ const Player = observer(() => {
                         }
                     )}
                 >
-                    <div className="flex h-10 flex-shrink-0 items-center justify-between px-2">
-                        <div>播放列表</div>
+                    <div className="flex flex-shrink-0 items-center justify-between bg-opacity-60 px-3 py-1">
+                        <div className="text-lg">播放列表</div>
                         <div className="flex">
-                            <button
+                            <IconButton
                                 onClick={() => playerStore.toggleShowPlayList()}
                             >
                                 {playerStore.showPlayList ? (
@@ -195,9 +196,9 @@ const Player = observer(() => {
                                 ) : (
                                     <SidebarClose />
                                 )}
-                            </button>
-                            <button
-                                className="mx-3"
+                            </IconButton>
+                            <IconButton
+                                className="mx-1"
                                 onClick={() => playerStore.toggleFullScreen()}
                             >
                                 {playerStore.fullScreen ? (
@@ -205,13 +206,15 @@ const Player = observer(() => {
                                 ) : (
                                     <Maximize />
                                 )}
-                            </button>
-                            <button onClick={() => playerStore.toggleMini()}>
+                            </IconButton>
+                            <IconButton
+                                onClick={() => playerStore.toggleMini()}
+                            >
                                 <ChevronDown />
-                            </button>
+                            </IconButton>
                         </div>
                     </div>
-                    <div className="h-full w-full lg:overflow-auto">
+                    <div className="h-full w-full overflow-auto">
                         {playerStore.playlist.map((item, index) => (
                             <div
                                 key={item.url}
@@ -230,11 +233,9 @@ const Player = observer(() => {
                                         }
                                     )}
                                 >
-                                    <div className="text-lg font-bold">
-                                    {item.title} 
-                                    </div>
-                                    <div className="text-sm">
-                                    {item.chapter}
+                                    <div className="text-lg">{item.title}</div>
+                                    <div className="text-sm ">
+                                        {item.chapter}
                                     </div>
                                 </div>
                             </div>
