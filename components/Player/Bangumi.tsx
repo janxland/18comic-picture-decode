@@ -52,8 +52,8 @@ const BangumiPlayer = observer(() => {
         }
 
         // 如果 artplayer 已经初始化过了
-        if (art) {
-            art.destroy(false);
+        if (!art?.isDestroy) {
+            art?.destroy(false);
         }
 
         // 如果 artRef.current 不存在
@@ -231,11 +231,12 @@ const BangumiPlayer = observer(() => {
         }
 
         // 播放的时候 添加一次记录
-        art.on("play", () => {
+        art.on("video:play", () => {
+            console.log("play");
             addHistory();
             setPlaying(true);
-        });
-
+        })        
+    
         art.on("pause", () => {
             setPlaying(false);
         });
