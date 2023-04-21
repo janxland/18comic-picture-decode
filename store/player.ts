@@ -1,5 +1,6 @@
 import { Extension } from "@/db";
-import { makeAutoObservable } from "mobx";
+import { isClient } from "@/utils/is-client";
+import { autorun, makeAutoObservable } from "mobx";
 import { enqueueSnackbar } from "notistack";
 
 export interface PlayerListType {
@@ -25,10 +26,27 @@ export default class PlayerStore {
 
     constructor() {
         makeAutoObservable(this);
+        this.init();
+        autorun(() => {
+            if (!isClient() || !this.playlist.length) {
+                return
+            }
+            localStorage.setItem("playlist", JSON.stringify({ playlist: this.playlist, index: this.index }))
+        })
     }
 
     // 从 localStorage 读取上次记录
-    async init() {}
+    init() {
+        if (!isClient()) {
+            return
+        }
+        const data = localStorage.getItem("playlist");
+        if (data) {
+            const { playlist, index } = JSON.parse(data);
+            this.playlist = playlist;
+            this.index = index;
+        }
+    }
 
     // 当前播放
     get currentPlay() {
@@ -80,6 +98,8 @@ export default class PlayerStore {
     // 清空播放列队
     clearPlayList() {
         this.playlist = [];
+        // 清除 localStorage
+        localStorage.removeItem("playlist");
     }
 
     // 切换 showPlayList
