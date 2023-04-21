@@ -58,22 +58,22 @@ const Player = observer(() => {
             return;
         }
         if (!document.fullscreenElement && playerStore.fullScreen) {
-            playRef.current.requestFullscreen({
-                navigationUI: "hide",
-            });
+            playRef.current.requestFullscreen();
             // 全屏时要收起播放列表
             playerStore.toggleShowPlayList(false);
             return;
         }
-        document.exitFullscreen();
+        // 如果不是按 esc 退出全屏则执行退出全屏
+        if (document.fullscreenElement && !playerStore.fullScreen) {
+            document.exitFullscreen();
+        }
         playerStore.toggleShowPlayList(true);
     }, [playerStore.fullScreen]);
 
     // 如果是按esc退出全屏
-    playRef.current?.addEventListener("fullscreenchange", () => {
-        // 如果退出显示播放列表
+    playRef.current?.addEventListener("fullscreenchange", (e) => {
         if (!document.fullscreenElement) {
-            playerStore.toggleShowPlayList(true);
+            playerStore.toggleFullScreen(false);
         }
     });
 
@@ -144,7 +144,7 @@ const Player = observer(() => {
                         </div>
                         {/* 标题 */}
                         {playerStore.mini && (
-                            <div className="flex h-10 items-center justify-center lg:hidden">
+                            <div className="flex items-center justify-center lg:hidden">
                                 <div className="truncate">
                                     {playerStore.currentPlay?.title}
                                 </div>
@@ -185,7 +185,7 @@ const Player = observer(() => {
                         }
                     )}
                 >
-                    <div className="flex flex-shrink-0 items-center justify-between bg-opacity-60 px-3 py-1">
+                    <div className="flex flex-shrink-0 items-center justify-between px-3 py-1">
                         <div className="text-lg">播放列表</div>
                         <div className="flex">
                             <IconButton
