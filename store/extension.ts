@@ -24,7 +24,6 @@ export default class ExtensionStore {
             this.proxyUrl = settingsStore.getSetting("miruProxy");
             // 重载扩展proxy地址
             this.extensionsMap.forEach((extension, pkg) => {
-                console.log("proxyUrl", this.proxyUrl);
                 if (this.proxyUrl) {
                     extension.proxyUrl = this.proxyUrl;
                 }
