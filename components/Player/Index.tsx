@@ -222,7 +222,7 @@ const Player = observer(() => {
                             >
                                 <div
                                     className={clsx(
-                                        "flex w-full truncate rounded-xl p-2 transition hover:bg-black hover:bg-opacity-40",
+                                        " w-full truncate rounded-xl p-2 transition hover:bg-black hover:bg-opacity-40",
                                         {
                                             "bg-black bg-opacity-20 ring-2 ring-black dark:ring-white":
                                                 item.url ===
@@ -230,7 +230,12 @@ const Player = observer(() => {
                                         }
                                     )}
                                 >
-                                    {item.title} {item.chapter}
+                                    <div className="text-lg font-bold">
+                                    {item.title} 
+                                    </div>
+                                    <div className="text-sm">
+                                    {item.chapter}
+                                    </div>
                                 </div>
                             </div>
                         ))}
