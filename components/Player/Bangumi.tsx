@@ -207,11 +207,7 @@ const BangumiPlayer = observer(() => {
             art.autoHeight = true;
         });
 
-        return () => {
-            if (art && art.destroy) {
-                art.destroy(false);
-            }
-        };
+        
     }, [data]);
 
     const addHistory = async () => {
@@ -257,7 +253,12 @@ const BangumiPlayer = observer(() => {
                 addHistory();
             }
         });
-    }, [art]);
+        return () => {
+            if (art && art.destroy) {
+                art.destroy(false);
+            }
+        };
+    }, [art,playerStore.playlist,playerStore.index]);
 
     const togglePlay = () => {
         if (!art) {
@@ -270,10 +271,7 @@ const BangumiPlayer = observer(() => {
         }
     };
 
-    if (currentPlay.type !== "bangumi") {
-        return null;
-    }
-
+ 
     if (error) {
         return <ErrorView error={error}></ErrorView>;
     }
