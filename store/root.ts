@@ -4,6 +4,7 @@ import HistoryStore from "./history";
 import SettingsStore from "./settings";
 import { TMDBStore } from "./tmdb";
 import PlayerStore from "./player";
+import SyncStore from "./sync";
 
 export interface RootStore {
     settingsStore: SettingsStore;
@@ -11,6 +12,7 @@ export interface RootStore {
     extensionStore: ExtensionStore;
     historyStore: HistoryStore;
     playerStore: PlayerStore;
+    syncStore: SyncStore;
 }
 
 export class RootStore {
@@ -20,5 +22,6 @@ export class RootStore {
         this.extensionStore = new ExtensionStore(this.settingsStore);
         this.historyStore = new HistoryStore();
         this.playerStore = new PlayerStore();
+        this.syncStore = new SyncStore(this.settingsStore);
     }
 }

@@ -43,6 +43,8 @@ export function exportData() {
         db.extension.toArray(),
         db.love.toArray(),
         db.settings.toArray(),
+        db.extensionSettings.toArray(),
+        db.tmdb.toArray(),
     ]);
 }
 
@@ -52,5 +54,7 @@ export function importData(data: any) {
         db.extension.bulkPut(data[1]),
         db.love.bulkPut(data[2]),
         db.settings.bulkPut(data[3]),
+        db.extensionSettings.bulkPut(data[4]),
+        db.tmdb.bulkPut(data[5]),
     ]);
 }
