@@ -15,6 +15,7 @@ import {
     TMDB,
 } from "@/db";
 import { Settings } from "http2";
+import { Loader2 } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -95,9 +96,16 @@ const Sync = observer(() => {
 
     useEffect(() => {
         (async () => {
-            const res = await syncStore.pull();
-            setCloudUpdateTime(res?.updatedAt);
-            setFileUrl(res?.rawUrl);
+            try {
+                setLoading(true);
+                const res = await syncStore.pull();
+                setCloudUpdateTime(res?.updatedAt);
+                setFileUrl(res?.rawUrl);
+            } catch (error) {
+                enqueueSnackbar("获取备份失败: " + error, { variant: "error" });
+            } finally {
+                setLoading(false);
+            }
         })();
     }, [settingsStore.getSetting("githubToken")]);
 
@@ -177,25 +185,26 @@ const Sync = observer(() => {
         <div className="mb-3">
             <Input title="Github Token" bindKey="githubToken"></Input>
             {settingsStore.getSetting("githubToken") && (
-                <div className="w-full items-center rounded-lg border p-2 md:w-96">
-                    <div className="flex items-center justify-between">
+                <div className="relative w-full items-center overflow-hidden rounded-lg border p-2 md:w-96">
+                    <div className=" flex items-center justify-between">
                         <div>
                             <h2>存储时间</h2>
                             <p>{cloudUpdateTime}</p>
                         </div>
                         <div>
-                            <Button
-                                className="mr-2"
-                                loading={loading}
-                                onClick={handlePush}
-                            >
+                            <Button className="mr-2" onClick={handlePush}>
                                 备份
                             </Button>
-                            <Button loading={loading} onClick={handleRestore}>
-                                恢复
-                            </Button>
+                            <Button onClick={handleRestore}>恢复</Button>
                         </div>
                     </div>
+                    {loading && (
+                        <div className="absolute left-0 right-0 bottom-0 top-0">
+                            <div className="flex h-full w-full items-center justify-center bg-black bg-opacity-50">
+                                <Loader2 className="animate-spin" />
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
