@@ -2,8 +2,19 @@
 import { useTranslation } from "@/app/i18n";
 import Button from "@/components/common/Button";
 import { useRootStore } from "@/context/root-context";
-import { db, exportData, importData, loveDB } from "@/db";
-import { Cloud, Database } from "lucide-react";
+import {
+    db,
+    exportData,
+    Extension,
+    ExtensionSettings,
+    History,
+    historyDB,
+    importData,
+    Love,
+    loveDB,
+    TMDB,
+} from "@/db";
+import { Settings } from "http2";
 import { observer } from "mobx-react-lite";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -80,7 +91,7 @@ const Sync = observer(() => {
         useRootStore();
     const [cloudUpdateTime, setCloudUpdateTime] = useState<string>();
     const [fileUrl, setFileUrl] = useState<string>();
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -92,7 +103,7 @@ const Sync = observer(() => {
 
     const handlePush = async () => {
         try {
-            setLoading(true)
+            setLoading(true);
             // 固化缓存的历史记录
             historyStore.init();
 
@@ -114,18 +125,36 @@ const Sync = observer(() => {
         } catch (error) {
             enqueueSnackbar("备份失败: " + error, { variant: "error" });
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
     const handleRestore = async () => {
         try {
-            setLoading(true)
+            setLoading(true);
             if (!fileUrl) {
                 enqueueSnackbar("请先备份", { variant: "error" });
                 return;
             }
-            const res = await request(fileUrl);
+            const res = (await request(fileUrl)) as [
+                History[],
+                Extension[],
+                Love[],
+                Settings[],
+                ExtensionSettings[],
+                TMDB[]
+            ];
+
+            // 如果本地历史记录有视频封面则不替换
+            await Promise.all(
+                res[0].map(async (item) => {
+                    if (item.type === "bangumi") {
+                        item.cover =
+                            (await historyDB.getHistory(item.url, item.package))
+                                ?.cover || "";
+                    }
+                })
+            );
 
             // 重置数据库
             await db.delete();
@@ -142,7 +171,7 @@ const Sync = observer(() => {
                 variant: "error",
             });
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
@@ -157,10 +186,16 @@ const Sync = observer(() => {
                             <p>{cloudUpdateTime}</p>
                         </div>
                         <div>
-                            <Button className="mr-2" loading={loading} onClick={handlePush}>
+                            <Button
+                                className="mr-2"
+                                loading={loading}
+                                onClick={handlePush}
+                            >
                                 备份
                             </Button>
-                            <Button loading={loading} onClick={handleRestore}>恢复</Button>
+                            <Button loading={loading} onClick={handleRestore}>
+                                恢复
+                            </Button>
                         </div>
                     </div>
                 </div>
