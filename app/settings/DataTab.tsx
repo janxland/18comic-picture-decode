@@ -115,10 +115,6 @@ const Sync = observer(() => {
                 }
             });
             const { rawUrl, updatedAt } = await syncStore.push(data);
-            if (!updatedAt) {
-                enqueueSnackbar("备份失败", { variant: "error" });
-                return;
-            }
             setCloudUpdateTime(updatedAt);
             enqueueSnackbar("备份成功", { variant: "success" });
             setFileUrl(rawUrl);
@@ -159,8 +155,10 @@ const Sync = observer(() => {
             // 重置数据库
             await db.delete();
             await db.open();
+
             await importData(res);
-            // 重写加载
+
+            // 重新加载
             await historyStore.init();
             await extensionStore.init();
             await settingsStore.init();
