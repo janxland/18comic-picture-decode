@@ -42,7 +42,7 @@ export default class SyncStore {
         }
         const list = (await this.request("/gists")) as GistItem[];
         const gist = list.find((item: GistItem) => {
-            return item.description === "MiruAync";
+            return item.description === "MiruSync";
         });
         this.gid = gist?.id;
         return this.gid;
@@ -56,7 +56,7 @@ export default class SyncStore {
             return;
         }
         const gist = (await this.request(`/gists/${gid}`)) as GistItem;
-        const file = gist.files["MiruAsync.json"];
+        const file = gist.files["MiruSync.json"];
         return { rawUrl: file.raw_url, updatedAt: gist.updated_at };
     }
 
@@ -71,10 +71,10 @@ export default class SyncStore {
             gist = (await this.request("/gists", {
                 method: "POST",
                 data: {
-                    description: "MiruAync",
+                    description: "MiruSync",
                     public: false,
                     files: {
-                        "MiruAsync.json": {
+                        "MiruSync.json": {
                             content: JSON.stringify(data, null, 2),
                         },
                     },
@@ -86,7 +86,7 @@ export default class SyncStore {
                 method: "PATCH",
                 data: {
                     files: {
-                        "MiruAsync.json": {
+                        "MiruSync.json": {
                             content: JSON.stringify(data, null, 2),
                         },
                     },
@@ -96,7 +96,7 @@ export default class SyncStore {
         }
         // 存在则更新
         return {
-            rawUrl: files["MiruAsync.json"].raw_url,
+            rawUrl: files["MiruSync.json"].raw_url,
             updatedAt: gist.updated_at,
         };
     }
