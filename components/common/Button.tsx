@@ -1,7 +1,12 @@
 import { HtmlHTMLAttributes } from "react";
 import { clsx } from "clsx";
+import { Loader2 } from "lucide-react";
 
-export default function Button(props: HtmlHTMLAttributes<HTMLButtonElement>) {
+interface ButtonProps extends HtmlHTMLAttributes<HTMLButtonElement> {
+    loading?:boolean
+}
+
+export default function Button(props: ButtonProps) {
     return (
         <button
             {...props}
@@ -10,7 +15,10 @@ export default function Button(props: HtmlHTMLAttributes<HTMLButtonElement>) {
                 props.className
             )}
         >
-            {props.children}
+          {props.loading && 
+            <Loader2 className="animate-spin" /> ||
+            props.children
+          } 
         </button>
     );
 }

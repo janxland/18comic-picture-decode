@@ -2,14 +2,23 @@
 import { useTranslation } from "@/app/i18n";
 import Button from "@/components/common/Button";
 import { useRootStore } from "@/context/root-context";
-import { loveDB } from "@/db";
+import { db, exportData, importData, loveDB } from "@/db";
+import { Cloud, Database } from "lucide-react";
+import { observer } from "mobx-react-lite";
+import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+import request from "umi-request";
+import Input from "./Input";
+import Title from "./Title";
 
 export default function DataTab() {
     const { historyStore } = useRootStore();
     const { t } = useTranslation("settings");
     return (
         <div>
+            <Title>同步</Title>
+            <Sync />
+            <Title>存储</Title>
             <ClearCacheBotton
                 title={t("data.history")}
                 count={historyStore.history.length}
@@ -65,3 +74,97 @@ function ClearCacheBotton(props: {
         </div>
     );
 }
+
+const Sync = observer(() => {
+    const { syncStore, historyStore, extensionStore, settingsStore } =
+        useRootStore();
+    const [cloudUpdateTime, setCloudUpdateTime] = useState<string>();
+    const [fileUrl, setFileUrl] = useState<string>();
+    const [loading,setLoading] = useState(false)
+
+    useEffect(() => {
+        (async () => {
+            const res = await syncStore.pull();
+            setCloudUpdateTime(res?.updatedAt);
+            setFileUrl(res?.rawUrl);
+        })();
+    }, [settingsStore.getSetting("githubToken")]);
+
+    const handlePush = async () => {
+        try {
+            setLoading(true)
+            // 固化缓存的历史记录
+            historyStore.init();
+
+            // 导出数据不包含视频封面
+            const data = await exportData();
+            data[0].map((item) => {
+                if (item.type === "bangumi") {
+                    item.cover = "";
+                }
+            });
+            const { rawUrl, updatedAt } = await syncStore.push(data);
+            if (!updatedAt) {
+                enqueueSnackbar("备份失败", { variant: "error" });
+                return;
+            }
+            setCloudUpdateTime(updatedAt);
+            enqueueSnackbar("备份成功", { variant: "success" });
+            setFileUrl(rawUrl);
+        } catch (error) {
+            enqueueSnackbar("备份失败: " + error, { variant: "error" });
+        } finally {
+            setLoading(false)
+        }
+    };
+
+    const handleRestore = async () => {
+        try {
+            setLoading(true)
+            if (!fileUrl) {
+                enqueueSnackbar("请先备份", { variant: "error" });
+                return;
+            }
+            const res = await request(fileUrl);
+
+            // 重置数据库
+            await db.delete();
+            await db.open();
+            await importData(res);
+            // 重写加载
+            await historyStore.init();
+            await extensionStore.init();
+            await settingsStore.init();
+
+            enqueueSnackbar("恢复成功", { variant: "success" });
+        } catch (error) {
+            enqueueSnackbar("恢复失败: " + error, {
+                variant: "error",
+            });
+        } finally {
+            setLoading(false)
+        }
+    };
+
+    return (
+        <div className="mb-3">
+            <Input title="Github Token" bindKey="githubToken"></Input>
+            {settingsStore.getSetting("githubToken") && (
+                <div className="w-full items-center rounded-lg border p-2 md:w-96">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2>存储时间</h2>
+                            <p>{cloudUpdateTime}</p>
+                        </div>
+                        <div>
+                            <Button className="mr-2" loading={loading} onClick={handlePush}>
+                                备份
+                            </Button>
+                            <Button loading={loading} onClick={handleRestore}>恢复</Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+});
