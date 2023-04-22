@@ -68,13 +68,24 @@ const ContinueVewing = observer(() => {
                                     {history.cover as string}
                                 </div>
                             </div>
-                        )) || (
-                            <LoadingImg
-                                className="h-full w-full object-cover"
-                                src={history.cover as string}
-                                alt={history.title}
-                            />
-                        )}
+                        )) ||
+                            (history.cover && (
+                                <LoadingImg
+                                    className="h-full w-full object-cover"
+                                    src={history.cover as string}
+                                    alt={history.title}
+                                />
+                            )) || (
+                                // 没有图片显示随机的颜色块
+                                <div
+                                    className="h-full w-full"
+                                    style={{
+                                        backgroundColor: `hsl(${Math.floor(
+                                            Math.random() * 360
+                                        )}, 100%, 80%)`,
+                                    }}
+                                ></div>
+                            )}
                         <div className="absolute left-0 right-0 bottom-0 bg-gradient-to-t from-black p-2">
                             <p className=" mt-3 mb-1 text-xs text-neutral-300">
                                 <CheckUpdate
