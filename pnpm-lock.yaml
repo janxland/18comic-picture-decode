@@ -17,8 +17,8 @@ dependencies:
     specifier: 18.0.11
     version: 18.0.11
   artplayer:
-    specifier: ^4.6.2
-    version: 4.6.2
+    specifier: ^5.0.0
+    version: 5.0.0
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
@@ -581,8 +581,8 @@ packages:
       get-intrinsic: 1.2.0
     dev: true
 
-  /artplayer@4.6.2:
-    resolution: {integrity: sha512-9RMfFFy2wGgHUCnrwk+M2Z5OiLWQcBL+YzkSBwSi6IuJG6oM+TlfJJZt09RL2iag6DNQ+AUYtB879WUHxbqfIQ==}
+  /artplayer@5.0.0:
+    resolution: {integrity: sha512-uUonBFKiOjFQnayBa4JXo/HvB0LO/REdlnZJb+u+PdubTz0T1c3rxybuCuj0IG+FpNDIHIZk9NiN3cUiZgYmlA==}
     dependencies:
       option-validator: 2.0.6
     dev: false
