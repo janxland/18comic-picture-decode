@@ -124,10 +124,10 @@ export default function BaseDetail() {
     }, [tmdbId]);
 
     return (
-        <div className="mb-5 flex flex-col items-center md:mb-16 md:flex-row md:items-end">
-            <div className="mb-6 flex-col items-center md:mb-0 md:flex md:w-1/4 lg:w-1/5">
+        <div className="mb-5 flex  md:mb-16 items-end">
+            <div className="w-56 flex-col items-center mb-0 md:flex md:w-1/4 lg:w-1/5">
                 <LoadingImg
-                    className="mb-3 w-56 rounded-xl shadow-2xl ring-4 ring-gray-300 md:block md:w-full"
+                    className="mb-3 rounded-xl shadow-2xl ring-4 ring-gray-300 md:block md:w-full"
                     src={detail?.cover}
                     alt={detail.title}
                 />
@@ -140,8 +140,8 @@ export default function BaseDetail() {
                     ></LoveButton>
                 </div>
             </div>
-            <div className="w-full md:ml-5 md:mt-10 md:w-3/4 lg:w-4/5">
-                <div className="mb-1 text-3xl">{detail?.title}</div>
+            <div className="w-full ml-5 md:mt-10 md:w-3/4 lg:w-4/5">
+                <div className="mb-1 text-2xl md:text-3xl">{detail?.title}</div>
                 <div className="mb-3 text-gray-500 dark:text-white dark:text-opacity-60">
                     {genres?.map((g, index) => (
                         <span key={index} className="mr-1">
@@ -150,7 +150,7 @@ export default function BaseDetail() {
                     ))}
                 </div>
                 <div className="max-h-48 overflow-hidden">
-                    <div className="mb-3">
+                    <div className="mb-3 hidden md:block" >
                         {Array.from(metaData.entries()).map((item, index) => (
                             <p key={index} className="mb-1">
                                 <span className="font-bold">{item[0]}</span>
@@ -178,7 +178,7 @@ export default function BaseDetail() {
                             </a>
                         </p>
                     </div>
-                    <div className="max-h-52 overflow-auto md:h-full">
+                    <div className="max-h-32 overflow-auto md:h-full">
                         <p>{overview}</p>
                     </div>
                 </div>
