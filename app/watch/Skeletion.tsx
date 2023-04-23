@@ -9,7 +9,7 @@ export default function Skeletion({ cover }: { cover?: string }) {
             <BaseMargin>
                 <div className="min-h-screen">
                     <div className="mb-5 flex  md:mb-16 items-end">
-                        <div className="w-56 flex-col items-center md:mb-0 md:flex md:w-1/4 lg:w-1/5">
+                        <div className="w-56 flex-col items-center md:mb-0 md:flex md:w-1/4 lg:w-1/5 ">
                             {cover ? (
                                 <LoadingImg
                                     className="mb-3 rounded-xl shadow-2xl ring-4 ring-gray-300 md:block md:w-full "
@@ -23,14 +23,15 @@ export default function Skeletion({ cover }: { cover?: string }) {
                                 <SkeletonBlock className="h-11 w-full" />
                             </div>
                         </div>
-                        <div className="w-full ml-5 md:mt-10 md:w-3/4 lg:w-4/5">
-                            <div className="mb-4 h-12 w-60 animate-pulse rounded-xl bg-slate-200 dark:bg-zinc-700"></div>
+                        <div className="w-full ml-5 md:mt-10 md:w-3/4 lg:w-4/5 ">
+                            <div
+                                className="mb-4 h-12 md:w-60 animate-pulse rounded-xl bg-slate-200 dark:bg-zinc-700"></div>
                             <div className="max-h-48 overflow-hidden">
-                                <SkeletonBlock className="mb-2 h-8 w-52" />
+                                <SkeletonBlock className="mb-2 h-8 w-2/3 md:w-52" />
                                 <SkeletonBlock className="hidden md:block mb-2 h-8 w-80" />
-                                <SkeletonBlock className="mb-2 h-8 w-72" />
+                                <SkeletonBlock className="mb-2 h-8 w-1/2 md:w-72" />
                                 <SkeletonBlock className="hidden md:block mb-2 h-8 w-80" />
-                                <SkeletonBlock className="mb-2 h-8 w-60" />
+                                <SkeletonBlock className="mb-2 h-8 w-5/6 md:w-60" />
                             </div>
                         </div>
                     </div>
