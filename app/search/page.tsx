@@ -35,10 +35,6 @@ const SearchPage = observer(() => {
             .getExtensionsByType(getModel(settingsStore.getSetting("model")));
 
         // 搜索全部扩展
-        newTabs.push({
-            title: "全部",
-            content: <SearchAll toTab={(index) => setTabIndex(index)} extensions={extensions} kw={kw} />
-        });
 
         extensions.map((value: Extension) => {
             newTabs.push({
@@ -46,6 +42,13 @@ const SearchPage = observer(() => {
                 content: <Result extension={value} kw={kw} />
             });
         });
+
+        if (newTabs.length > 1) {
+            newTabs.unshift({
+                title: "全部",
+                content: <SearchAll toTab={(index) => setTabIndex(index)} extensions={extensions} kw={kw} />
+            });
+        }
         setTabs(newTabs);
     }, [settingsStore.getSetting("model"), kw]);
 
@@ -70,7 +73,7 @@ const SearchPage = observer(() => {
                 </form>
 
                 {/*无扩展时显示的界面*/}
-                {tabs.length === 1 && (
+                {tabs.length === 0 && (
                     <div className="mt-28 text-center">
                         <p className="text-2xl font-bold">
                             {t("no-extension")}
