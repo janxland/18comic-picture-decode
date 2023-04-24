@@ -45,7 +45,7 @@ const SearchPage = observer(() => {
 
         if (newTabs.length > 1) {
             newTabs.unshift({
-                title: "全部",
+                title: t("all"),
                 content: <SearchAll toTab={(index) => setTabIndex(index)} extensions={extensions} kw={kw} />
             });
         }

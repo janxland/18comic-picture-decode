@@ -17,7 +17,19 @@
         "title": "Data",
         "history": "History",
         "collection": "Collection",
-        "clear": "Clear"
+        "clear": "Clear",
+        "sync": "Sync",
+        "storage": "Storage",
+        "github-token": "Github Token",
+        "storage-time": "Storage time",
+        "backup": "Backup",
+        "backup-success": "Backup success",
+        "backup-failed": "Backup failed",
+        "please-backup-first": "Please backup first",
+        "get-backup-failed": "Get backup failed",
+        "restore": "Restore",
+        "restore-success": "Restore success",
+        "restore-failed": "Restore failed"
     },
     "about": {
         "title": "About",

@@ -12,7 +12,7 @@ export default function Credits() {
     const { tmdbStore } = useRootStore();
     const { tmdbId, mediaType: media_type } = useWatchContext();
     const [cast, setCast] = useState<TypeCredits.Cast[]>([]);
-    const { t } = useTranslation("watch");
+    const { t } = useTranslation(["watch","common"]);
     useEffect(() => {
         if (!tmdbId) {
             return;
@@ -26,10 +26,6 @@ export default function Credits() {
 
     if (!tmdbId) {
         return null;
-    }
-
-    if (cast.length) {
-        <SkeletonBlock className="mb-6 h-56" />;
     }
 
     return (
@@ -50,18 +46,17 @@ export default function Credits() {
                                         className="flex items-center justify-center"
                                         style={{
                                             width: "130px",
-                                            height: "190px",
+                                            height: "190px"
                                         }}
                                     >
-                                        {" "}
-                                        加载错误{" "}
+                                        {t("load-error")}
                                     </div>
                                 }
                                 loadview={
                                     <SkeletonBlock
                                         style={{
                                             width: "130px",
-                                            height: "190px",
+                                            height: "190px"
                                         }}
                                     />
                                 }
@@ -72,8 +67,7 @@ export default function Credits() {
                                 className="flex items-center justify-center"
                                 style={{ width: "130px", height: "190px" }}
                             >
-                                {" "}
-                                无图片{" "}
+                                {t("no-image")}
                             </div>
                         )}
                         <a
