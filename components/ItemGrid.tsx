@@ -42,9 +42,9 @@ function Fragment({ itemData }: { itemData: ListItem }) {
     );
 }
 
-const BangumiGrid = {
+const ItemGrid = {
     Grid,
     Fragment,
 };
 
-export default BangumiGrid;
+export default ItemGrid;

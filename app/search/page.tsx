@@ -11,26 +11,38 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "@/app/i18n";
 import Result from "./Result";
 import changeTitle from "@/utils/title-change";
+import SearchAll from "@/app/search/SearchAll";
 
 const SearchPage = observer(() => {
     const { extensionStore, settingsStore } = useRootStore();
     const [tabs, setTabs] = useState<Array<Tabs>>([]);
     const [kw, setKw] = useState<string>("");
     const { t } = useTranslation("search");
+    const [tabIndex, setTabIndex] = useState(0);
+
+
     useEffect(() => {
         changeTitle(t("title"));
     }, []);
 
     useEffect(() => {
+        setTabIndex(0);
         const newTabs: Array<Tabs> = [];
-        extensionStore
-            .getExtensionsByType(getModel(settingsStore.getSetting("model")))
-            .map((value: Extension) => {
-                newTabs.push({
-                    title: value.name,
-                    content: <Result extension={value} kw={kw} />,
-                });
+        const extensions = extensionStore
+            .getExtensionsByType(getModel(settingsStore.getSetting("model")));
+
+        // 搜索全部扩展
+        newTabs.push({
+            title: "全部",
+            content: <SearchAll toTab={(index) => setTabIndex(index)} extensions={extensions} kw={kw} />
+        });
+
+        extensions.map((value: Extension) => {
+            newTabs.push({
+                title: value.name,
+                content: <Result extension={value} kw={kw} />
             });
+        });
         setTabs(newTabs);
     }, [settingsStore.getSetting("model"), kw]);
 
@@ -53,14 +65,17 @@ const SearchPage = observer(() => {
                         placeholder={t("search-placeholder") as string}
                     />
                 </form>
-                <Tab className="mb-6" tabs={tabs}></Tab>
-                {tabs.length === 0 && (
+
+                {/*无扩展时显示的界面*/}
+                {tabs.length === 1 && (
                     <div className="mt-28 text-center">
                         <p className="text-2xl font-bold">
                             {t("no-extension")}
                         </p>
                         <p className="text-sm">{t("no-extension-tips")}</p>
                     </div>
+                ) || (
+                    <Tab className="mb-6" tabs={tabs} index={tabIndex}></Tab>
                 )}
             </BaseMargin>
         </Layout>
