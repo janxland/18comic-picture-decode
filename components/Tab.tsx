@@ -26,7 +26,7 @@ export default function Tab(props: TabProps) {
         if (props.index !== undefined) {
             setActiveTab(Number(props.index));
         }
-    }, [props.index]);
+    }, [props.index,props.tabs]);
 
     const tabs = props.tabs.map((tab, index) => (
         <button
@@ -57,7 +57,7 @@ export default function Tab(props: TabProps) {
                     >
                         {tabs}
                     </div>
-                    <div className="mt-3">{props.tabs[activeTab].content}</div>
+                    <div className="mt-3">{props.tabs[activeTab]?.content}</div>
                 </>
             )}
         </div>
