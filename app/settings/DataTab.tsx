@@ -12,7 +12,7 @@ import {
     importData,
     Love,
     loveDB,
-    TMDB,
+    TMDB
 } from "@/db";
 import { Settings } from "http2";
 import { Loader2 } from "lucide-react";
@@ -28,9 +28,9 @@ export default function DataTab() {
     const { t } = useTranslation("settings");
     return (
         <div>
-            <Title>同步</Title>
+            <Title>{t("data.sync")}</Title>
             <Sync />
-            <Title>存储</Title>
+            <Title>{t("data.storage")}</Title>
             <ClearCacheBotton
                 title={t("data.history")}
                 count={historyStore.history.length}
@@ -68,8 +68,7 @@ function ClearCacheBotton(props: {
     return (
         <div className="mb-3">
             <span className="mr-3">
-                {" "}
-                {props.title}{" "}
+                {props.title}
                 <span className="rounded-lg bg-black  pl-2 pr-2 text-white">
                     {count}
                 </span>{" "}
@@ -93,6 +92,7 @@ const Sync = observer(() => {
     const [cloudUpdateTime, setCloudUpdateTime] = useState<string>();
     const [fileUrl, setFileUrl] = useState<string>();
     const [loading, setLoading] = useState(false);
+    const { t } = useTranslation("settings");
 
     useEffect(() => {
         (async () => {
@@ -102,7 +102,7 @@ const Sync = observer(() => {
                 setCloudUpdateTime(res?.updatedAt);
                 setFileUrl(res?.rawUrl);
             } catch (error) {
-                enqueueSnackbar("获取备份失败: " + error, { variant: "error" });
+                enqueueSnackbar(t("data.get-backup-failed") + error, { variant: "error" });
             } finally {
                 setLoading(false);
             }
@@ -124,10 +124,10 @@ const Sync = observer(() => {
             });
             const { rawUrl, updatedAt } = await syncStore.push(data);
             setCloudUpdateTime(updatedAt);
-            enqueueSnackbar("备份成功", { variant: "success" });
+            enqueueSnackbar(t("data.backup-success"), { variant: "success" });
             setFileUrl(rawUrl);
         } catch (error) {
-            enqueueSnackbar("备份失败: " + error, { variant: "error" });
+            enqueueSnackbar(t("data.backup-failed") + error, { variant: "error" });
         } finally {
             setLoading(false);
         }
@@ -137,7 +137,7 @@ const Sync = observer(() => {
         try {
             setLoading(true);
             if (!fileUrl) {
-                enqueueSnackbar("请先备份", { variant: "error" });
+                enqueueSnackbar(t("data.please-backup-first"), { variant: "error" });
                 return;
             }
             const res = (await request(fileUrl)) as [
@@ -171,10 +171,10 @@ const Sync = observer(() => {
             await extensionStore.init();
             await settingsStore.init();
 
-            enqueueSnackbar("恢复成功", { variant: "success" });
+            enqueueSnackbar(t("data.restore-success"), { variant: "success" });
         } catch (error) {
-            enqueueSnackbar("恢复失败: " + error, {
-                variant: "error",
+            enqueueSnackbar(t("data.restore-failed") + error, {
+                variant: "error"
             });
         } finally {
             setLoading(false);
@@ -188,14 +188,16 @@ const Sync = observer(() => {
                 <div className="relative w-full items-center overflow-hidden rounded-lg border p-2 md:w-96">
                     <div className=" flex items-center justify-between">
                         <div>
-                            <h2>存储时间</h2>
+                            <h2>{t("data.storage-time")}</h2>
                             <p>{cloudUpdateTime}</p>
                         </div>
                         <div>
                             <Button className="mr-2" onClick={handlePush}>
-                                备份
+                                {t("data.backup")}
                             </Button>
-                            <Button onClick={handleRestore}>恢复</Button>
+                            <Button onClick={handleRestore}>
+                                {t("data.restore")}
+                            </Button>
                         </div>
                     </div>
                     {loading && (
