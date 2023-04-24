@@ -12,9 +12,9 @@ import {
     importData,
     Love,
     loveDB,
-    TMDB
+    TMDB,
+    Settings
 } from "@/db";
-import { Settings } from "http2";
 import { Loader2 } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { enqueueSnackbar } from "notistack";
@@ -122,6 +122,14 @@ const Sync = observer(() => {
                     item.cover = "";
                 }
             });
+
+            // 脱敏
+            data[3].map((item) => {
+                if (item.key === "githubToken") {
+                    item.value = "";
+                }
+            });
+
             const { rawUrl, updatedAt } = await syncStore.push(data);
             setCloudUpdateTime(updatedAt);
             enqueueSnackbar(t("data.backup-success"), { variant: "success" });
@@ -159,6 +167,13 @@ const Sync = observer(() => {
                     }
                 })
             );
+
+            // 不替换 githubToken
+            res[3].map((item) => {
+                if (item.key === "githubToken") {
+                    item.value = settingsStore.getSetting("githubToken")
+                }
+            });
 
             // 重置数据库
             await db.delete();
