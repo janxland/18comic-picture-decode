@@ -27,6 +27,9 @@ const SearchPage = observer(() => {
 
     useEffect(() => {
         setTabIndex(0);
+    }, [settingsStore.getSetting("model")]);
+
+    useEffect(() => {
         const newTabs: Array<Tabs> = [];
         const extensions = extensionStore
             .getExtensionsByType(getModel(settingsStore.getSetting("model")));
@@ -75,7 +78,7 @@ const SearchPage = observer(() => {
                         <p className="text-sm">{t("no-extension-tips")}</p>
                     </div>
                 ) || (
-                    <Tab className="mb-6" tabs={tabs} index={tabIndex}></Tab>
+                    <Tab className="mb-6" tabs={tabs} index={tabIndex} onChange={(index) => setTabIndex(index)}></Tab>
                 )}
             </BaseMargin>
         </Layout>
