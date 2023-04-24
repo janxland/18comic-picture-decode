@@ -92,12 +92,10 @@ function Search({ extension, kw }: { extension: Extension, kw: string }) {
                             url: value.url,
                             cover: value.cover
                         }
-                    }} className="flex-shrink-0 mr-3">
+                    }} className="flex-shrink-0 mr-3 w-1/2 md:w-1/4 lg:w-1/5">
                         <LazyElement
                             placeholder={<div className="w-48"></div>}>
-                            <div className="w-48 md:w-56 lg:w-56">
-                                <ItemGrid.Fragment itemData={value} />
-                            </div>
+                            <ItemGrid.Fragment itemData={value} />
                         </LazyElement>
 
                     </Link>
