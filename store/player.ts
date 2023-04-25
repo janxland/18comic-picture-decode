@@ -29,16 +29,16 @@ export default class PlayerStore {
         this.init();
         autorun(() => {
             if (!isClient() || !this.playlist.length) {
-                return
+                return;
             }
-            localStorage.setItem("playlist", JSON.stringify({ playlist: this.playlist, index: this.index }))
-        })
+            localStorage.setItem("playlist", JSON.stringify({ playlist: this.playlist, index: this.index }));
+        });
     }
 
     // 从 localStorage 读取上次记录
     init() {
         if (!isClient()) {
-            return
+            return;
         }
         const data = localStorage.getItem("playlist");
         if (data) {
@@ -50,7 +50,8 @@ export default class PlayerStore {
 
     // 当前播放
     get currentPlay() {
-        return this.playlist[this.index];
+        const index = this.index >= this.playlist.length ? 0 : this.index;
+        return this.playlist[index];
     }
 
     // 添加播放并切换到当前播放
@@ -65,7 +66,7 @@ export default class PlayerStore {
     }
 
     // 添加下个播放
-    addNextPlay(play: PlayerListType) {
+    pushPlayer(play: PlayerListType) {
         // 如果有一样的就先删除再添加
         const index = this.playlist.findIndex((v) => v.url === play.url);
         if (index !== -1) {
@@ -73,6 +74,10 @@ export default class PlayerStore {
         }
 
         this.playlist.push(play);
+    }
+
+    addNextPlay(play: PlayerListType) {
+        this.playlist.splice(this.index + 1, 0, play);
     }
 
     // 切换下一个播放

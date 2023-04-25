@@ -26,7 +26,7 @@ export default function Tab(props: TabProps) {
         if (props.index !== undefined) {
             setActiveTab(Number(props.index));
         }
-    }, [props.index,props.tabs]);
+    }, [props.index, props.tabs]);
 
     const tabs = props.tabs.map((tab, index) => (
         <button
@@ -49,15 +49,15 @@ export default function Tab(props: TabProps) {
         <div className={clsx("overflow-x-scroll scrollbar-none")}>
             {props.tabs.length > 0 && (
                 <>
-                    <div
+                    {props.tabs.length > 1 && <div
                         className={clsx(
-                            "flex overflow-auto scrollbar-none",
+                            "flex overflow-auto scrollbar-none mb-3",
                             props.className
                         )}
                     >
                         {tabs}
-                    </div>
-                    <div className="mt-3">{props.tabs[activeTab]?.content}</div>
+                    </div>}
+                    <div>{props.tabs[activeTab]?.content}</div>
                 </>
             )}
         </div>
