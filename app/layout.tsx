@@ -3,7 +3,7 @@ import RootProvider from "@/app/RootProvider";
 import { ReactNode } from "react";
 
 export const metadata = {
-    title: "Miru",
+    title: "Home | Miru",
 };
 
 export default async function RootLayout({
