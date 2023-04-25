@@ -29,7 +29,7 @@ const Episodes = observer(() => {
         playerStore.clearPlayList();
 
         nextPlayers.map((item, _) => {
-            playerStore.pushPlayer({
+            playerStore.pushPlay({
                 url: item.url,
                 chapter: item.chapter,
                 pageUrl,
@@ -72,7 +72,7 @@ const Episodes = observer(() => {
             }, {
                 text: t("menu.add-to-playlist"),
                 action: () => {
-                    playerStore.pushPlayer(play);
+                    playerStore.pushPlay(play);
                 }
             }
         ];

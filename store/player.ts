@@ -66,7 +66,7 @@ export default class PlayerStore {
     }
 
     // 添加下个播放
-    pushPlayer(play: PlayerListType) {
+    pushPlay(play: PlayerListType) {
         // 如果有一样的就先删除再添加
         const index = this.playlist.findIndex((v) => v.url === play.url);
         if (index !== -1) {
@@ -77,6 +77,10 @@ export default class PlayerStore {
     }
 
     addNextPlay(play: PlayerListType) {
+        const index = this.playlist.findIndex((v) => v.url === play.url);
+        if (index !== -1) {
+            this.playlist.splice(index, 1);
+        }
         this.playlist.splice(this.index + 1, 0, play);
     }
 
