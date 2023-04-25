@@ -122,18 +122,17 @@ const Episodes = observer(() => {
                     content: (
                         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 p-1">
                             {item.urls.map((value, index) => {
-                                // @ts-ignore
                                 return (
                                     <div
                                         className={clsx(
-                                            "flex justify-between items-center bg-neutral-200 text-black dark:text-white dark:bg-black dark:bg-opacity-60 h-14 overflow-hidden rounded-lg",
+                                            "flex justify-between items-center overflow-hidden bg-neutral-200 text-black dark:text-white dark:bg-black dark:bg-opacity-60 h-14 rounded-lg",
                                             {
                                                 "ring-2 ring-gray-700 dark:ring-gray-200": playerStore.currentPlay?.url === value.url
                                             }
                                         )}
                                         key={index}>
                                         <span
-                                            className="cursor-pointer w-full h-full flex items-center p-2 hover:bg-neutral-300 dark:hover:bg-neutral-800"
+                                            className="cursor-pointer truncate w-full h-full flex items-center p-2 hover:bg-neutral-300 dark:hover:bg-neutral-800"
                                             onClick={() =>
                                                 handlePlay(
                                                     index,
