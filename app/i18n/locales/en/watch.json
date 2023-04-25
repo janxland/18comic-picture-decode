@@ -31,6 +31,10 @@
         "episode-run-time": "Episode Run Time:",
         "runtime": "Runtime:"
     },
+    "menu": {
+        "add-to-next-play": "Add to Next Play",
+        "add-to-playlist": "Add to Playlist"
+    },
     "changing-tmdb-metadata-targets": "Changing TMDB Metadata Targets",
     "enter-the-current-movie-keyword": "Enter the current movie keyword",
     "changing-tmdb-metadata-targets-tips": "If the metadata is wrong: TMDB metadata is provided by the third party, if you find the wrong metadata, you can change it through TMDB official website",
