@@ -5,9 +5,14 @@ import SwitchTitle from "@/components/SwitchTitle";
 import Collection from "./Collection";
 import ContinueViewing from "./ContinueViewing";
 import { useTranslation } from "@/app/i18n";
+import { useEffect } from "react";
+import changeTitle from "@/utils/title-change";
 
 export default function Home() {
     const { t } = useTranslation("home");
+    useEffect(() => {
+        changeTitle(t("title"));
+    }, []);
     return (
         <Layout>
             <BaseMargin>
