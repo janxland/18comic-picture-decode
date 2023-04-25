@@ -65,12 +65,12 @@ const Episodes = observer(() => {
 
         const menus: { text: string, action: () => void }[] = [
             {
-                text: "添加到接下来",
+                text: t("menu.add-to-next-play"),
                 action: () => {
                     playerStore.addNextPlay(play);
                 }
             }, {
-                text: "添加到列队",
+                text: t("menu.add-to-playlist"),
                 action: () => {
                     playerStore.pushPlayer(play);
                 }
