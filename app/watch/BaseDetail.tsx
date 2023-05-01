@@ -19,7 +19,7 @@ export default function BaseDetail() {
         extension,
         setWatchData,
         tmdbId,
-        mediaType: media_type,
+        mediaType: media_type
     } = useWatchContext();
     const [metaData, setMetaData] = useState<Map<string, string>>(new Map());
     const [overview, setOverview] = useState<string | undefined>(detail.desc);
@@ -37,7 +37,7 @@ export default function BaseDetail() {
                     return {
                         ...data!,
                         tmdbId: tmdbData.tmdbId,
-                        mediaType: tmdbData.mediaType,
+                        mediaType: tmdbData.mediaType
                     };
                 });
                 return;
@@ -51,7 +51,7 @@ export default function BaseDetail() {
                     return {
                         ...data!,
                         tmdbId: res[0].id,
-                        mediaType: res[0].media_type,
+                        mediaType: res[0].media_type
                     };
                 });
             });
@@ -117,7 +117,7 @@ export default function BaseDetail() {
             setWatchData((data) => {
                 return {
                     ...data!,
-                    background: tmdbStore.getImageUrl(res!.backdrop_path),
+                    background: tmdbStore.getImageUrl(res!.backdrop_path)
                 };
             });
         });
@@ -150,14 +150,14 @@ export default function BaseDetail() {
                     ))}
                 </div>
                 <div className="max-h-48 overflow-hidden">
-                    <div className="mb-3 hidden md:block" >
+                    <div className="mb-3 hidden md:block">
                         {Array.from(metaData.entries()).map((item, index) => (
                             <p key={index} className="mb-1">
                                 <span className="font-bold">{item[0]}</span>
                                 {item[1]}
                             </p>
                         ))}
-                        {/* 如果tmdb找不到数据就会显示扩展的元数据 */}
+                        {/* 如果 TMDB 找不到数据就会显示扩展的元数据 */}
                         {detail.metadata &&
                             Object.keys(detail.metadata).map((key, index) => (
                                 <p key={index} className="mb-1">
@@ -200,10 +200,10 @@ export default function BaseDetail() {
                 >
                     <div className="mb-3">
                         {metaData.size > 0 && (
+                            <>
                                 <h3 className="mb-3 border-b pb-2 font-bold">
                                     {t("from-tmdb")}
                                 </h3>
-                            ) && (
                                 <div className="mb-3 grid grid-cols-2">
                                     {Array.from(metaData.entries()).map(
                                         (item, index) => (
@@ -211,12 +211,14 @@ export default function BaseDetail() {
                                                 <span className="font-bold">
                                                     {item[0]}
                                                 </span>
+                                                {item[1].length > 20 && <br className="mb-2" />}
                                                 {item[1]}
                                             </p>
                                         )
                                     )}
                                 </div>
-                            )}
+                            </>
+                        )}
                         <h3 className="mb-3 border-b pb-2 font-bold">
                             {t("from-extension")}
                         </h3>
@@ -249,17 +251,18 @@ export default function BaseDetail() {
     );
 }
 
-function LoveButton({
-    pkg,
-    url,
-    type,
-    data,
-}: {
-    pkg: string;
-    url: string;
-    type: any;
-    data: Detail;
-}) {
+function LoveButton(
+    {
+        pkg,
+        url,
+        type,
+        data
+    }: {
+        pkg: string;
+        url: string;
+        type: any;
+        data: Detail;
+    }) {
     const [isLove, setIsLove] = useState(false);
     const { t } = useTranslation("watch");
     useEffect(() => {
@@ -273,7 +276,7 @@ function LoveButton({
                 url: url,
                 title: data.title,
                 cover: data.cover,
-                type: type,
+                type: type
             })
             .finally(() => {
                 checkLove();
