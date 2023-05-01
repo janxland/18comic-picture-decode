@@ -6,25 +6,28 @@ import { Credits as TypeCredits } from "@/types/tmdb";
 import { useEffect, useState } from "react";
 import { useTranslation } from "@/app/i18n";
 import Title from "./Title";
+import { useQuery } from "@tanstack/react-query";
 
 // 主演
 export default function Credits() {
     const { tmdbStore } = useRootStore();
     const { tmdbId, mediaType: media_type } = useWatchContext();
-    const [cast, setCast] = useState<TypeCredits.Cast[]>([]);
-    const { t } = useTranslation(["watch","common"]);
-    useEffect(() => {
-        if (!tmdbId) {
-            return;
-        }
-        tmdbStore.getCredits(tmdbId, media_type!).then((res) => {
-            if (res) {
-                setCast(res.cast);
-            }
-        });
-    }, [tmdbId]);
+    const { t } = useTranslation(["watch", "common"]);
+
+    const { data, isLoading } = useQuery({
+        queryKey: ["credits", tmdbId, media_type],
+        queryFn: () => tmdbStore.getCredits(tmdbId!, media_type!)
+    });
 
     if (!tmdbId) {
+        return null;
+    }
+
+    if (isLoading) {
+        return <SkeletonBlock className="mb-6 h-56" />;
+    }
+
+    if (!data || data.cast.length === 0) {
         return null;
     }
 
@@ -32,7 +35,7 @@ export default function Credits() {
         <div className="mb-3">
             <Title>{t("starring")}</Title>
             <div className="flex overflow-auto pb-3 scrollbar-none">
-                {cast.map((item, index) => (
+                {data.cast.map((item, index) => (
                     <div
                         key={index}
                         className="mr-3 flex-shrink-0"
