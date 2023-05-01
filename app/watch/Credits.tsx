@@ -19,6 +19,9 @@ export default function Credits() {
         queryFn: () => tmdbStore.getCredits(tmdbId!, media_type!)
     });
 
+    if (!tmdbId) {
+        return null;
+    }
 
     if (isLoading) {
         return <SkeletonBlock className="mb-6 h-56" />;
