@@ -29,7 +29,7 @@ export interface Episode {
 
 // 影视 watch Props
 export interface BangumiWatch {
-    type: "hls" | "mp4";
+    type: "hls" | "mp4" | "flv" | "dash";
     url: string;
     // 是否禁用默认播放器
     noDefaultPlayer: boolean;
