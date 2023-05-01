@@ -19,6 +19,12 @@ dependencies:
   artplayer:
     specifier: ^5.0.0
     version: 5.0.0
+  artplayer-plugin-dash-quality:
+    specifier: ^2.0.0
+    version: 2.0.0
+  artplayer-plugin-hls-quality:
+    specifier: ^2.0.0
+    version: 2.0.0
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
@@ -586,6 +592,14 @@ packages:
       es-shim-unscopables: 1.0.0
       get-intrinsic: 1.2.0
     dev: true
+
+  /artplayer-plugin-dash-quality@2.0.0:
+    resolution: {integrity: sha512-bQ1cGEX54O1s/9OVuFAHnV/zqDdOgM4uNPBzl3F1cqPUAxWzc1dfLt9OFTyEWCWyNBN9A5xjx7bRK4vevxcrdg==}
+    dev: false
+
+  /artplayer-plugin-hls-quality@2.0.0:
+    resolution: {integrity: sha512-+/tiLXi2BNOuw7z2ayI6cYlZBZEP/ujS01bTtanRi2P0zl8wHafPEk0bAA8VbXxpP9gYT0/DjBIifNR9W0xqhA==}
+    dev: false
 
   /artplayer@5.0.0:
     resolution: {integrity: sha512-uUonBFKiOjFQnayBa4JXo/HvB0LO/REdlnZJb+u+PdubTz0T1c3rxybuCuj0IG+FpNDIHIZk9NiN3cUiZgYmlA==}

@@ -9,6 +9,8 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useRef, useState } from "react";
 import ErrorView from "../ErrorView";
 import LoadingBox from "../LoadingBox";
+import artplayerPluginDashQuality from "artplayer-plugin-dash-quality";
+import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
 
 
 const BangumiPlayer = observer(() => {
@@ -57,6 +59,41 @@ const BangumiPlayer = observer(() => {
         // 如果 artRef.current 不存在
         if (!artRef.current) {
             return;
+        }
+
+        // 画质插件
+        let qualityPlugin: any;
+        if (data.type === "hls") {
+            qualityPlugin = artplayerPluginHlsQuality({
+                // Show quality in control
+                control: true,
+
+                // Show quality in setting
+                setting: true,
+
+                // Get the resolution text from level
+                getResolution: (level) => level.height + "P",
+
+                // I18n
+                title: "Quality",
+                auto: "Auto"
+            });
+        }
+        if (data.type === "dash") {
+            qualityPlugin = artplayerPluginDashQuality({
+                // Show quality in control
+                control: true,
+
+                // Show quality in setting
+                setting: true,
+
+                // Get the resolution text from level
+                getResolution: (level) => level.height + "P",
+
+                // I18n
+                title: "Quality",
+                auto: "Auto"
+            });
         }
 
         setArt(
@@ -181,6 +218,9 @@ const BangumiPlayer = observer(() => {
                         }
                     }
                 ],
+                plugins: [
+                    qualityPlugin
+                ],
                 subtitle: {
                     type: "srt",
                     style: {
@@ -296,7 +336,7 @@ const BangumiPlayer = observer(() => {
             <div className="h-full w-full" ref={artRef}></div>
             {playerStore.mini && art && (
                 // 缩小后的播放控件
-                <div className="absolute top-0 left-0 z-40 h-full w-full ">
+                <div className="absolute top-0 left-0 h-full w-full " style={{ zIndex: 99999 }}>
                     <div
                         className="flex h-full w-full items-center justify-center text-white opacity-0 transition-all hover:bg-black hover:bg-opacity-70 hover:opacity-100">
                         <button
@@ -325,9 +365,14 @@ export default BangumiPlayer;
 
 function playM3u8(video: HTMLMediaElement, url: string, art: Artplayer) {
     if (Hls.isSupported()) {
+        // @ts-ignore
+        if (art.hls) art.hls.destroy();
         const hls = new Hls();
         hls.loadSource(url);
         hls.attachMedia(video);
+        // @ts-ignore
+        art.hls = hls;
+        art.on("destroy", () => hls.destroy());
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
         video.src = url;
     } else {
