@@ -17,7 +17,7 @@ const Episodes = observer(() => {
     const { historyStore, playerStore } = useRootStore();
     const { detail, url: pageUrl, pkg, extension } = useWatchContext();
     const [episodesTabs, setEpisodesTabs] = useState<Tabs[]>([]);
-    const { t } = useTranslation("watch");
+    const { t } = useTranslation("detail");
     const [menu, setMenu] = useState<ReactNode | null>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -174,7 +174,7 @@ const Episodes = observer(() => {
                             // 通过detail.episodes找到对应的url
                             const chap = res?.chapter.split("|");
                             if (!chap || chap.length !== 2) {
-                                enqueueSnackbar(t("watch-record-error"), {
+                                enqueueSnackbar(t("detail-record-error"), {
                                     variant: "error"
                                 });
                                 return;

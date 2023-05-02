@@ -49,7 +49,7 @@ const Collection = observer(() => {
                 <Link
                     key={love.id}
                     href={{
-                        pathname: "/watch",
+                        pathname: "/detail",
                         query: {
                             pkg: love.package,
                             url: love.url,

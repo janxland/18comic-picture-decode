@@ -25,7 +25,7 @@ export default function BaseDetail() {
     const [overview, setOverview] = useState<string | undefined>(detail.desc);
     const [showMore, setShowMore] = useState<boolean>(false);
     const [genres, setGenres] = useState<string[]>();
-    const { t } = useTranslation("watch");
+    const { t } = useTranslation("detail");
 
     // 获取 TMDB ID
     // 也许可以获取个背景（（就不判断了
@@ -264,7 +264,7 @@ function LoveButton(
         data: Detail;
     }) {
     const [isLove, setIsLove] = useState(false);
-    const { t } = useTranslation("watch");
+    const { t } = useTranslation("detail");
     useEffect(() => {
         checkLove();
     }, []);

@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 export default function Credits() {
     const { tmdbStore } = useRootStore();
     const { tmdbId, mediaType: media_type } = useWatchContext();
-    const { t } = useTranslation(["watch", "common"]);
+    const { t } = useTranslation(["detail", "common"]);
 
     const { data, isLoading } = useQuery({
         queryKey: ["credits", tmdbId, media_type],
