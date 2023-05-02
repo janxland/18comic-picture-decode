@@ -24,6 +24,7 @@ const BangumiPlayer = observer(() => {
         queryFn: () => {
             return extension?.watch(currentPlay.url) as BangumiWatch;
         },
+        staleTime: Infinity,
     });
 
     useEffect(() => {
