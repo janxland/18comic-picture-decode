@@ -12,7 +12,6 @@ import LoadingBox from "../LoadingBox";
 import artplayerPluginDashQuality from "artplayer-plugin-dash-quality";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
 
-
 const BangumiPlayer = observer(() => {
     const { extensionStore, historyStore, playerStore } = useRootStore();
     const currentPlay = playerStore.currentPlay;
@@ -24,7 +23,7 @@ const BangumiPlayer = observer(() => {
         queryKey: ["watch", currentPlay.url, currentPlay.pkg],
         queryFn: () => {
             return extension?.watch(currentPlay.url) as BangumiWatch;
-        }
+        },
     });
 
     useEffect(() => {
@@ -76,7 +75,7 @@ const BangumiPlayer = observer(() => {
 
                 // I18n
                 title: "Quality",
-                auto: "Auto"
+                auto: "Auto",
             });
         }
         if (data.type === "dash") {
@@ -92,7 +91,7 @@ const BangumiPlayer = observer(() => {
 
                 // I18n
                 title: "Quality",
-                auto: "Auto"
+                auto: "Auto",
             });
         }
 
@@ -119,45 +118,46 @@ const BangumiPlayer = observer(() => {
                 airplay: true,
                 autoplay: true,
                 moreVideoAttr: {
-                    crossOrigin: "anonymous"
+                    crossOrigin: "anonymous",
                 },
                 controls: [
+                    ...(data.controls || []),
                     {
                         position: "left",
-                        html: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-skip-back\"><polygon points=\"19 20 9 12 19 4 19 20\"></polygon><line x1=\"5\" x2=\"5\" y1=\"19\" y2=\"5\"></line></svg>",
+                        html: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-skip-back"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" x2="5" y1="19" y2="5"></line></svg>',
                         index: 1,
                         tooltip: "上一集",
-                        click: function() {
+                        click: function () {
                             playerStore.togglePrevPlay();
-                        }
+                        },
                     },
                     {
                         position: "left",
-                        html: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-skip-forward\"><polygon points=\"5 4 15 12 5 20 5 4\"></polygon><line x1=\"19\" x2=\"19\" y1=\"5\" y2=\"19\"></line></svg>",
+                        html: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-skip-forward"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" x2="19" y1="5" y2="19"></line></svg>',
                         index: 20,
                         tooltip: "下一集",
-                        click: function() {
+                        click: function () {
                             playerStore.toggleNextPlay();
-                        }
+                        },
                     },
                     {
                         position: "right",
-                        html: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-list\"><line x1=\"8\" x2=\"21\" y1=\"6\" y2=\"6\"></line><line x1=\"8\" x2=\"21\" y1=\"12\" y2=\"12\"></line><line x1=\"8\" x2=\"21\" y1=\"18\" y2=\"18\"></line><line x1=\"3\" x2=\"3.01\" y1=\"6\" y2=\"6\"></line><line x1=\"3\" x2=\"3.01\" y1=\"12\" y2=\"12\"></line><line x1=\"3\" x2=\"3.01\" y1=\"18\" y2=\"18\"></line></svg>",
+                        html: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list"><line x1="8" x2="21" y1="6" y2="6"></line><line x1="8" x2="21" y1="12" y2="12"></line><line x1="8" x2="21" y1="18" y2="18"></line><line x1="3" x2="3.01" y1="6" y2="6"></line><line x1="3" x2="3.01" y1="12" y2="12"></line><line x1="3" x2="3.01" y1="18" y2="18"></line></svg>',
                         index: 1,
                         tooltip: "播放列表",
-                        click: function() {
+                        click: function () {
                             playerStore.toggleShowPlayList();
-                        }
+                        },
                     },
                     {
                         position: "right",
-                        html: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-maximize\"><path d=\"M8 3H5a2 2 0 0 0-2 2v3\"></path><path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"></path><path d=\"M3 16v3a2 2 0 0 0 2 2h3\"></path><path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"></path></svg>",
+                        html: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>',
                         index: 1000,
                         tooltip: "全屏",
-                        click: function() {
+                        click: function () {
                             playerStore.toggleFullScreen();
-                        }
-                    }
+                        },
+                    },
                 ],
                 settings: [
                     {
@@ -168,7 +168,7 @@ const BangumiPlayer = observer(() => {
                                 html: "Display",
                                 tooltip: "Show",
                                 switch: true,
-                                onSwitch: function(item) {
+                                onSwitch: function (item) {
                                     item.tooltip = item.switch
                                         ? "Hide"
                                         : "Show";
@@ -177,21 +177,22 @@ const BangumiPlayer = observer(() => {
                                     }
                                     art.subtitle.show = !item.switch;
                                     return !item.switch;
-                                }
+                                },
                             },
                             {
                                 default: false,
-                                html: "选择字幕文件"
-                            }
+                                html: "选择字幕文件",
+                            },
+                            ...(data.subtitles || []),
                         ],
-                        onSelect: function(item) {
+                        onSelect: function (item) {
                             if (item.html === "选择字幕文件") {
                                 // 选择字幕文件
                                 const input = document.createElement("input");
                                 input.type = "file";
                                 input.accept = "text/srt";
                                 input.click();
-                                input.onchange = function() {
+                                input.onchange = function () {
                                     if (!input.files) {
                                         return;
                                     }
@@ -202,7 +203,7 @@ const BangumiPlayer = observer(() => {
                                             return;
                                         }
                                         art.subtitle.switch(item.url, {
-                                            name: file.name
+                                            name: file.name,
                                         });
                                     }
                                 };
@@ -212,31 +213,29 @@ const BangumiPlayer = observer(() => {
                                 return;
                             }
                             art.subtitle.switch(item.url, {
-                                name: item.html
+                                name: item.html,
                             });
                             return item.html;
-                        }
-                    }
+                        },
+                    },
                 ],
-                plugins: [
-                    qualityPlugin
-                ],
+                plugins: [qualityPlugin],
                 subtitle: {
                     type: "srt",
                     style: {
                         color: "#000",
                         fontSize: "20px",
                         textShadow:
-                            "0 1px white, 1px 0 white, -1px 0 white, 0 -1px white"
+                            "0 1px white, 1px 0 white, -1px 0 white, 0 -1px white",
                     },
-                    encoding: "utf-8"
+                    encoding: "utf-8",
                 },
                 customType: {
                     hls: playM3u8,
                     flv: playFlv,
                     dash: playMpd,
-                    custom: extension?.customPlayer
-                }
+                    custom: extension?.customPlayer,
+                },
             })
         );
 
@@ -246,8 +245,6 @@ const BangumiPlayer = observer(() => {
             }
             art.autoHeight = true;
         });
-
-
     }, [data]);
 
     const addHistory = async () => {
@@ -261,7 +258,7 @@ const BangumiPlayer = observer(() => {
             title: currentPlay.title,
             chapter: currentPlay.chapter,
             type: "bangumi",
-            cover: await art.getDataURL()
+            cover: await art.getDataURL(),
         });
     };
 
@@ -312,7 +309,6 @@ const BangumiPlayer = observer(() => {
         }
     };
 
-
     if (error) {
         return <ErrorView error={error}></ErrorView>;
     }
@@ -330,15 +326,17 @@ const BangumiPlayer = observer(() => {
             className={clsx({
                 "h-52 w-full flex-shrink lg:h-screen": !playerStore.mini,
                 "relative h-16 w-full lg:h-40 lg:w-96": playerStore.mini,
-                "!h-screen": playerStore.fullScreen
+                "!h-screen": playerStore.fullScreen,
             })}
         >
             <div className="h-full w-full" ref={artRef}></div>
             {playerStore.mini && art && (
                 // 缩小后的播放控件
-                <div className="absolute top-0 left-0 h-full w-full " style={{ zIndex: 99999 }}>
-                    <div
-                        className="flex h-full w-full items-center justify-center text-white opacity-0 transition-all hover:bg-black hover:bg-opacity-70 hover:opacity-100">
+                <div
+                    className="absolute top-0 left-0 h-full w-full "
+                    style={{ zIndex: 99999 }}
+                >
+                    <div className="flex h-full w-full items-center justify-center text-white opacity-0 transition-all hover:bg-black hover:bg-opacity-70 hover:opacity-100">
                         <button
                             className="mx-3"
                             onClick={() => playerStore.togglePrevPlay()}
@@ -380,9 +378,9 @@ function playM3u8(video: HTMLMediaElement, url: string, art: Artplayer) {
     }
 }
 
-
 function playFlv(video: HTMLMediaElement, url: string, art: Artplayer) {
-    import("flv.js").then((module) => {
+    import("flv.js")
+        .then((module) => {
             const flvjs = module.default;
             if (flvjs.isSupported()) {
                 // @ts-ignore
@@ -396,28 +394,29 @@ function playFlv(video: HTMLMediaElement, url: string, art: Artplayer) {
             } else {
                 art.notice.show = "Unsupported playback format: flv";
             }
-        }
-    ).catch((e) => {
-        art.notice.show = e;
-    });
+        })
+        .catch((e) => {
+            art.notice.show = e;
+        });
 }
 
-
 function playMpd(video: HTMLMediaElement, url: string, art: Artplayer) {
-    import("dashjs").then((module) => {
-        const dashjs = module.default;
-        if (dashjs.supportsMediaSource()) {
-            // @ts-ignore
-            if (art.dash) art.dash.destroy();
-            const dash = dashjs.MediaPlayer().create();
-            dash.initialize(video, url, art.option.autoplay);
-            // @ts-ignore
-            art.dash = dash;
-            art.on("destroy", () => dash.destroy());
-        } else {
-            art.notice.show = "Unsupported playback format: mpd";
-        }
-    }).catch((e) => {
-        art.notice.show = e;
-    });
+    import("dashjs")
+        .then((module) => {
+            const dashjs = module.default;
+            if (dashjs.supportsMediaSource()) {
+                // @ts-ignore
+                if (art.dash) art.dash.destroy();
+                const dash = dashjs.MediaPlayer().create();
+                dash.initialize(video, url, art.option.autoplay);
+                // @ts-ignore
+                art.dash = dash;
+                art.on("destroy", () => dash.destroy());
+            } else {
+                art.notice.show = "Unsupported playback format: mpd";
+            }
+        })
+        .catch((e) => {
+            art.notice.show = e;
+        });
 }

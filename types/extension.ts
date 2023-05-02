@@ -1,3 +1,5 @@
+import { ComponentOption } from "artplayer/types/component";
+
 export interface ListItem {
     title: string;
     url: string;
@@ -29,8 +31,15 @@ export interface Episode {
 
 // 影视 watch Props
 export interface BangumiWatch {
-    type: "hls" | "mp4" | "flv" | "dash";
+    type: "hls" | "mp4" | "flv" | "dash" | "custom";
     url: string;
+    // 定义字幕,
+    subtitles?: {
+        html: string;
+        src: string;
+    }[];
+    // 控制器
+    controls?: ComponentOption[];
     // 是否禁用默认播放器
     noDefaultPlayer: boolean;
 }
