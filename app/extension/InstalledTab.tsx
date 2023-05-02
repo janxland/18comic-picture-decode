@@ -191,7 +191,7 @@ function ExtSettingsModal({
             value: extension?.license,
         },
         {
-            name: t("ext-metadata.nadescriptionme"),
+            name: t("ext-metadata.description"),
             value: extension?.description,
         },
     ];
