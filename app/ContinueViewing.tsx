@@ -55,7 +55,7 @@ const ContinueVewing = observer(() => {
                 >
                     <Link
                         href={{
-                            pathname: "/watch",
+                            pathname: "/detail",
                             query: {
                                 pkg: history.package,
                                 url: history.url,

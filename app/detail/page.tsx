@@ -24,10 +24,10 @@ const WatchPage = observer(() => {
     const url = searchParams?.get("url") as string;
     const cover = searchParams?.get("cover") as string;
     const extension = extensionStore.getExtension(pkg);
-    const { t } = useTranslation("watch");
+    const { t } = useTranslation("detail");
     const [watchData, setWatchData] = useState<WatchData>();
     const { isLoading, error, isError, data } = useQuery({
-        queryKey: ["watch", pkg, url],
+        queryKey: ["detail", pkg, url],
         queryFn: () => extension?.detail(url),
     });
     useEffect(() => {

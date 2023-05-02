@@ -15,7 +15,7 @@ import { useTranslation } from "@/app/i18n";
 
 export default function Footer() {
     const { extension } = useWatchContext();
-    const { t } = useTranslation("watch");
+    const { t } = useTranslation("detail");
     const [showModal, setShowModal] = useState(false);
     const [kw, setKw] = useState("");
     const [serachKw, setSearchKw] = useState("");
@@ -75,7 +75,7 @@ function TMDBModalSearchResult({
     kw: string;
     onClose: () => void;
 }) {
-    const { t } = useTranslation(["watch", "common"]);
+    const { t } = useTranslation(["detail", "common"]);
     const { url, pkg, setWatchData } = useWatchContext();
     const { settingsStore } = useRootStore();
     const { tmdbStore } = useRootStore();
