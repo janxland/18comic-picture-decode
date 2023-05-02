@@ -86,7 +86,7 @@ function Search({ extension, kw }: { extension: Extension, kw: string }) {
             {data.map((value, index) => {
                 return (
                     <Link key={index} href={{
-                        pathname: "/watch",
+                        pathname: "/detail",
                         query: {
                             pkg: extension.package,
                             url: value.url,

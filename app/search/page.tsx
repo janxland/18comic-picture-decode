@@ -12,14 +12,25 @@ import { useTranslation } from "@/app/i18n";
 import Result from "./Result";
 import changeTitle from "@/utils/title-change";
 import SearchAll from "@/app/search/SearchAll";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SearchPage = observer(() => {
     const { extensionStore, settingsStore } = useRootStore();
     const [tabs, setTabs] = useState<Array<Tabs>>([]);
-    const [kw, setKw] = useState<string>("");
     const { t } = useTranslation("search");
     const [tabIndex, setTabIndex] = useState(0);
+    const param = useSearchParams();
+    const route = useRouter();
+    const [kw, setKW] = useState("");
+    const [inputKW, setInputKW] = useState("");
 
+
+    useEffect(() => {
+        if (param) {
+            setKW(param.get("kw") as string);
+            setInputKW(param.get("kw") as string);
+        }
+    }, [param]);
 
     useEffect(() => {
         changeTitle(t("title"));
@@ -54,10 +65,7 @@ const SearchPage = observer(() => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const str = (
-            (e.target as HTMLFormElement).elements[0] as HTMLInputElement
-        ).value;
-        setKw(str);
+        route.replace(`/search?kw=${inputKW}`);
     };
 
     return (
@@ -67,8 +75,10 @@ const SearchPage = observer(() => {
                 <form className="mb-6" onSubmit={handleSubmit}>
                     <input
                         type="text"
+                        value={inputKW}
                         className="w-full rounded-3xl border p-4 dark:bg-black dark:text-white"
                         placeholder={t("search-placeholder") as string}
+                        onChange={(e) => setInputKW(e.target.value)}
                     />
                 </form>
 

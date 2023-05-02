@@ -8,13 +8,14 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useTranslation } from "@/app/i18n";
 
-export default function Result({
-    extension,
-    kw,
-}: {
-    extension: Extension;
-    kw?: string;
-}) {
+export default function Result(
+    {
+        extension,
+        kw
+    }: {
+        extension: Extension;
+        kw?: string;
+    }) {
     const { t } = useTranslation(["search", "common"]);
     const {
         data,
@@ -23,6 +24,7 @@ export default function Result({
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
+        isFetched
     } = useInfiniteQuery({
         queryKey: ["getSearchItems", extension.package, kw],
         queryFn: ({ pageParam = 1 }) => {
@@ -40,9 +42,10 @@ export default function Result({
             }
             return pages.length + 1;
         },
+        keepPreviousData: true
     });
 
-    if (isLoading) {
+    if (isLoading || !isFetched) {
         return (
             <ItemGrid.Grid>
                 {new Array(20).fill(0).map((_, i) => (
@@ -56,7 +59,7 @@ export default function Result({
     }
 
     // 如果没有数据
-    if (!data || data.pages.length === 0 ) {
+    if (!data || !data.pages.length) {
         return (
             <div className="mt-28 text-center">
                 <p className="text-2xl font-bold">{t("no-content")}</p>
@@ -77,12 +80,12 @@ export default function Result({
                             >
                                 <Link
                                     href={{
-                                        pathname: "/watch",
+                                        pathname: "/detail",
                                         query: {
                                             pkg: extension.package,
                                             url: value.url,
-                                            cover: value.cover,
-                                        },
+                                            cover: value.cover
+                                        }
                                     }}
                                     className="h-full w-full"
                                 >
@@ -96,12 +99,12 @@ export default function Result({
             </ItemGrid.Grid>
             {data.pages[data.pages.length - 1].length === 0 && (
                 <div className="m-6 text-center">
-                <p className="text-1xl font-bold">{t("no-more-content")}</p>
-            </div>
+                    <p className="text-1xl font-bold">{t("no-more-content")}</p>
+                </div>
             )}
             <ErrorView error={error} />
             <div className="text-center">
-                {hasNextPage &&  (
+                {hasNextPage && (
                     <Button className="m-4" onClick={() => fetchNextPage()}>
                         {isFetchingNextPage ? t("loading") : t("more")}
                     </Button>
