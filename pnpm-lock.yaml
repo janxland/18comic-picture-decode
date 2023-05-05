@@ -11,11 +11,11 @@ dependencies:
     specifier: 18.16.4
     version: 18.16.4
   '@types/react':
-    specifier: 18.2.0
-    version: 18.2.0
+    specifier: 18.2.5
+    version: 18.2.5
   '@types/react-dom':
-    specifier: 18.2.1
-    version: 18.2.1
+    specifier: 18.2.4
+    version: 18.2.4
   artplayer:
     specifier: ^5.0.0
     version: 5.0.0
@@ -39,7 +39,7 @@ dependencies:
     version: 3.2.3
   dexie-react-hooks:
     specifier: ^1.1.3
-    version: 1.1.3(@types/react@18.2.0)(dexie@3.2.3)(react@18.2.0)
+    version: 1.1.3(@types/react@18.2.5)(dexie@3.2.3)(react@18.2.0)
   eslint:
     specifier: 8.39.0
     version: 8.39.0
@@ -386,14 +386,14 @@ packages:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
     dev: false
 
-  /@types/react-dom@18.2.1:
-    resolution: {integrity: sha512-8QZEV9+Kwy7tXFmjJrp3XUKQSs9LTnE0KnoUb0YCguWBiNW0Yfb2iBMYZ08WPg35IR6P3Z0s00B15SwZnO26+w==}
+  /@types/react-dom@18.2.4:
+    resolution: {integrity: sha512-G2mHoTMTL4yoydITgOGwWdWMVd8sNgyEP85xVmMKAPUBwQWm9wBPQUmvbeF4V3WBY1P7mmL4BkjQ0SqUpf1snw==}
     dependencies:
-      '@types/react': 18.2.0
+      '@types/react': 18.2.5
     dev: false
 
-  /@types/react@18.2.0:
-    resolution: {integrity: sha512-0FLj93y5USLHdnhIhABk83rm8XEGA7kH3cr+YUlvxoUGp1xNt/DINUMvqPxLyOQMzLmZe8i4RTHbvb8MC7NmrA==}
+  /@types/react@18.2.5:
+    resolution: {integrity: sha512-RuoMedzJ5AOh23Dvws13LU9jpZHIc/k90AgmK7CecAYeWmSr3553L4u5rk4sWAPBuQosfT7HmTfG4Rg5o4nGEA==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -882,14 +882,14 @@ packages:
       minimist: 1.2.8
     dev: true
 
-  /dexie-react-hooks@1.1.3(@types/react@18.2.0)(dexie@3.2.3)(react@18.2.0):
+  /dexie-react-hooks@1.1.3(@types/react@18.2.5)(dexie@3.2.3)(react@18.2.0):
     resolution: {integrity: sha512-bXXE1gfYtfuVYTNiOlyam+YVaO8KaqacgRuxFuP37YtpS6o/jxT6KOl5h+hhqY36s0UavlHWbL+HWJFMcQumIg==}
     peerDependencies:
       '@types/react': '>=16'
       dexie: '>=3.1.0-alpha.1 <5.0.0'
       react: '>=16'
     dependencies:
-      '@types/react': 18.2.0
+      '@types/react': 18.2.5
       dexie: 3.2.3
       react: 18.2.0
     dev: false
