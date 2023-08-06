@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>解密图片</title>
+    <style>
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  </head>
+  <script>
+    async function decodeImage(photoUrl) {
+      const regexString = "\\/(\\d+)\\/(\\d+)\\.webp";
+        const matches = photoUrl.match(regexString);
+        let chapterId = matches[1];
+        let photoId = matches[2];
+        let outputImage = document.getElementById("output-image");
+        if(chapterId <= 220971) {
+            log.info("✖️:[{}]小于220971, [{}]不需要切割", chapterId, photoName);
+            return outputImage.src = photoUrl;
+        }
+        try {
+          let md5c = CryptoJS.MD5(chapterId + photoId).toString();
+          let c = parseInt(md5c.charAt(md5c.length - 1), 16);
+          c >= 10 ? c = c-1 : c = c;
+          let mod; chapterId >= 421926 ? (mod = 8 ) : (mod = 10);
+          const rule = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
+          let piece; chapterId >= 268850 ? (piece = rule[parseInt(c, 16) % mod]) : (piece=10);
+          const response = await fetch(photoUrl);
+          const buffer = await response.arrayBuffer();
+          const uint8Array = new Uint8Array(buffer);
+          const blob = new Blob([uint8Array], { type: 'image/webp' });
+          const blobUrl = URL.createObjectURL(blob);
+          console.log(piece);
+          outputImage.src = blobUrl;
+          outputImage.onload = async function() {
+            outputImage.src = await reverseImage(outputImage, chapterId, piece);
+            outputImage.onload = null;
+          };
+        } catch (error) {
+          console.error('解密图片失败:', error);
+        }
+    }
+    function reverseImage(bufferedImage, chapterId, piece) {
+      if (piece === 1) {
+        return bufferedImage;
+      }
+      const height = bufferedImage.height;
+      const width = bufferedImage.width;
+      const preImgHeight = Math.floor(height / piece);
+      if (preImgHeight === 0) {
+        return bufferedImage;
+      }
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.width = width;
+      canvas.height = height;
+      for (let i = 0; i < piece; i++) {
+        let subCanvas = document.createElement('canvas');
+        let subContext = subCanvas.getContext('2d');
+        subCanvas.width = width;
+        subCanvas.height = preImgHeight;
+        if (i === piece - 1) {
+          subContext.drawImage(bufferedImage, 0, i * preImgHeight, width, height - i * preImgHeight, 0, 0, width, height - i * preImgHeight);
+        } else {
+          subContext.drawImage(bufferedImage, 0, i * preImgHeight, width, preImgHeight, 0, 0, width, preImgHeight);
+        }
+        context.drawImage(subCanvas, 0, height - (i + 1) * preImgHeight);
+      }
+        return canvas.toDataURL('image/webp');
+    }
+  </script>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/jimp/browser/lib/jimp.min.js"></script>
+      <h1>解密图片</h1>
+      <div>
+        <input type="text" id="image-url" placeholder="输入图片URL" />
+        <button onclick='decodeImage(document.getElementById("image-url").value)'>解密</button>
+      </div>
+      <div>
+        <img id="output-image" src="" alt="解密后的图片" />
+      </div>
+  </body>
+</html>
