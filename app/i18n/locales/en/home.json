@@ -1,0 +1,13 @@
+{
+    "title": "Home",
+    "continue-viewing": "Continue viewing",
+    "collection": "Collection",
+    "no-continue-viewing": {
+        "title": "No viewing history",
+        "message": "You can search to find the content you like to watch"
+    },
+    "no-collection": {
+        "title": "No collection",
+        "message": "You can search to find your favorite content"
+    }
+}
